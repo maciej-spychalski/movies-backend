@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class StorageItemDto {
     private Long id;
-    private MovieDto movieDto;
+    private String movieTitle;
     private Integer quantity;
 }

@@ -14,6 +14,8 @@ public interface DirectorRepository extends CrudRepository<Director, Long> {
     @Override
     Optional<Director> findById(Long id);
 
+    Optional<Director> findByFirstnameAndAndSurname(String firstname, String surname);
+
     @Override
     List<Director> findAll();
 

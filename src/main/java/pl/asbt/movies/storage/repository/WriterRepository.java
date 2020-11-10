@@ -14,6 +14,8 @@ public interface WriterRepository extends CrudRepository<Writer, Long> {
     @Override
     Optional<Writer> findById(Long id);
 
+    Optional<Writer> findByFirstnameAndAndSurname(String firstname, String surname);
+
     @Override
     List<Writer> findAll();
 

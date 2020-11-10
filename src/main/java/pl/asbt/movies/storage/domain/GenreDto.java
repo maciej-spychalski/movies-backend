@@ -12,6 +12,6 @@ public class GenreDto {
 
     private Long id;
     private String type;
-    private List<MovieDto> moviesDto = new ArrayList<>();
+    private List<String> moviesTitle = new ArrayList<>();
 
 }

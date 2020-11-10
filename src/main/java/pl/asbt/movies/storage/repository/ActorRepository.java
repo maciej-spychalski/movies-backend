@@ -14,6 +14,8 @@ public interface ActorRepository extends CrudRepository<Actor, Long> {
     @Override
     Optional<Actor> findById(Long id);
 
+    Optional<Actor> findByFirstnameAndAndSurname(String firstname, String surname);
+
     @Override
     List<Actor> findAll();
 

@@ -13,6 +13,6 @@ public class ActorDto {
     private Long id;
     private String firstname;
     private String surname;
-    private List<MovieDto> moviesDto = new ArrayList<>();
+    private List<String> moviesTitle = new ArrayList<>();
 
 }
