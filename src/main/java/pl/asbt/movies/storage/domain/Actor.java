@@ -20,10 +20,9 @@ public class Actor {
     private String surname;
     private List<Movie> movies = new ArrayList<>();
 
-    public Actor(String firstname, String surname, List<Movie> movies) {
+    public Actor(String firstname, String surname) {
         this.firstname = firstname;
         this.surname = surname;
-        this.movies = movies;
     }
 
     @Id

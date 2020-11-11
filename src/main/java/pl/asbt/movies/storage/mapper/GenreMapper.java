@@ -11,10 +11,9 @@ import java.util.stream.Collectors;
 @Component
 public class GenreMapper {
 
-    public Genre mapToGenre(final GenreDto genreDto, List<Movie> movies) {
+    public Genre mapToGenre(final GenreDto genreDto) {
         return new Genre(
-                genreDto.getType(),
-                movies);
+                genreDto.getType());
     }
 
     public GenreDto mapToGenreDto(final Genre genre) {

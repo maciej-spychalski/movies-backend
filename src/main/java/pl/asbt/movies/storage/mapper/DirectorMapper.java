@@ -9,11 +9,10 @@ import java.util.stream.Collectors;
 @Component
 public class DirectorMapper {
 
-    public Director mapToDirector(final DirectorDto directorDto, List<Movie> movies) {
+    public Director mapToDirector(final DirectorDto directorDto) {
         return new Director(
                 directorDto.getFirstname(),
-                directorDto.getSurname(),
-                movies);
+                directorDto.getSurname());
     }
 
     public DirectorDto mapToDirectorDto(final Director director) {

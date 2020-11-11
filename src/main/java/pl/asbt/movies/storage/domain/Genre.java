@@ -19,9 +19,8 @@ public class Genre {
     private String type;
     private List<Movie> movies = new ArrayList<>();
 
-    public Genre(String type, List<Movie> movies) {
+    public Genre(String type) {
         this.type = type;
-        this.movies = movies;
     }
 
     @Id

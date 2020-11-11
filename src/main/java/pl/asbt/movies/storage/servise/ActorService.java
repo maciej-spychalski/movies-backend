@@ -30,7 +30,7 @@ public class ActorService {
 
     public Actor createActor(final ActorDto actorDto) {
         List<Movie> movies = new ArrayList<>();
-        return actorRepository.save(actorMapper.mapToActor(actorDto, movies));
+        return actorRepository.save(actorMapper.mapToActor(actorDto));
     }
 
     public Optional<Actor> getActor(final Long id) {

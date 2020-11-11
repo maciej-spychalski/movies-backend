@@ -30,7 +30,7 @@ public class DirectorService {
 
     public Director createDirector(final DirectorDto directorDto) {
         List<Movie> movies = new ArrayList<>();
-        return directorRepository.save(directorMapper.mapToDirector(directorDto, movies));
+        return directorRepository.save(directorMapper.mapToDirector(directorDto));
     }
 
     public Optional<Director> getDirector(final Long id) {

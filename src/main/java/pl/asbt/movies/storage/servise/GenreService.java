@@ -28,9 +28,9 @@ public class GenreService {
         this.genreMapper = genreMapper;
     }
 
-    public Genre saveGenre(final GenreDto genreDto) {
+    public Genre createGenre(final GenreDto genreDto) {
         List<Movie> movies = new ArrayList<>();
-        return genreRepository.save(genreMapper.mapToGenre(genreDto, movies));
+        return genreRepository.save(genreMapper.mapToGenre(genreDto));
     }
 
     public Optional<Genre> getGenre(final Long id) {

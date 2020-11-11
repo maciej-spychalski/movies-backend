@@ -20,10 +20,9 @@ public class Director {
     private String surname;
     private List<Movie> movies = new ArrayList<>();
 
-    public Director(String firstname, String surname, List<Movie> movies) {
+    public Director(String firstname, String surname) {
         this.firstname = firstname;
         this.surname = surname;
-        this.movies = movies;
     }
 
     @Id

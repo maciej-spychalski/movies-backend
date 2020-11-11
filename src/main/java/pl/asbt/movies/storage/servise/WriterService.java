@@ -30,7 +30,7 @@ public class WriterService {
 
     public Writer createWriter(final WriterDto writerDto) {
         List<Movie> movies = new ArrayList<>();
-        return writerRepository.save(writerMapper.mapToWriter(writerDto, movies));
+        return writerRepository.save(writerMapper.mapToWriter(writerDto));
     }
 
     public Optional<Writer> getWriter(final Long id) {

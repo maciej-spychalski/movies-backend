@@ -9,6 +9,12 @@ import java.util.stream.Collectors;
 @Component
 public class MovieMapper {
 
+    private ActorMapper actorMapper;
+    private DirectorMapper directorMapper;
+    private GenreMapper genreMapper;
+    private  WriterMapper writerMapper;
+
+
     public Movie mapToMovie(final MovieDto movieDto, Director director, List<Writer> writers,
                             List<Actor> actors, List<Genre> genres) {
         return new Movie(
@@ -24,20 +30,10 @@ public class MovieMapper {
         return new MovieDto(
                 movie.getId(),
                 movie.getTitle(),
-                movie.getDirector().getId(),
-
-                movie.getWriters().stream()
-                        .map(w -> w.getId())
-                        .collect(Collectors.toList()),
-
-                movie.getActors().stream()
-                        .map(a -> a.getId())
-                        .collect(Collectors.toList()),
-
-                movie.getGenres().stream()
-                        .map(g -> g.getId())
-                        .collect(Collectors.toList()),
-
+                directorMapper.mapToDirectorDto(movie.getDirector()),
+                writerMapper.mapToWritersDto(movie.getWriters()),
+                actorMapper.mapToActorsDto(movie.getActors()),
+                genreMapper.mapToGenresDto(movie.getGenres()),
                 movie.getDuration());
     }
 

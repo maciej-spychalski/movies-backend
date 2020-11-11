@@ -11,11 +11,10 @@ import java.util.stream.Collectors;
 @Component
 public class WriterMapper {
 
-    public Writer mapToWriter(final WriterDto writerDto, List<Movie> movies) {
+    public Writer mapToWriter(final WriterDto writerDto) {
         return new Writer(
                 writerDto.getFirstname(),
-                writerDto.getSurname(),
-                movies);
+                writerDto.getSurname());
     }
 
     public WriterDto mapToWriterDto (final Writer writer) {

@@ -13,11 +13,10 @@ import java.util.stream.Collectors;
 @Component
 public class ActorMapper {
 
-    public Actor mapToActor(final ActorDto actorDto, List<Movie> movies) {
+    public Actor mapToActor(final ActorDto actorDto) {
         return new Actor(
                 actorDto.getFirstname(),
-                actorDto.getSurname(),
-                movies);
+                actorDto.getSurname());
     }
 
     public ActorDto mapToActorDto(final Actor actor) {

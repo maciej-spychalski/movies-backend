@@ -59,7 +59,7 @@ public class Movie {
     }
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
-    public List<Actor> getActorslist() {
+    public List<Actor> getActors() {
         return actors;
     }
 
@@ -95,7 +95,7 @@ public class Movie {
         this.writers = writers;
     }
 
-    public void setActorslist(List<Actor> actorslist) {
+    public void setActors(List<Actor> actorslist) {
         this.actors = actorslist;
     }
 
