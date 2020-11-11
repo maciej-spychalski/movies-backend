@@ -48,6 +48,11 @@ public class MovieService {
             LOGGER.error("There are no director id =" + movieDto.getDirectorId());
         }
 
+//        List<Writer> writers = new ArrayList<>();
+//        for(Long writerId : movieDto.getWritersId()) {
+//            writers.add(writerService.getWriter(writerId).orElse(new Writer()));
+//        }
+
         List<Writer> writers = movieDto.getWritersId().stream()
                 .map(id -> {
                     try {
@@ -111,6 +116,7 @@ public class MovieService {
 
     public void updateMovie(final MovieDto movieDto) {
         Long id = movieDto.getId();
+
         try {
             Movie movie = getMovie(id).orElseThrow(MovieNotFoundException::new);
             movie.setTitle(movieDto.getTitle());
@@ -120,6 +126,12 @@ public class MovieService {
         } catch (Exception e) {
             LOGGER.error("There are no movie id = " + id);
         }
+
+//        Movie theMovie = createMovie(movieDto);
+//        Long theMovieId = theMovie.getId();
+//        movieRepository.deleteById(theMovieId);
+//        theMovie.setId(id);
+//        movieRepository.save(theMovie);
     }
 
 }
