@@ -21,4 +21,6 @@ public interface GenreRepository extends CrudRepository<Genre, Long> {
 
     @Override
     void deleteById(Long id);
+
+    void deleteByType(String type);
 }

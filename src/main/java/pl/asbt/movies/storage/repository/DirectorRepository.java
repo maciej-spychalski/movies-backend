@@ -21,4 +21,6 @@ public interface DirectorRepository extends CrudRepository<Director, Long> {
 
     @Override
     void deleteById(Long id);
+
+    void deleteByFirstnameAndSurname(String firstname, String surname);
 }

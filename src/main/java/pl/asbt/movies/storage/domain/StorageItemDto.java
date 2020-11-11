@@ -8,5 +8,6 @@ import lombok.Getter;
 public class StorageItemDto {
     private Long id;
     private String movieTitle;
+    private Long movieId;
     private Integer quantity;
 }

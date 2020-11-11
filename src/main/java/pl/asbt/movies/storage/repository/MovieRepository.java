@@ -20,4 +20,6 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
     @Override
     void deleteById(Long id);
+
+    void deleteByTitle(String title);
 }

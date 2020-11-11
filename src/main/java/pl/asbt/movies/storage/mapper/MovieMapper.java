@@ -10,14 +10,13 @@ import java.util.stream.Collectors;
 public class MovieMapper {
 
     public Movie mapToMovie(final MovieDto movieDto, Director director, List<Writer> writers,
-                            List<Actor> actors, List<Genre> genres, StorageItem storageItem) {
+                            List<Actor> actors, List<Genre> genres) {
         return new Movie(
                 movieDto.getTitle(),
                 director,
                 writers,
                 actors,
                 genres,
-                storageItem,
                 movieDto.getDuration());
     }
 
@@ -25,21 +24,20 @@ public class MovieMapper {
         return new MovieDto(
                 movie.getId(),
                 movie.getTitle(),
-                movie.getDirector().getFirstname() + " " + movie.getDirector().getSurname(),
+                movie.getDirector().getId(),
 
                 movie.getWriters().stream()
-                .map(w -> w.getFirstname() + " " + w.getSurname())
-                .collect(Collectors.toList()),
+                        .map(w -> w.getId())
+                        .collect(Collectors.toList()),
 
                 movie.getActors().stream()
-                .map(a -> a.getFirstname() + " " + a.getSurname())
-                .collect(Collectors.toList()),
+                        .map(a -> a.getId())
+                        .collect(Collectors.toList()),
 
                 movie.getGenres().stream()
-                .map(g -> g.getType())
-                .collect(Collectors.toList()),
+                        .map(g -> g.getId())
+                        .collect(Collectors.toList()),
 
-                movie.getStorageItem().getId(),
                 movie.getDuration());
     }
 

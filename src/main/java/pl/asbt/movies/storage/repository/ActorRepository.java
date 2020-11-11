@@ -21,4 +21,6 @@ public interface ActorRepository extends CrudRepository<Actor, Long> {
 
     @Override
     void deleteById(Long id);
+
+    void deleteByFirstnameAndSurname(String firstname, String surname);
 }

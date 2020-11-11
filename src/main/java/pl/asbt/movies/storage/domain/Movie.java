@@ -21,17 +21,16 @@ public class Movie {
     private List<Writer> writers = new ArrayList<>();
     private List<Actor> actors = new ArrayList<>();
     private List<Genre> genres = new ArrayList<>();
-    private StorageItem storageItem;
     private Integer duration;
+    private StorageItem storageItem;
 
     public Movie(String title, Director director, List<Writer> writers, List<Actor> actors,
-                 List<Genre> genres, StorageItem storageItem, Integer duration) {
+                 List<Genre> genres, Integer duration) {
         this.title = title;
         this.director = director;
         this.writers = writers;
         this.actors = actors;
         this.genres = genres;
-        this.storageItem = storageItem;
         this.duration = duration;
     }
 

@@ -21,4 +21,6 @@ public interface WriterRepository extends CrudRepository<Writer, Long> {
 
     @Override
     void deleteById(Long id);
+
+    void deleteByFirstnameAndAndSurname(String firstname, String surname);
 }

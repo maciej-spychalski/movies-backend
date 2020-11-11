@@ -21,6 +21,7 @@ public class StorageItemMapper {
         return new StorageItemDto(
                 storageItem.getId(),
                 storageItem.getMovie().getTitle(),
+                storageItem.getMovie().getId(),
                 storageItem.getQuantity());
     }
 

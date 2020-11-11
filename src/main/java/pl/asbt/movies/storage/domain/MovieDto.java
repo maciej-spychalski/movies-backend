@@ -12,10 +12,9 @@ public class MovieDto {
 
     private Long id;
     private String title;
-    private String director;
-    private List<String> writers = new ArrayList<>();
-    private List<String> actors = new ArrayList<>();
-    private List<String> genres = new ArrayList<>();
-    private Long storageItemId;
+    private Long directorId;
+    private List<Long> writersId = new ArrayList<>();
+    private List<Long> actorsId = new ArrayList<>();
+    private List<Long> genresId = new ArrayList<>();
     private Integer duration;
 }
