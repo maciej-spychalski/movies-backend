@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.exception.MovieNotFoundException;
-import pl.asbt.movies.exception.StorageItemNotFoundException;
+import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.StorageItem;
 import pl.asbt.movies.storage.domain.StorageItemDto;
@@ -59,11 +58,11 @@ public class StorageItemService {
     public void updateStorageItem(final StorageItemDto storageItemDto) {
         Long id = storageItemDto.getId();
         try {
-            StorageItem storageItem = getStorageItem(id).orElseThrow(StorageItemNotFoundException::new);
+            StorageItem storageItem = getStorageItem(id).orElseThrow(SearchingException::new);
             storageItem.setQuantity(storageItemDto.getQuantity());
             storageItemRepository.save(storageItem);
         } catch (Exception e) {
-            LOGGER.error("There are no storage item id = " + id);
+            LOGGER.error(SearchingException.ERR_NO_STORAGE_ITEM);
         }
     }
 

@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.exception.GenreNotFoundException;
 import pl.asbt.movies.storage.domain.Genre;
 import pl.asbt.movies.storage.domain.GenreDto;
 import pl.asbt.movies.storage.domain.Movie;
+import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.GenreMapper;
 import pl.asbt.movies.storage.repository.GenreRepository;
 
@@ -56,11 +56,11 @@ public class GenreService {
     public void updateGenre(final GenreDto genreDto) {
         Long id = genreDto.getId();
         try {
-            Genre genre = getGenre(id).orElseThrow(GenreNotFoundException::new);
+            Genre genre = getGenre(id).orElseThrow(SearchingException::new);
             genre.setType(genreDto.getType());
             genreRepository.save(genre);
         } catch (Exception e) {
-            LOGGER.error("There are no genre id = " + id);
+            LOGGER.error(SearchingException.ERR_NO_GENRE);
         }
     }
 

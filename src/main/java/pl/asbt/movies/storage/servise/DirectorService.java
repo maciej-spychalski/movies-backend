@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.exception.DirectorNotFoundException;
 import pl.asbt.movies.storage.domain.Director;
 import pl.asbt.movies.storage.domain.DirectorDto;
 import pl.asbt.movies.storage.domain.Movie;
+import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.DirectorMapper;
 import pl.asbt.movies.storage.repository.DirectorRepository;
 
@@ -56,12 +56,12 @@ public class DirectorService {
     public void updateDirector(final DirectorDto directorDto) {
         Long id = directorDto.getId();
         try {
-            Director director = getDirector(id).orElseThrow(DirectorNotFoundException::new);
+            Director director = getDirector(id).orElseThrow(SearchingException::new);
             director.setFirstname(directorDto.getFirstname());
             director.setSurname(directorDto.getSurname());
             directorRepository.save(director);
         } catch (Exception e) {
-            LOGGER.error("There are no director id = " + id);
+            LOGGER.error(SearchingException.ERR_NO_DIRECTOR);
         }
     }
 

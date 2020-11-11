@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.exception.WriterNotFoundException;
+import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.Writer;
 import pl.asbt.movies.storage.domain.WriterDto;
@@ -56,12 +56,12 @@ public class WriterService {
     public void updateWriter(final WriterDto writerDto) {
         Long id = writerDto.getId();
         try {
-            Writer writer = getWriter(id).orElseThrow(WriterNotFoundException::new);
+            Writer writer = getWriter(id).orElseThrow(SearchingException::new);
             writer.setFirstname(writerDto.getFirstname());
             writer.setSurname(writer.getSurname());
             writerRepository.save(writer);
         } catch (Exception e) {
-            LOGGER.error("There are no writer id = " + id);
+            LOGGER.error(SearchingException.ERR_NO_WRITER);
         }
     }
 

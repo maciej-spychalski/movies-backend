@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.exception.ActorNotFoundException;
+import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.domain.ActorDto;
 import pl.asbt.movies.storage.domain.Movie;
@@ -56,12 +56,12 @@ public class ActorService {
     public void updateActor(final ActorDto actorDto) {
         Long id = actorDto.getId();
         try {
-            Actor actor = getActor(id).orElseThrow(ActorNotFoundException::new);
+            Actor actor = getActor(id).orElseThrow(SearchingException::new);
             actor.setFirstname(actorDto.getFirstname());
             actor.setSurname(actorDto.getSurname());
             actorRepository.save(actor);
         } catch (Exception e) {
-            LOGGER.error("There are no actor id = " + id);
+            LOGGER.error(SearchingException.ERR_NO_ACTOR);
         }
     }
 

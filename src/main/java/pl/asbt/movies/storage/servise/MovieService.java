@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.exception.*;
 import pl.asbt.movies.storage.domain.*;
+import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.*;
 import pl.asbt.movies.storage.repository.MovieRepository;
 
@@ -93,7 +93,7 @@ public class MovieService {
         Movie themovie = movieFromMovieDto(movieDto);
 
         try {
-            Movie movie = getMovie(id).orElseThrow(MovieNotFoundException::new);
+            Movie movie = getMovie(id).orElseThrow(SearchingException::new);
             movie.setTitle(themovie.getTitle());
             movie.setDuration(themovie.getDuration());
             movie.setWriters(themovie.getWriters());
@@ -102,7 +102,7 @@ public class MovieService {
             movie.setDuration(themovie.getDuration());
             movieRepository.save(movie);
         } catch (Exception e) {
-            LOGGER.error("There are no movie id = " + id);
+            LOGGER.error(SearchingException.ERR_NO_MOVIE);
         }
     }
 
