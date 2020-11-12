@@ -12,7 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity(name = "ACTORS")
+@Entity
+@Table (name = "ACTORS", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
+})
+//@Entity(name = "ACTORS)
 public class Actor {
 
     private Long id;
@@ -46,8 +50,8 @@ public class Actor {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "JOIN_MOVIE_ACTOR",
-            joinColumns = {@JoinColumn(name = "ID", referencedColumnName = "ACTOR_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ID", referencedColumnName = "MOVIE_ID")}
+            joinColumns = {@JoinColumn(name = "ACTOR_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")}
     )
     public List<Movie> getMovies() {
         return movies;

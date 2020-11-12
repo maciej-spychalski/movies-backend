@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.domain.ActorDto;
-import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.mapper.ActorMapper;
 import pl.asbt.movies.storage.repository.ActorRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,15 +27,20 @@ public class ActorService {
     }
 
     public Actor createActor(final ActorDto actorDto) {
-        List<Movie> movies = new ArrayList<>();
-        return actorRepository.save(actorMapper.mapToActor(actorDto));
+        Actor result = new Actor();
+        try {
+            return actorRepository.save(actorMapper.mapToActor(actorDto));
+        } catch (Exception e) {
+            LOGGER.error(SearchingException.ERR_ACTOR_ALREADY_EXIST);
+        }
+        return result;
     }
 
     public Optional<Actor> getActor(final Long id) {
         return actorRepository.findById(id);
     }
 
-    public Optional<Actor> getActor(final String firstname, final String surname) {
+    public List<Actor> getActorsByNameAndSurname(final String firstname, final String surname) {
         return actorRepository.findByFirstnameAndAndSurname(firstname, surname);
     }
 
@@ -49,7 +52,7 @@ public class ActorService {
         actorRepository.deleteById(id);
     }
 
-    public void deleteActor(final String firstname, final String surname) {
+    public void deleteActorsByNameAndSurname(final String firstname, final String surname) {
         actorRepository.deleteByFirstnameAndSurname(firstname, surname);
     }
 

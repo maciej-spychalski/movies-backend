@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.domain.Director;
 import pl.asbt.movies.storage.domain.Genre;
 import pl.asbt.movies.storage.domain.GenreDto;
 import pl.asbt.movies.storage.domain.Movie;
@@ -29,15 +30,20 @@ public class GenreService {
     }
 
     public Genre createGenre(final GenreDto genreDto) {
-        List<Movie> movies = new ArrayList<>();
-        return genreRepository.save(genreMapper.mapToGenre(genreDto));
+        Genre result = new Genre();
+        try {
+            return genreRepository.save(genreMapper.mapToGenre(genreDto));
+        } catch (Exception e) {
+            LOGGER.error(SearchingException.ERR_GENRE_ALREADY_EXIST);
+        }
+        return result;
     }
 
     public Optional<Genre> getGenre(final Long id) {
         return genreRepository.findById(id);
     }
 
-    public Optional<Genre> getGenre(final String type) {
+    public List<Genre> getAllGenresByType(final String type) {
         return genreRepository.findByType(type);
     }
 

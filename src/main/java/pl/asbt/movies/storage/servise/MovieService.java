@@ -37,42 +37,65 @@ public class MovieService {
 
     public Movie movieFromMovieDto (final MovieDto movieDto) {
         DirectorDto directorDto = movieDto.getDirectorDto();
-        Director director = directorService.getDirector(directorDto.getFirstname(), directorDto.getSurname())
-                .orElse(new Director(directorDto.getFirstname(), directorDto.getSurname()));
+        Director director = directorService.getDirector(directorDto.getId()).orElse(new Director());
 
         List<Writer> writers = new ArrayList<>();
         for(WriterDto theWriter : movieDto.getWritersDto()) {
-            Writer writer = writerService.getWriter(theWriter.getFirstname(), theWriter.getSurname())
-                    .orElse(new Writer(theWriter.getFirstname(), theWriter.getSurname()));
+            Writer writer = writerService.getWriter(theWriter.getId()).orElse(new Writer());
             writers.add(writer);
         }
 
         List<Actor> actors = new ArrayList<>();
         for(ActorDto theActor : movieDto.getActorsDto()) {
-            Actor actor = actorService.getActor(theActor.getFirstname(), theActor.getSurname())
-                    .orElse(new Actor(theActor.getFirstname(), theActor.getSurname()));
+            Actor actor = actorService.getActor(theActor.getId()).orElse(new Actor());
             actors.add(actor);
         }
 
         List<Genre> genres = new ArrayList<>();
         for(GenreDto theGenre : movieDto.getGenresDto()) {
-            Genre genre = genreService.getGenre(theGenre.getType())
-                    .orElse(new Genre(theGenre.getType()));
+            Genre genre = genreService.getGenre(theGenre.getId()).orElse(new Genre());
             genres.add(genre);
         }
+
+        /*DirectorDto directorDto = movieDto.getDirectorDto();
+        Director director = directorService.getAllDirectorsByNameAndSurname(directorDto.getFirstname(), directorDto.getSurname()).get(0);
+
+        List<Writer> writers = new ArrayList<>();
+        for(WriterDto theWriter : movieDto.getWritersDto()) {
+            Writer writer = writerService.getAllWritersByNameAndSurname(theWriter.getFirstname(), theWriter.getSurname()).get(0);
+            writers.add(writer);
+        }
+
+        List<Actor> actors = new ArrayList<>();
+        for(ActorDto theActor : movieDto.getActorsDto()) {
+            Actor actor = actorService.getActorsByNameAndSurname(theActor.getFirstname(), theActor.getSurname()).get(0);
+            actors.add(actor);
+        }
+
+        List<Genre> genres = new ArrayList<>();
+        for(GenreDto theGenre : movieDto.getGenresDto()) {
+            Genre genre = genreService.getAllGenresByType(theGenre.getType()).get(0);
+            genres.add(genre);
+        }*/
 
         return movieMapper.mapToMovie(movieDto, director, writers, actors, genres);
     }
 
     public Movie createMovie(final MovieDto movieDto) {
-        return movieRepository.save(movieFromMovieDto(movieDto));
+        Movie result = new Movie();
+        try {
+            return movieRepository.save(movieFromMovieDto(movieDto));
+        } catch (Exception e) {
+            LOGGER.error(SearchingException.ERR_MOVIE_ALREADY_EXIST);
+        }
+        return result;
     }
 
     public Optional<Movie> getMovie(final Long id) {
         return movieRepository.findById(id);
     }
 
-    public Optional<Movie> getMovie(final String title) {
+    public List<Movie> getAllMoviesByTitle(final String title) {
         return movieRepository.findByTitle(title);
     }
 

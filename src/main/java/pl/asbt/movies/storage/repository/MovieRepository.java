@@ -13,7 +13,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
     @Override
     Optional<Movie> findById(Long id);
 
-    Optional<Movie> findByTitle(String title);
+    List<Movie> findByTitle(String title);
 
     @Override
     List<Movie> findAll();

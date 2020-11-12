@@ -1,6 +1,7 @@
 package pl.asbt.movies.storage.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.Director;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface DirectorRepository extends CrudRepository<Director, Long> {
     @Override
     Optional<Director> findById(Long id);
 
-    Optional<Director> findByFirstnameAndAndSurname(String firstname, String surname);
+    List<Director> findByFirstnameAndAndSurname(String firstname, String surname);
 
     @Override
     List<Director> findAll();
@@ -22,5 +23,6 @@ public interface DirectorRepository extends CrudRepository<Director, Long> {
     @Override
     void deleteById(Long id);
 
+    @Transactional
     void deleteByFirstnameAndSurname(String firstname, String surname);
 }

@@ -46,8 +46,8 @@ public class Writer {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "JOIN_MOVIE_WRITER",
-            joinColumns = {@JoinColumn(name = "ID", referencedColumnName = "WRITER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ID", referencedColumnName = "MOVIE_ID")}
+            joinColumns = {@JoinColumn(name = "WRITER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")}
     )
     public List<Movie> getMovies() {
         return movies;

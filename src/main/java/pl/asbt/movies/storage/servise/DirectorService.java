@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.domain.Director;
 import pl.asbt.movies.storage.domain.DirectorDto;
 import pl.asbt.movies.storage.domain.Movie;
@@ -29,15 +30,20 @@ public class DirectorService {
     }
 
     public Director createDirector(final DirectorDto directorDto) {
-        List<Movie> movies = new ArrayList<>();
-        return directorRepository.save(directorMapper.mapToDirector(directorDto));
+        Director result = new Director();
+        try {
+            return directorRepository.save(directorMapper.mapToDirector(directorDto));
+        } catch (Exception e) {
+            LOGGER.error(SearchingException.ERR_DIRECTOR_ALREADY_EXIST);
+        }
+        return result;
     }
 
     public Optional<Director> getDirector(final Long id) {
         return directorRepository.findById(id);
     }
 
-    public Optional<Director> getDirector(final String firstname, final String surname) {
+    public List<Director> getAllDirectorsByNameAndSurname(final String firstname, final String surname) {
         return directorRepository.findByFirstnameAndAndSurname(firstname, surname);
     }
 

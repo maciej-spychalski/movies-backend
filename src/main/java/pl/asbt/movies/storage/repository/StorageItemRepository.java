@@ -1,6 +1,7 @@
 package pl.asbt.movies.storage.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.StorageItem;
 
@@ -15,7 +16,7 @@ public interface StorageItemRepository extends CrudRepository<StorageItem, Long>
     @Override
     Optional<StorageItem> findById(Long id);
 
-    Optional<StorageItem> findByMovie_Title(String title);
+    List<StorageItem> findByMovie_Title(String title);
 
     @Override
     List<StorageItem> findAll();
@@ -23,5 +24,6 @@ public interface StorageItemRepository extends CrudRepository<StorageItem, Long>
     @Override
     void deleteById(Long id);
 
+    @Transactional
     void deleteByMovie_Title(String title);
 }

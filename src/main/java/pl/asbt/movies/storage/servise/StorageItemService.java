@@ -30,16 +30,22 @@ public class StorageItemService {
         this.movieRepository = movieRepository;
     }
 
-    public StorageItem createStorageItem(final StorageItemDto storageItemDto) throws MovieNotFoundException {
-        Movie movie = movieRepository.findById(storageItemDto.getMovieId()).orElseThrow(MovieNotFoundException::new);
-        return storageItemRepository.save(storageItemMapper.mapToStorageItem(storageItemDto, movie));
+    public StorageItem createStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
+        Movie movie = movieRepository.findById(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
+        StorageItem result = new StorageItem();
+        try {
+            return storageItemRepository.save(storageItemMapper.mapToStorageItem(storageItemDto, movie));
+        } catch (Exception e) {
+            LOGGER.error(SearchingException.ERR_STORAGE_ITEM_ALREADY_EXIST);
+        }
+        return result;
     }
 
     public Optional<StorageItem> getStorageItem(final Long id) {
         return storageItemRepository.findById(id);
     }
 
-    public Optional<StorageItem> getStorageItem(final String title) {
+    public List<StorageItem> getAllStorageItemsMovie_Title(final String title) {
         return storageItemRepository.findByMovie_Title(title);
     }
 

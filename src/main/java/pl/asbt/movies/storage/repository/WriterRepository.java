@@ -1,6 +1,7 @@
 package pl.asbt.movies.storage.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.Writer;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface WriterRepository extends CrudRepository<Writer, Long> {
     @Override
     Optional<Writer> findById(Long id);
 
-    Optional<Writer> findByFirstnameAndAndSurname(String firstname, String surname);
+    List<Writer> findByFirstnameAndAndSurname(String firstname, String surname);
 
     @Override
     List<Writer> findAll();
@@ -22,5 +23,6 @@ public interface WriterRepository extends CrudRepository<Writer, Long> {
     @Override
     void deleteById(Long id);
 
+    @Transactional
     void deleteByFirstnameAndAndSurname(String firstname, String surname);
 }

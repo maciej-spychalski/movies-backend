@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.domain.StorageItem;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.Writer;
@@ -29,15 +30,20 @@ public class WriterService {
     }
 
     public Writer createWriter(final WriterDto writerDto) {
-        List<Movie> movies = new ArrayList<>();
-        return writerRepository.save(writerMapper.mapToWriter(writerDto));
+        Writer result = new Writer();
+        try {
+            return writerRepository.save(writerMapper.mapToWriter(writerDto));
+        } catch (Exception e) {
+            LOGGER.error(SearchingException.ERR_WRITER_ALREADY_EXIST);
+        }
+        return result;
     }
 
     public Optional<Writer> getWriter(final Long id) {
         return writerRepository.findById(id);
     }
 
-    public Optional<Writer> getWriter(final String firstname, final String surname) {
+    public List<Writer> getAllWritersByNameAndSurname(final String firstname, final String surname) {
         return writerRepository.findByFirstnameAndAndSurname(firstname, surname);
     }
 
