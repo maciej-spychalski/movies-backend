@@ -47,7 +47,7 @@ public class GenreService {
         return genreRepository.findByType(type);
     }
 
-    public List<Genre> getAllGenre() {
+    public List<Genre> getAllGenres() {
         return genreRepository.findAll();
     }
 

@@ -26,8 +26,8 @@ public class WriterServiceTest {
         // Given
         List<String> movies = new ArrayList<>();
         WriterDto writerDto = new WriterDto(1L, "Name1", "Surname1", movies);
-
         int writerQuantity = writerService.getAllWriters().size();
+
         // When
         Writer writer1 = writerService.createWriter(writerDto);
 

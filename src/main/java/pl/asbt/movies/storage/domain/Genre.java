@@ -33,7 +33,7 @@ public class Genre {
         return id;
     }
 
-    @Column(name = "TYPE")
+    @Column(name = "TYPE", unique = true)
     public String getType() {
         return type;
     }

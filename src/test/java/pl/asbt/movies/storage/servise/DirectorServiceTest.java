@@ -27,8 +27,8 @@ public class DirectorServiceTest {
         // Given
         List<String> movies = new ArrayList<>();
         DirectorDto directorDto = new DirectorDto(1L, "Name1", "Surname1", movies);
-
         int directorQuantity = directorService.getAllDirectors().size();
+
         // When
         Director director1 = directorService.createDirector(directorDto);
 

@@ -26,8 +26,8 @@ public class ActorServiceTest {
         // Given
         List<String> movies = new ArrayList<>();
         ActorDto actorDto = new ActorDto(1L, "Name1", "Surname1", movies);
-
         int actorsQuantity = actorService.getAllActors().size();
+
         // When
         Actor actor1 = actorService.createActor(actorDto);
 
