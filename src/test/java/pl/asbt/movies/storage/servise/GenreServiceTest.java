@@ -126,49 +126,46 @@ public class GenreServiceTest {
         // CleanUp
         genreService.deleteGenre(genre2Id);
     }
+
+    @Test
+    public void deleteGenresByType() {
+        // Given
+        List<String> movies = new ArrayList<>();
+        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
+        GenreDto genreDto2 = new GenreDto(2L, "Sci-fi", movies);
+        Genre genre1 = genreService.createGenre(genreDto1);
+        Long genre1Id = genre1.getId();
+        Genre genre2 = genreService.createGenre(genreDto2);
+        int genresQuantity = genreService.getAllGenres().size();
+
+        // When
+        genreService.deleteGenreByType(genre2.getType());
+
+        // Then
+        assertEquals(genresQuantity - 1, genreService.getAllGenres().size());
+
+        // CleanUp
+        genreService.deleteGenre(genre1Id);
+    }
+
+    @Test
+    public void updateGenreTestSuite() {
+        // Given
+        List<String> movies = new ArrayList<>();
+        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
+        Genre genre1 = genreService.createGenre(genreDto1);
+        Long genre1Id = genre1.getId();
+        GenreDto genreDto2 = new GenreDto(genre1Id, "Sci-fi", movies);
+
+        // When
+        genreService.updateGenre(genreDto2);
+
+        // Then
+        Genre genre2 = genreService.getGenre(genre1Id).orElse(new Genre());
+        assertEquals("Sci-fi", genre2.getType());
+
+        // CleanUp
+        genreService.deleteGenre(genre1Id);
+
+    }
 }
-
-/*
-    @Test
-    public void deleteActorsByNameAndSurnameTestSuite() {
-        // Given
-        List<String> movies = new ArrayList<>();
-        ActorDto actorDto1 = new ActorDto(1L, "Name1", "Surname1", movies);
-        ActorDto actorDto2 = new ActorDto(1L, "Name2", "Surname2", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        Actor actor2 = actorService.createActor(actorDto2);
-        //Long actor2ID = actor2.getId();
-        int actorsNumber = actorService.getAllActors().size();
-
-        // When
-        actorService.deleteActorsByNameAndSurname(actor2.getFirstname(), actor2.getSurname());
-
-        // Then
-        assertEquals(actorsNumber -1 , actorService.getAllActors().size());
-
-        // CleanUp
-        actorService.deleteActor(actor1ID);
-    }
-
-    @Test
-    public void updateActorTestSuite() {
-        // Given
-        List<String> movies = new ArrayList<>();
-        ActorDto actorDto1 = new ActorDto(1L, "Name1", "Surname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        ActorDto actorDto2 = new ActorDto(actor1ID, "Name2", "Surname2", movies);
-
-        // When
-        actorService.updateActor(actorDto2);
-
-        // Then
-        Actor actor2 = actorService.getActor(actor1ID).orElse(new Actor());
-        assertEquals("Name2", actor2.getFirstname());
-        assertEquals("Surname2", actor2.getSurname());
-
-        // CleanUp
-        actorService.deleteActor(actor1ID);
-    }
-*/

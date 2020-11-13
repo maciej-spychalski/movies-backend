@@ -1,6 +1,7 @@
 package pl.asbt.movies.storage.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.Genre;
 
 import java.util.List;
@@ -22,5 +23,6 @@ public interface GenreRepository extends CrudRepository<Genre, Long> {
     @Override
     void deleteById(Long id);
 
+    @Transactional
     void deleteByType(String type);
 }

@@ -55,7 +55,7 @@ public class GenreService {
         genreRepository.deleteById(id);
     }
 
-    public void deleteGenre(final String type) {
+    public void deleteGenreByType(final String type) {
         genreRepository.deleteByType(type);
     }
 
