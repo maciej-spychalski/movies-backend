@@ -12,11 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity
-@Table (name = "ACTORS", uniqueConstraints = {
+//@Entity
+@Entity (name = "ACTORS")
+@Table (uniqueConstraints = {
         @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
 })
-//@Entity(name = "ACTORS)
+//@Table (name = "ACTORS", uniqueConstraints = {
+//        @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
+//})
 public class Actor {
 
     private Long id;

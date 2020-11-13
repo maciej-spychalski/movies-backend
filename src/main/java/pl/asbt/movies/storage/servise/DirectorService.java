@@ -55,7 +55,7 @@ public class DirectorService {
         directorRepository.deleteById(id);
     }
 
-    public void deleteDirector(final String firstname, final String surname) {
+    public void deleteDirectorByNameAndSurname(final String firstname, final String surname) {
         directorRepository.deleteByFirstnameAndSurname(firstname, surname);
     }
 

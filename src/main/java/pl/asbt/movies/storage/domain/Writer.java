@@ -12,7 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+//@Entity
 @Entity(name = "WRITERS")
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
+})
+//@Table(name = "WRITERS", uniqueConstraints = {
+//        @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
+//})
 public class Writer {
 
     private Long id;

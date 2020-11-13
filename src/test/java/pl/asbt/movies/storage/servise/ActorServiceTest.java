@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.domain.ActorDto;
-import pl.asbt.movies.storage.repository.ActorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ public class ActorServiceTest {
 
     @Autowired
     ActorService actorService;
-    ActorRepository actorRepository;
 
     @Test
     public void createActorTestSuite() {

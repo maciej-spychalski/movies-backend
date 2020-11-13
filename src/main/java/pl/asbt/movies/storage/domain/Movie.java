@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity(name = "MOVIES")
+//@Table(name = "MOVIES")
 public class Movie {
 
     private Long id;

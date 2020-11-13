@@ -55,7 +55,7 @@ public class WriterService {
         writerRepository.deleteById(id);
     }
 
-    public void deleteWriter(final String firstname, final String surname) {
+    public void deleteWriterByNameAndSurname(final String firstname, final String surname) {
         writerRepository.deleteByFirstnameAndAndSurname(firstname, surname);
     }
 
@@ -64,7 +64,7 @@ public class WriterService {
         try {
             Writer writer = getWriter(id).orElseThrow(SearchingException::new);
             writer.setFirstname(writerDto.getFirstname());
-            writer.setSurname(writer.getSurname());
+            writer.setSurname(writerDto.getSurname());
             writerRepository.save(writer);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_WRITER);

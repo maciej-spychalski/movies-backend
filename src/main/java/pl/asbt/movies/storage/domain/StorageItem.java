@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Entity(name = "STORAGE_ITEMS")
+//@Table(name = "STORAGE_ITEMS")
 public class StorageItem {
     private Long id;
     private Movie movie;
