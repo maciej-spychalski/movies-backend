@@ -63,17 +63,19 @@ public class StorageItemService {
         storageItemRepository.deleteByMovie_Title(title);
     }
 
-    public void updateStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
+    public StorageItem updateStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
         Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
+        StorageItem result = new StorageItem();
         Long id = storageItemDto.getId();
         try {
             StorageItem storageItem = getStorageItem(id).orElseThrow(SearchingException::new);
             storageItem.setMovie(movie);
             storageItem.setQuantity(storageItemDto.getQuantity());
-            storageItemRepository.save(storageItem);
+            return storageItemRepository.save(storageItem);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_STORAGE_ITEM);
         }
+        return result;
     }
 
 }

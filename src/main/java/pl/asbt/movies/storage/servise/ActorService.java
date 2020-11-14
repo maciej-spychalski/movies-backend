@@ -57,16 +57,18 @@ public class ActorService {
         actorRepository.deleteByFirstnameAndSurname(firstname, surname);
     }
 
-    public void updateActor(final ActorDto actorDto) {
+    public Actor updateActor(final ActorDto actorDto) {
+        Actor result = new Actor();
         Long id = actorDto.getId();
         try {
             Actor actor = getActor(id).orElseThrow(SearchingException::new);
             actor.setFirstname(actorDto.getFirstname());
             actor.setSurname(actorDto.getSurname());
-            actorRepository.save(actor);
+            return actorRepository.save(actor);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_ACTOR);
         }
+        return result;
     }
 
 }

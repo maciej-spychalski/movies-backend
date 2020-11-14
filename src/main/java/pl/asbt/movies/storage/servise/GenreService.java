@@ -57,15 +57,17 @@ public class GenreService {
         genreRepository.deleteByType(type);
     }
 
-    public void updateGenre(final GenreDto genreDto) {
+    public Genre updateGenre(final GenreDto genreDto) {
+        Genre result = new Genre();
         Long id = genreDto.getId();
         try {
             Genre genre = getGenre(id).orElseThrow(SearchingException::new);
             genre.setType(genreDto.getType());
-            genreRepository.save(genre);
+            return genreRepository.save(genre);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_GENRE);
         }
+        return result;
     }
 
 }

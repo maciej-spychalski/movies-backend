@@ -105,7 +105,8 @@ public class MovieService {
         movieRepository.deleteByTitle(title);
     }
 
-    public void updateMovie(final MovieDto movieDto) {
+    public Movie updateMovie(final MovieDto movieDto) {
+        Movie result = new Movie();
         Long id = movieDto.getId();
 
         try {
@@ -116,10 +117,11 @@ public class MovieService {
             movie.setWriters(getWriters(movieDto));
             movie.setActors(getActors(movieDto));
             movie.setGenres(getGenres(movieDto));
-            movieRepository.save(movie);
+            return movieRepository.save(movie);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_MOVIE);
         }
+        return result;
     }
 
 }

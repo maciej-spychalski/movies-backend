@@ -57,16 +57,18 @@ public class DirectorService {
         directorRepository.deleteByFirstnameAndSurname(firstname, surname);
     }
 
-    public void updateDirector(final DirectorDto directorDto) {
+    public Director updateDirector(final DirectorDto directorDto) {
+        Director result = new Director();
         Long id = directorDto.getId();
         try {
             Director director = getDirector(id).orElseThrow(SearchingException::new);
             director.setFirstname(directorDto.getFirstname());
             director.setSurname(directorDto.getSurname());
-            directorRepository.save(director);
+            return directorRepository.save(director);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_DIRECTOR);
         }
+        return result;
     }
 
 }

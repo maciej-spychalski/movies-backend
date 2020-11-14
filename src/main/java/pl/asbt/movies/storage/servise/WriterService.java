@@ -57,16 +57,18 @@ public class WriterService {
         writerRepository.deleteByFirstnameAndAndSurname(firstname, surname);
     }
 
-    public void updateWriter(final WriterDto writerDto) {
+    public Writer updateWriter(final WriterDto writerDto) {
+        Writer result = new Writer();
         Long id = writerDto.getId();
         try {
             Writer writer = getWriter(id).orElseThrow(SearchingException::new);
             writer.setFirstname(writerDto.getFirstname());
             writer.setSurname(writerDto.getSurname());
-            writerRepository.save(writer);
+            return writerRepository.save(writer);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_WRITER);
         }
+        return result;
     }
 
 }
