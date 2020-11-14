@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity(name = "MOVIES")
-//@Table(name = "MOVIES")
 public class Movie {
 
     private Long id;
@@ -23,7 +22,6 @@ public class Movie {
     private List<Actor> actors = new ArrayList<>();
     private List<Genre> genres = new ArrayList<>();
     private Integer duration;
-    private StorageItem storageItem;
 
     public Movie(String title, Director director, List<Writer> writers, List<Actor> actors,
                  List<Genre> genres, Integer duration) {
@@ -48,23 +46,23 @@ public class Movie {
         return title;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "DIRECTOR_ID")
     public Director getDirector() {
         return director;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Writer> getWriters() {
         return writers;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Actor> getActors() {
         return actors;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Genre> getGenres() {
         return genres;
     }
@@ -72,12 +70,6 @@ public class Movie {
     @Column(name = "DURATION")
     public Integer getDuration() {
         return duration;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "STORAGE_ITEM_ID")
-    public StorageItem getStorageItem() {
-        return storageItem;
     }
 
     public void setId(Long id) {
@@ -108,7 +100,4 @@ public class Movie {
         this.duration = duration;
     }
 
-    public void setStorageItem(StorageItem storageItem) {
-        this.storageItem = storageItem;
-    }
 }

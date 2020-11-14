@@ -1,5 +1,6 @@
 package pl.asbt.movies.storage.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.*;
 
@@ -12,12 +13,24 @@ public class MovieMapper {
     private ActorMapper actorMapper;
     private DirectorMapper directorMapper;
     private GenreMapper genreMapper;
-    private  WriterMapper writerMapper;
+    private WriterMapper writerMapper;
+    private StorageItemMapper storageItemMapper;
 
+    @Autowired
+    public MovieMapper(ActorMapper actorMapper, DirectorMapper directorMapper,
+                       GenreMapper genreMapper, WriterMapper writerMapper,
+                       StorageItemMapper storageItemMapper) {
+        this.actorMapper = actorMapper;
+        this.directorMapper = directorMapper;
+        this.genreMapper = genreMapper;
+        this.writerMapper = writerMapper;
+        this.storageItemMapper = storageItemMapper;
+    }
 
-    public Movie mapToMovie(final MovieDto movieDto, Director director, List<Writer> writers,
-                            List<Actor> actors, List<Genre> genres) {
+    public Movie mapToMovie(final MovieDto movieDto, final Director director, final List<Writer> writers,
+                            final List<Actor> actors, final List<Genre> genres) {
         return new Movie(
+                movieDto.getId(),   //Todo: Dlaczego nie działa bez podania jakiegokolwiek ID ???
                 movieDto.getTitle(),
                 director,
                 writers,

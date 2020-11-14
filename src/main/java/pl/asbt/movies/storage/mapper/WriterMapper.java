@@ -1,7 +1,6 @@
 package pl.asbt.movies.storage.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.Writer;
 import pl.asbt.movies.storage.domain.WriterDto;
 

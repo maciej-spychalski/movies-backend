@@ -4,15 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.storage.domain.Director;
 import pl.asbt.movies.storage.domain.Genre;
 import pl.asbt.movies.storage.domain.GenreDto;
-import pl.asbt.movies.storage.domain.Movie;
+import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.GenreMapper;
 import pl.asbt.movies.storage.repository.GenreRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +32,7 @@ public class GenreService {
         try {
             return genreRepository.save(genreMapper.mapToGenre(genreDto));
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_GENRE_ALREADY_EXIST);
+            LOGGER.error(CreatingException.ERR_GENRE_ALREADY_EXIST);
         }
         return result;
     }

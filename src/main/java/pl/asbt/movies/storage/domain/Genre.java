@@ -12,9 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-//@Entity
 @Entity (name = "GENRES")
-//@Table (name = "GENRES")
 public class Genre {
 
     private Long id;

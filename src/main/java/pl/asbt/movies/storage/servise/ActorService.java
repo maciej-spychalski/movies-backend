@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.domain.ActorDto;
@@ -31,7 +32,7 @@ public class ActorService {
         try {
             return actorRepository.save(actorMapper.mapToActor(actorDto));
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_ACTOR_ALREADY_EXIST);
+            LOGGER.error(CreatingException.ERR_ACTOR_ALREADY_EXIST);
         }
         return result;
     }

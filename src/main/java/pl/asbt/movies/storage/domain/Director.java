@@ -12,15 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-//@Entity
-//@Table (name = "DIRECTORS")
 @Entity (name = "DIRECTORS")
 @Table (uniqueConstraints = {
         @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
 })
-//@Table (name = "DIRECTORS", uniqueConstraints = {
-//        @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
-//})
 public class Director {
 
     private Long id;

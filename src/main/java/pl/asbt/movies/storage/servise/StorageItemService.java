@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.StorageItem;
@@ -22,21 +23,22 @@ public class StorageItemService {
     private StorageItemRepository storageItemRepository;
     private StorageItemMapper storageItemMapper;
     private MovieRepository movieRepository;
+    private MovieService movieService;
 
     @Autowired
-    public StorageItemService(StorageItemRepository storageItemRepository, StorageItemMapper storageItemMapper, MovieRepository movieRepository) {
+    public StorageItemService(StorageItemRepository storageItemRepository, StorageItemMapper storageItemMapper, MovieService movieService) {
         this.storageItemRepository = storageItemRepository;
         this.storageItemMapper = storageItemMapper;
-        this.movieRepository = movieRepository;
+        this.movieService = movieService;
     }
 
     public StorageItem createStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
-        Movie movie = movieRepository.findById(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
+        Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
         StorageItem result = new StorageItem();
         try {
             return storageItemRepository.save(storageItemMapper.mapToStorageItem(storageItemDto, movie));
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_STORAGE_ITEM_ALREADY_EXIST);
+            LOGGER.error(CreatingException.ERR_STORAGE_ITEM_ALREADY_EXIST);
         }
         return result;
     }

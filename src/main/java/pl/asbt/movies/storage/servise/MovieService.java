@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.*;
+import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.*;
 import pl.asbt.movies.storage.repository.MovieRepository;
@@ -35,58 +36,51 @@ public class MovieService {
         this.writerService = writerService;
     }
 
-    public Movie movieFromMovieDto (final MovieDto movieDto) {
-        DirectorDto directorDto = movieDto.getDirectorDto();
-        Director director = directorService.getDirector(directorDto.getId()).orElse(new Director());
-
-        List<Writer> writers = new ArrayList<>();
-        for(WriterDto theWriter : movieDto.getWritersDto()) {
-            Writer writer = writerService.getWriter(theWriter.getId()).orElse(new Writer());
-            writers.add(writer);
-        }
-
-        List<Actor> actors = new ArrayList<>();
-        for(ActorDto theActor : movieDto.getActorsDto()) {
-            Actor actor = actorService.getActor(theActor.getId()).orElse(new Actor());
-            actors.add(actor);
-        }
-
+    private List<Genre> getGenres(MovieDto movieDto) {
         List<Genre> genres = new ArrayList<>();
         for(GenreDto theGenre : movieDto.getGenresDto()) {
             Genre genre = genreService.getGenre(theGenre.getId()).orElse(new Genre());
             genres.add(genre);
         }
+        return genres;
+    }
 
-        /*DirectorDto directorDto = movieDto.getDirectorDto();
-        Director director = directorService.getAllDirectorsByNameAndSurname(directorDto.getFirstname(), directorDto.getSurname()).get(0);
-
-        List<Writer> writers = new ArrayList<>();
-        for(WriterDto theWriter : movieDto.getWritersDto()) {
-            Writer writer = writerService.getAllWritersByNameAndSurname(theWriter.getFirstname(), theWriter.getSurname()).get(0);
-            writers.add(writer);
-        }
-
+    private List<Actor> getActors(MovieDto movieDto) {
         List<Actor> actors = new ArrayList<>();
         for(ActorDto theActor : movieDto.getActorsDto()) {
-            Actor actor = actorService.getActorsByNameAndSurname(theActor.getFirstname(), theActor.getSurname()).get(0);
+            Actor actor = actorService.getActor(theActor.getId()).orElse(new Actor());
             actors.add(actor);
         }
+        return actors;
+    }
 
-        List<Genre> genres = new ArrayList<>();
-        for(GenreDto theGenre : movieDto.getGenresDto()) {
-            Genre genre = genreService.getAllGenresByType(theGenre.getType()).get(0);
-            genres.add(genre);
-        }*/
+    private List<Writer> getWriters(MovieDto movieDto) {
+        List<Writer> writers = new ArrayList<>();
+        for(WriterDto theWriter : movieDto.getWritersDto()) {
+            Writer writer = writerService.getWriter(theWriter.getId()).orElse(new Writer());
+            writers.add(writer);
+        }
+        return writers;
+    }
 
-        return movieMapper.mapToMovie(movieDto, director, writers, actors, genres);
+    private Director getDirector(MovieDto movieDto) {
+        DirectorDto directorDto = movieDto.getDirectorDto();
+        Director director = directorService.getDirector(directorDto.getId()).orElse(new Director());
+        return director;
     }
 
     public Movie createMovie(final MovieDto movieDto) {
         Movie result = new Movie();
         try {
-            return movieRepository.save(movieFromMovieDto(movieDto));
+            return movieRepository.save(movieMapper.mapToMovie(
+                    movieDto,
+                    getDirector(movieDto),
+                    getWriters(movieDto),
+                    getActors(movieDto),
+                    getGenres(movieDto)
+            ));
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_MOVIE_ALREADY_EXIST);
+            LOGGER.error(CreatingException.ERR_MOVIE_ALREADY_EXIST);
         }
         return result;
     }
@@ -107,22 +101,21 @@ public class MovieService {
         movieRepository.deleteById(id);
     }
 
-    public void deleteMovie(final String title) {
+    public void deleteMovieByTitle(final String title) {
         movieRepository.deleteByTitle(title);
     }
 
     public void updateMovie(final MovieDto movieDto) {
         Long id = movieDto.getId();
-        Movie themovie = movieFromMovieDto(movieDto);
 
         try {
             Movie movie = getMovie(id).orElseThrow(SearchingException::new);
-            movie.setTitle(themovie.getTitle());
-            movie.setDuration(themovie.getDuration());
-            movie.setWriters(themovie.getWriters());
-            movie.setActors(themovie.getActors());
-            movie.setGenres(themovie.getGenres());
-            movie.setDuration(themovie.getDuration());
+            movie.setTitle(movieDto.getTitle());
+            movie.setDuration(movieDto.getDuration());
+            movie.setDirector(getDirector(movieDto));
+            movie.setWriters(getWriters(movieDto));
+            movie.setActors(getActors(movieDto));
+            movie.setGenres(getGenres(movieDto));
             movieRepository.save(movie);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_MOVIE);

@@ -4,15 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.storage.domain.StorageItem;
+import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
-import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.Writer;
 import pl.asbt.movies.storage.domain.WriterDto;
 import pl.asbt.movies.storage.mapper.WriterMapper;
 import pl.asbt.movies.storage.repository.WriterRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +32,7 @@ public class WriterService {
         try {
             return writerRepository.save(writerMapper.mapToWriter(writerDto));
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_WRITER_ALREADY_EXIST);
+            LOGGER.error(CreatingException.ERR_WRITER_ALREADY_EXIST);
         }
         return result;
     }

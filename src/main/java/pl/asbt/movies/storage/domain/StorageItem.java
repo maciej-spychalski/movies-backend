@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Entity(name = "STORAGE_ITEMS")
-//@Table(name = "STORAGE_ITEMS")
 public class StorageItem {
     private Long id;
     private Movie movie;
@@ -29,8 +28,8 @@ public class StorageItem {
         return id;
     }
 
-    // Do zastanowienia czy StorageItem musi w bazie danych przechowywać dane o filmie
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //todo: Do zastanowienia czy Movie musi przechowywać inforamcje o StorageItem
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "MOVIE_ID")
     public Movie getMovie() {
         return movie;
