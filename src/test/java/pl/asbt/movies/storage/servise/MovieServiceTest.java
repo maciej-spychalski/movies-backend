@@ -213,8 +213,6 @@ public class MovieServiceTest {
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
         MovieDto movieDto2 = new MovieDto(movie1ID, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
-        /*Movie movie2 = movieService.createMovie(movieDto2);
-        Long movie2ID = movie2.getId();*/
 
         // When
         movieService.updateMovie(movieDto2);

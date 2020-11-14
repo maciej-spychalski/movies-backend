@@ -13,6 +13,7 @@ public class StorageItemMapper {
 
     public StorageItem mapToStorageItem(final StorageItemDto storageItemDto, Movie movie) {
         return new StorageItem(
+                storageItemDto.getId(),     //Todo: Dlaczego nie działa bez podania jakiegokolwiek ID ???
                 movie,
                 storageItemDto.getQuantity());
     }

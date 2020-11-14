@@ -47,7 +47,7 @@ public class StorageItemService {
         return storageItemRepository.findById(id);
     }
 
-    public List<StorageItem> getAllStorageItemsMovie_Title(final String title) {
+    public List<StorageItem> getStorageItemsByMovieTitle(final String title) {
         return storageItemRepository.findByMovie_Title(title);
     }
 
@@ -59,14 +59,16 @@ public class StorageItemService {
         storageItemRepository.deleteById(id);
     }
 
-    public void deleteStorageItem(final String title) {
+    public void deleteStorageItemByMovieTitle(final String title) {
         storageItemRepository.deleteByMovie_Title(title);
     }
 
-    public void updateStorageItem(final StorageItemDto storageItemDto) {
+    public void updateStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
+        Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
         Long id = storageItemDto.getId();
         try {
             StorageItem storageItem = getStorageItem(id).orElseThrow(SearchingException::new);
+            storageItem.setMovie(movie);
             storageItem.setQuantity(storageItemDto.getQuantity());
             storageItemRepository.save(storageItem);
         } catch (Exception e) {
