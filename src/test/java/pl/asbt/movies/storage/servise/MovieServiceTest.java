@@ -1,5 +1,7 @@
 package pl.asbt.movies.storage.servise;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,40 +40,54 @@ public class MovieServiceTest {
     @Autowired
     MovieRepository movieRepository;
 
+    private DirectorDto directorDto;
+    private List<WriterDto> writersDto = new ArrayList<>();
+    private List<ActorDto> actorsDto = new ArrayList<>();
+    private List<GenreDto> genresDto = new ArrayList<>();
+
+    @Before
+    public void createData() {
+        List<String> movies = new ArrayList<>();
+
+        directorDto = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
+        Director director = directorService.createDirector(directorDto);
+        Long director1ID = director.getId();
+        directorDto = new DirectorDto(director1ID, "DirectorName1", "DirectorSurname1", movies);
+
+        WriterDto writerDto = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
+        Writer writer = writerService.createWriter(writerDto);
+        Long writer1Id = writer.getId();
+        writerDto = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
+        writersDto.add(writerDto);
+
+        ActorDto actorDto = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
+        Actor actor = actorService.createActor(actorDto);
+        Long actor1ID = actor.getId();
+        actorDto = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
+        actorsDto.add(actorDto);
+
+        GenreDto genreDto = new GenreDto(1L, "Comedy", movies);
+        Genre genre = genreService.createGenre(genreDto);
+        Long genreID = genre.getId();
+        genreDto = new GenreDto(genreID, "Comedy", movies);
+        genresDto.add(genreDto);
+    }
+
+    @After
+    public void deleteData() {
+        directorService.deleteDirector(directorDto.getId());
+        writerService.deleteWriter(writersDto.get(0).getId());
+        actorService.deleteActor(actorsDto.get(0).getId());
+        genreService.deleteGenre(genresDto.get(0).getId());
+    }
+
     @Test
     public void createMovieTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
         int moviesQuantity = movieService.getAllMovies().size();
 
         // When
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
 
         // Then
@@ -81,43 +97,12 @@ public class MovieServiceTest {
 
         //CleanUp
         movieService.deleteMovie(movie1ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
     }
 
     @Test
     public void getMovieTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
 
@@ -130,46 +115,15 @@ public class MovieServiceTest {
 
         //CleanUp
         movieService.deleteMovie(movie1ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
     }
 
     @Test
     public void getMovieByTitleTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
-        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto1, writersDto, actorsDto, genresDto, 95);
+        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
         Movie movie2 = movieService.createMovie(movieDto2);
         Long movie2ID = movie2.getId();
 
@@ -184,46 +138,15 @@ public class MovieServiceTest {
         //CleanUp
         movieService.deleteMovie(movie1ID);
         movieService.deleteMovie(movie2ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
     }
 
     @Test
     public void getAllMoviesTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
-        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto1, writersDto, actorsDto, genresDto, 95);
+        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
         Movie movie2 = movieService.createMovie(movieDto2);
         Long movie2ID = movie2.getId();
 
@@ -237,46 +160,15 @@ public class MovieServiceTest {
         //CleanUp
         movieService.deleteMovie(movie1ID);
         movieService.deleteMovie(movie2ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
     }
 
     @Test
     public void deleteMovieTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
-        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto1, writersDto, actorsDto, genresDto, 95);
+        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
         Movie movie2 = movieService.createMovie(movieDto2);
         Long movie2ID = movie2.getId();
 
@@ -290,46 +182,15 @@ public class MovieServiceTest {
 
         //CleanUp
         movieService.deleteMovie(movie2ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
     }
 
     @Test
     public void deleteMovieByTitleTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
-        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto1, writersDto, actorsDto, genresDto, 95);
+        MovieDto movieDto2 = new MovieDto(2L, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
         Movie movie2 = movieService.createMovie(movieDto2);
         Long movie2ID = movie2.getId();
 
@@ -343,46 +204,15 @@ public class MovieServiceTest {
 
         //CleanUp
         movieService.deleteMovie(movie2ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
     }
 
     @Test
     public void updateMovieTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-
-        DirectorDto directorDto1 = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
-        Long director1ID = director1.getId();
-
-        WriterDto writerDto1 = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
-        Long writer1Id = writer1.getId();
-        writerDto1 = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-        List<WriterDto> writersDto = new ArrayList<>();
-        writersDto.add(writerDto1);
-
-        ActorDto actorDto1 = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-        Actor actor1 = actorService.createActor(actorDto1);
-        Long actor1ID = actor1.getId();
-        actorDto1 = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-        List<ActorDto> actorsDto =  new ArrayList<>();
-        actorsDto.add(actorDto1);
-
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
-        Long genre1ID = genre1.getId();
-        genreDto1 = new GenreDto(genre1ID, "Comedy", movies);
-        List<GenreDto> genresDto = new ArrayList<>();
-        genresDto.add(genreDto1);
-
-        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto1, writersDto, actorsDto, genresDto, 90);
+        MovieDto movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
         Movie movie1 = movieService.createMovie(movieDto1);
         Long movie1ID = movie1.getId();
-        MovieDto movieDto2 = new MovieDto(movie1ID, "Title2", directorDto1, writersDto, actorsDto, genresDto, 95);
+        MovieDto movieDto2 = new MovieDto(movie1ID, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
         /*Movie movie2 = movieService.createMovie(movieDto2);
         Long movie2ID = movie2.getId();*/
 
@@ -396,10 +226,5 @@ public class MovieServiceTest {
 
         //CleanUp
         movieService.deleteMovie(movie1ID);
-        directorService.deleteDirector(director1ID);
-        writerService.deleteWriter(writer1Id);
-        actorService.deleteActor(actor1ID);
-        genreService.deleteGenre(genre1ID);
-
     }
 }
