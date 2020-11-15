@@ -22,7 +22,7 @@ public class DirectorController {
     @Autowired
     DirectorMapper directorMapper;
 
-    @PostMapping(value = "", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createDirector(@RequestBody DirectorDto directorDto) {
         directorService.createDirector(directorDto);
     }
@@ -37,7 +37,6 @@ public class DirectorController {
         return directorMapper.mapToDirectorsDto(directorService.getAllDirectorsByNameAndSurname(name, surname));
     }
 
-//    @GetMapping(value = "")
     @GetMapping
     public List<DirectorDto> getDirectors() {
         return directorMapper.mapToDirectorsDto(directorService.getAllDirectors());
