@@ -28,12 +28,12 @@ public class WriterController {
     }
 
     @GetMapping(value = "/{writerId}")
-    public WriterDto getDirector(@PathVariable Long writerId) throws SearchingException {
+    public WriterDto getWriter(@PathVariable Long writerId) throws SearchingException {
         return writerMapper.mapToWriterDto(writerService.getWriter(writerId).orElseThrow(SearchingException::new));
     }
 
     @GetMapping(value = "/{name}/{surname}")
-    public List<WriterDto> getWritersByNameAndSurname(@PathVariable String name, @PathVariable String surname) {
+    public List<WriterDto> getWriterByNameAndSurname(@PathVariable String name, @PathVariable String surname) {
         return writerMapper.mapToWritersDto(writerService.getAllWritersByNameAndSurname(name, surname));
     }
 
@@ -53,7 +53,7 @@ public class WriterController {
     }
 
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public WriterDto updateDirector(@RequestBody WriterDto writerDto) {
+    public WriterDto updateWriter(@RequestBody WriterDto writerDto) {
         return writerMapper.mapToWriterDto(writerService.updateWriter(writerDto));
     }
 }

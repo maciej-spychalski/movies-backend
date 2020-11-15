@@ -33,7 +33,7 @@ public class DirectorController {
     }
 
     @GetMapping(value = "/{name}/{surname}")
-    public List<DirectorDto> getDirectorsByNameAndSurname(@PathVariable String name, @PathVariable String surname) {
+    public List<DirectorDto> getDirectorByNameAndSurname(@PathVariable String name, @PathVariable String surname) {
         return directorMapper.mapToDirectorsDto(directorService.getAllDirectorsByNameAndSurname(name, surname));
     }
 
