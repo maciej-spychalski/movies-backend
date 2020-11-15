@@ -23,8 +23,12 @@ public class Movie {
     private List<Genre> genres = new ArrayList<>();
     private Integer duration;
 
-    public Movie(String title, Director director, List<Writer> writers, List<Actor> actors,
-                 List<Genre> genres, Integer duration) {
+    public Movie(String title, Integer duration) {
+        this.title = title;
+        this.duration = duration;
+    }
+
+    public Movie(String title, Director director, List<Writer> writers, List<Actor> actors, List<Genre> genres, Integer duration) {
         this.title = title;
         this.director = director;
         this.writers = writers;
@@ -33,10 +37,53 @@ public class Movie {
         this.duration = duration;
     }
 
+    public static class MovieBuilder {
+        private String title;
+        private Director director;
+        private List<Writer> writers = new ArrayList<>();
+        private List<Actor> actors = new ArrayList<>();
+        private List<Genre> genres = new ArrayList<>();
+        private Integer duration;
+
+        public MovieBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public MovieBuilder director(Director director) {
+            this.director = director;
+            return this;
+        }
+
+        public MovieBuilder writer(Writer writer) {
+            this.writers.add(writer);
+            return this;
+        }
+
+        public MovieBuilder actor(Actor actor) {
+            this.actors.add(actor);
+            return this;
+        }
+
+        public MovieBuilder genre(Genre genre) {
+            this.genres.add(genre);
+            return this;
+        }
+
+        public MovieBuilder duration(Integer duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public Movie build() {
+            return new Movie(title, director, writers, actors, genres, duration);
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "MOVIE_ID", unique = true)
     public Long getId() {
         return id;
     }
@@ -52,25 +99,20 @@ public class Movie {
         return director;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
-//    @ManyToMany(cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.REFRESH,
-//            CascadeType.MERGE},
-//            mappedBy = "movies")
-//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies", fetch = FetchType.EAGER)
+//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Writer> getWriters() {
         return writers;
     }
 
+//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
-//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies", fetch = FetchType.EAGER)
     public List<Actor> getActors() {
         return actors;
     }
 
+//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
-//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies", fetch = FetchType.EAGER)
     public List<Genre> getGenres() {
         return genres;
     }

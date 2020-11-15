@@ -15,15 +15,14 @@ public class StorageItem {
     private Movie movie;
     private Integer quantity;
 
-    public StorageItem(Movie movie, Integer quantity) {
-        this.movie = movie;
+    public StorageItem(Integer quantity) {
         this.quantity = quantity;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "STORAGE_ITEM_ID", unique = true)
     public Long getId() {
         return id;
     }

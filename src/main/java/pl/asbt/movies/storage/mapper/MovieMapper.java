@@ -27,16 +27,8 @@ public class MovieMapper {
         this.storageItemMapper = storageItemMapper;
     }
 
-    public Movie mapToMovie(final MovieDto movieDto, final Director director, final List<Writer> writers,
-                            final List<Actor> actors, final List<Genre> genres) {
-        return new Movie(
-                movieDto.getId(),   //Todo: Dlaczego nie działa bez podania jakiegokolwiek ID ???
-                movieDto.getTitle(),
-                director,
-                writers,
-                actors,
-                genres,
-                movieDto.getDuration());
+    public Movie mapToMovie(final MovieDto movieDto) {
+        return new Movie(movieDto.getTitle(), movieDto.getDuration());
     }
 
     public MovieDto mapToMovieDto(final Movie movie) {

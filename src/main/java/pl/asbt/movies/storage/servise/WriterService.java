@@ -19,22 +19,14 @@ public class WriterService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WriterService.class);
     private WriterRepository writerRepository;
-    private WriterMapper writerMapper;
 
     @Autowired
-    public WriterService(WriterRepository writerRepository, WriterMapper writerMapper) {
+    public WriterService(WriterRepository writerRepository) {
         this.writerRepository = writerRepository;
-        this.writerMapper = writerMapper;
     }
 
-    public Writer createWriter(final WriterDto writerDto) {
-        Writer result = new Writer();
-        try {
-            return writerRepository.save(writerMapper.mapToWriter(writerDto));
-        } catch (Exception e) {
-            LOGGER.error(CreatingException.ERR_WRITER_ALREADY_EXIST);
-        }
-        return result;
+    public Writer saveWriter(final Writer writer) {
+        return writerRepository.save(writer);
     }
 
     public Optional<Writer> getWriter(final Long id) {
@@ -59,12 +51,12 @@ public class WriterService {
 
     public Writer updateWriter(final WriterDto writerDto) {
         Writer result = new Writer();
-        Long id = writerDto.getId();
+        Long writerId = writerDto.getId();
         try {
-            Writer writer = getWriter(id).orElseThrow(SearchingException::new);
+            Writer writer = getWriter(writerId).orElseThrow(SearchingException::new);
             writer.setFirstname(writerDto.getFirstname());
             writer.setSurname(writerDto.getSurname());
-            return writerRepository.save(writer);
+            return saveWriter(writer);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_WRITER);
         }

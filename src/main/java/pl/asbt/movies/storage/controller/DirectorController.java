@@ -15,7 +15,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/storage/directors")
 public class DirectorController {
-
+/*
     @Autowired
     DirectorService directorService;
 
@@ -24,7 +24,7 @@ public class DirectorController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createDirector(@RequestBody DirectorDto directorDto) {
-        directorService.createDirector(directorDto);
+        directorService.saveDirector(directorDto);
     }
 
     @GetMapping(value = "/{directorId}")
@@ -55,5 +55,5 @@ public class DirectorController {
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public DirectorDto updateDirector(@RequestBody DirectorDto directorDto) {
         return directorMapper.mapToDirectorDto(directorService.updateDirector(directorDto));
-    }
+    }*/
 }

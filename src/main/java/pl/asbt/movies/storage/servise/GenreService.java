@@ -19,22 +19,14 @@ public class GenreService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreService.class);
     private GenreRepository genreRepository;
-    private GenreMapper genreMapper;
 
     @Autowired
-    public GenreService(GenreRepository genreRepository, GenreMapper genreMapper) {
+    public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
-        this.genreMapper = genreMapper;
     }
 
-    public Genre createGenre(final GenreDto genreDto) {
-        Genre result = new Genre();
-        try {
-            return genreRepository.save(genreMapper.mapToGenre(genreDto));
-        } catch (Exception e) {
-            LOGGER.error(CreatingException.ERR_GENRE_ALREADY_EXIST);
-        }
-        return result;
+    public Genre saveGenre(final Genre genre) {
+        return genreRepository.save(genre);
     }
 
     public Optional<Genre> getGenre(final Long id) {
@@ -59,11 +51,11 @@ public class GenreService {
 
     public Genre updateGenre(final GenreDto genreDto) {
         Genre result = new Genre();
-        Long id = genreDto.getId();
+        Long genreId = genreDto.getId();
         try {
-            Genre genre = getGenre(id).orElseThrow(SearchingException::new);
+            Genre genre = getGenre(genreId).orElseThrow(SearchingException::new);
             genre.setType(genreDto.getType());
-            return genreRepository.save(genre);
+            return saveGenre(genre);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_GENRE);
         }

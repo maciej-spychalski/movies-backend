@@ -31,7 +31,7 @@ public class Actor {
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "ACTOR_ID", unique = true)
     public Long getId() {
         return id;
     }
@@ -46,15 +46,11 @@ public class Actor {
         return surname;
     }
 
-        @ManyToMany(cascade = CascadeType.ALL)
-//    @ManyToMany(
-//            targetEntity = Movie.class,
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "JOIN_MOVIE_ACTOR",
-            joinColumns = {@JoinColumn(name = "ACTOR_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")}
+            joinColumns = {@JoinColumn(name = "ACTOR_ID", referencedColumnName = "ACTOR_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "MOVIE_ID")}
     )
     public List<Movie> getMovies() {
         return movies;

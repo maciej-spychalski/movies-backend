@@ -19,22 +19,14 @@ public class ActorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActorService.class);
     private ActorRepository actorRepository;
-    private ActorMapper actorMapper;
 
     @Autowired
-    public ActorService(ActorRepository actorRepository, ActorMapper actorMapper) {
+    public ActorService(ActorRepository actorRepository) {
         this.actorRepository = actorRepository;
-        this.actorMapper = actorMapper;
     }
 
-    public Actor createActor(final ActorDto actorDto) {
-        Actor result = new Actor();
-        try {
-            return actorRepository.save(actorMapper.mapToActor(actorDto));
-        } catch (Exception e) {
-            LOGGER.error(CreatingException.ERR_ACTOR_ALREADY_EXIST);
-        }
-        return result;
+    public Actor saveActor(final Actor actor) {
+        return actorRepository.save(actor);
     }
 
     public Optional<Actor> getActor(final Long id) {
@@ -59,12 +51,12 @@ public class ActorService {
 
     public Actor updateActor(final ActorDto actorDto) {
         Actor result = new Actor();
-        Long id = actorDto.getId();
+        Long actorId = actorDto.getId();
         try {
-            Actor actor = getActor(id).orElseThrow(SearchingException::new);
+            Actor actor = getActor(actorId).orElseThrow(SearchingException::new);
             actor.setFirstname(actorDto.getFirstname());
             actor.setSurname(actorDto.getSurname());
-            return actorRepository.save(actor);
+            return saveActor(actor);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_ACTOR);
         }

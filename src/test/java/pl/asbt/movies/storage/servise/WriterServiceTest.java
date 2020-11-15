@@ -24,12 +24,11 @@ public class WriterServiceTest {
     @Test
     public void createWriterTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        WriterDto writerDto = new WriterDto(1L, "Name1", "Surname1", movies);
+        Writer writer1 = new Writer("Name1", "Surname1");
         int writerQuantity = writerService.getAllWriters().size();
 
         // When
-        Writer writer1 = writerService.createWriter(writerDto);
+        writer1 = writerService.saveWriter(writer1);
 
         // Then
         List<Writer> writers = writerService.getAllWriters();
@@ -43,9 +42,8 @@ public class WriterServiceTest {
     @Test
     public void getWriterTestSuit() {
         // Given
-        List<String> movies = new ArrayList<>();
-        WriterDto writerDto1 = new WriterDto(1L, "Name1", "Surname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
+        Writer writer1 = new Writer( "Name1", "Surname1");
+        writer1 = writerService.saveWriter(writer1);
         Long writer1ID = writer1.getId();
 
         // When
@@ -62,12 +60,11 @@ public class WriterServiceTest {
     @Test
     public void getWriterByNameAndSurnameTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        WriterDto writerDto1 = new WriterDto(1L, "Name1", "Surname1", movies);
-        WriterDto writerDto2 = new WriterDto(2L, "Name2", "Surname2", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
+        Writer writer1 = new Writer( "Name1", "Surname1");
+        Writer writer2 = new Writer( "Name2", "Surname2");
+        writer1 = writerService.saveWriter(writer1);
         Long writer1ID = writer1.getId();
-        Writer writer2 = writerService.createWriter(writerDto2);
+        writer2 = writerService.saveWriter(writer2);
         Long writer2ID = writer2.getId();
 
         // When
@@ -86,12 +83,11 @@ public class WriterServiceTest {
     @Test
     public void getAllWritersTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        WriterDto writerDto1 = new WriterDto(1L, "Name1", "Surname1", movies);
-        WriterDto writerDto2 = new WriterDto(2L, "Name2", "Surname2", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
+        Writer writer1 = new Writer( "Name1", "Surname1");
+        Writer writer2 = new Writer( "Name2", "Surname2");
+        writer1 = writerService.saveWriter(writer1);
         Long writer1ID = writer1.getId();
-        Writer writer2 = writerService.createWriter(writerDto2);
+        writer2 = writerService.saveWriter(writer2);
         Long writer2ID = writer2.getId();
 
         // When
@@ -109,12 +105,11 @@ public class WriterServiceTest {
     @Test
     public void deleteWriterTestSuit() {
         // Given
-        List<String> movies = new ArrayList<>();
-        WriterDto writerDto1 = new WriterDto(1L, "Name1", "Surname1", movies);
-        WriterDto writerDto2 = new WriterDto(2L, "Name2", "Surname2", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
+        Writer writer1 = new Writer( "Name1", "Surname1");
+        Writer writer2 = new Writer( "Name2", "Surname2");
+        writer1 = writerService.saveWriter(writer1);
         Long writer1ID = writer1.getId();
-        Writer writer2 = writerService.createWriter(writerDto2);
+        writer2 = writerService.saveWriter(writer2);
         Long writer2ID = writer2.getId();
         int writersNumber = writerService.getAllWriters().size();
 
@@ -131,12 +126,11 @@ public class WriterServiceTest {
     @Test
     public void deleteWritersByNameAndSurnameTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        WriterDto writerDto1 = new WriterDto(1L, "Name1", "Surname1", movies);
-        WriterDto writerDto2 = new WriterDto(2L, "Name2", "Surname2", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
+        Writer writer1 = new Writer( "Name1", "Surname1");
+        Writer writer2 = new Writer( "Name2", "Surname2");
+        writer1 = writerService.saveWriter(writer1);
         Long writer1ID = writer1.getId();
-        Writer writer2 = writerService.createWriter(writerDto2);
+        writer2 = writerService.saveWriter(writer2);
         Long writer2ID = writer2.getId();
         int writersNumber = writerService.getAllWriters().size();
 
@@ -154,8 +148,8 @@ public class WriterServiceTest {
     public void updateWriterTestSuite() {
         // Given
         List<String> movies = new ArrayList<>();
-        WriterDto writerDto1 = new WriterDto(1L, "Name1", "Surname1", movies);
-        Writer writer1 = writerService.createWriter(writerDto1);
+        Writer writer1 = new Writer( "Name1", "Surname1");
+        writer1 = writerService.saveWriter(writer1);
         Long writer1ID = writer1.getId();
         WriterDto writerDto2 = new WriterDto(writer1ID, "Name2", "Surname2", movies);
 
@@ -170,4 +164,5 @@ public class WriterServiceTest {
         // CleanUp
         writerService.deleteWriter(writer1ID);
     }
+
 }

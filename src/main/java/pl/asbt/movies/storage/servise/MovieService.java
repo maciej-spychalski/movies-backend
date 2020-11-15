@@ -40,6 +40,7 @@ public class MovieService {
         List<Genre> genres = new ArrayList<>();
         for(GenreDto theGenre : movieDto.getGenresDto()) {
             Genre genre = genreService.getGenre(theGenre.getId()).orElse(new Genre());
+            genre.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
             genres.add(genre);
         }
         return genres;
@@ -49,6 +50,7 @@ public class MovieService {
         List<Actor> actors = new ArrayList<>();
         for(ActorDto theActor : movieDto.getActorsDto()) {
             Actor actor = actorService.getActor(theActor.getId()).orElse(new Actor());
+            actor.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
             actors.add(actor);
         }
         return actors;
@@ -58,6 +60,7 @@ public class MovieService {
         List<Writer> writers = new ArrayList<>();
         for(WriterDto theWriter : movieDto.getWritersDto()) {
             Writer writer = writerService.getWriter(theWriter.getId()).orElse(new Writer());
+            writer.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
             writers.add(writer);
         }
         return writers;
@@ -66,23 +69,12 @@ public class MovieService {
     private Director getDirector(MovieDto movieDto) {
         DirectorDto directorDto = movieDto.getDirectorDto();
         Director director = directorService.getDirector(directorDto.getId()).orElse(new Director());
+        director.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
         return director;
     }
 
-    public Movie createMovie(final MovieDto movieDto) {
-        Movie result = new Movie();
-        try {
-            return movieRepository.save(movieMapper.mapToMovie(
-                    movieDto,
-                    getDirector(movieDto),
-                    getWriters(movieDto),
-                    getActors(movieDto),
-                    getGenres(movieDto)
-            ));
-        } catch (Exception e) {
-            LOGGER.error(CreatingException.ERR_MOVIE_ALREADY_EXIST);
-        }
-        return result;
+    public Movie saveMovie(final Movie movie) {
+        return movieRepository.save(movie);
     }
 
     public Optional<Movie> getMovie(final Long id) {
@@ -107,17 +99,12 @@ public class MovieService {
 
     public Movie updateMovie(final MovieDto movieDto) {
         Movie result = new Movie();
-        Long id = movieDto.getId();
-
+        Long movieId = movieDto.getId();
         try {
-            Movie movie = getMovie(id).orElseThrow(SearchingException::new);
+            Movie movie = getMovie(movieId).orElseThrow(SearchingException::new);
             movie.setTitle(movieDto.getTitle());
             movie.setDuration(movieDto.getDuration());
-            movie.setDirector(getDirector(movieDto));
-            movie.setWriters(getWriters(movieDto));
-            movie.setActors(getActors(movieDto));
-            movie.setGenres(getGenres(movieDto));
-            return movieRepository.save(movie);
+            return saveMovie(movie);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_MOVIE);
         }

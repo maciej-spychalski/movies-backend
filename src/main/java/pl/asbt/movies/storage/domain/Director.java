@@ -31,7 +31,7 @@ public class Director {
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "DIRECTOR_ID", unique = true)
     public Long getId() {
         return id;
     }

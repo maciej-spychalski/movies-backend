@@ -19,22 +19,14 @@ public class DirectorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DirectorService.class);
     private DirectorRepository directorRepository;
-    private DirectorMapper directorMapper;
 
     @Autowired
-    public DirectorService(DirectorRepository directorRepository, DirectorMapper directorMapper) {
+    public DirectorService(DirectorRepository directorRepository) {
         this.directorRepository = directorRepository;
-        this.directorMapper = directorMapper;
     }
 
-    public Director createDirector(final DirectorDto directorDto) {
-        Director result = new Director();
-        try {
-            return directorRepository.save(directorMapper.mapToDirector(directorDto));
-        } catch (Exception e) {
-            LOGGER.error(CreatingException.ERR_DIRECTOR_ALREADY_EXIST);
-        }
-        return result;
+    public Director saveDirector(final Director director) {
+        return directorRepository.save(director);
     }
 
     public Optional<Director> getDirector(final Long id) {
@@ -59,12 +51,12 @@ public class DirectorService {
 
     public Director updateDirector(final DirectorDto directorDto) {
         Director result = new Director();
-        Long id = directorDto.getId();
+        Long directorId = directorDto.getId();
         try {
-            Director director = getDirector(id).orElseThrow(SearchingException::new);
+            Director director = getDirector(directorId).orElseThrow(SearchingException::new);
             director.setFirstname(directorDto.getFirstname());
             director.setSurname(directorDto.getSurname());
-            return directorRepository.save(director);
+            return saveDirector(director);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_DIRECTOR);
         }

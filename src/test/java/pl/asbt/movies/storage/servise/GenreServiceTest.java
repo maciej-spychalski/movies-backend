@@ -17,19 +17,17 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GenreServiceTest {
-
     @Autowired
     GenreService genreService;
 
     @Test
-    public void createGenreTestSuite() {
+    public void saveGenreTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
+        Genre genre1 = new Genre( "Comedy");
         int genresQuantity = genreService.getAllGenres().size();
 
         // When
-        Genre genre1 = genreService.createGenre(genreDto1);
+        genre1 = genreService.saveGenre(genre1);
 
         // Then
         List<Genre> genres = genreService.getAllGenres();
@@ -43,9 +41,8 @@ public class GenreServiceTest {
     @Test
     public void getGenreTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
+        Genre genre1 = new Genre( "Comedy");
+        genre1 = genreService.saveGenre(genre1);
         Long genre1Id = genre1.getId();
 
         // When
@@ -61,12 +58,11 @@ public class GenreServiceTest {
     @Test
     public void getGenreByType() {
         // Given
-        List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        GenreDto genreDto2 = new GenreDto(2L, "Sci-fi", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
+        Genre genre1 = new Genre( "Comedy");
+        Genre genre2 = new Genre( "Sci-fi");
+        genre1 = genreService.saveGenre(genre1);
         Long genre1Id = genre1.getId();
-        Genre genre2 = genreService.createGenre(genreDto2);
+        genre2 = genreService.saveGenre(genre2);
         Long genre2Id = genre2.getId();
 
         // When
@@ -85,12 +81,11 @@ public class GenreServiceTest {
     @Test
     public void getAllGenresTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        GenreDto genreDto2 = new GenreDto(2L, "Sci-fi", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
+        Genre genre1 = new Genre("Comedy");
+        Genre genre2 = new Genre( "Sci-fi");
+        genre1 = genreService.saveGenre(genre1);
         Long genre1Id = genre1.getId();
-        Genre genre2 = genreService.createGenre(genreDto2);
+        genre2 = genreService.saveGenre(genre2);
         Long genre2Id = genre2.getId();
 
         // When
@@ -108,12 +103,11 @@ public class GenreServiceTest {
     @Test
     public void deleteGenreTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        GenreDto genreDto2 = new GenreDto(2L, "Sci-fi", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
+        Genre genre1 = new Genre( "Comedy");
+        Genre genre2 = new Genre( "Sci-fi");
+        genre1 = genreService.saveGenre(genre1);
         Long genre1Id = genre1.getId();
-        Genre genre2 = genreService.createGenre(genreDto2);
+        genre2 = genreService.saveGenre(genre2);
         Long genre2Id = genre2.getId();
         int genresQuantity = genreService.getAllGenres().size();
 
@@ -130,12 +124,11 @@ public class GenreServiceTest {
     @Test
     public void deleteGenresByType() {
         // Given
-        List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        GenreDto genreDto2 = new GenreDto(2L, "Sci-fi", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
+        Genre genre1 = new Genre( "Comedy");
+        Genre genre2 = new Genre( "Sci-fi");
+        genre1 = genreService.saveGenre(genre1);
         Long genre1Id = genre1.getId();
-        Genre genre2 = genreService.createGenre(genreDto2);
+        genre2 = genreService.saveGenre(genre2);
         int genresQuantity = genreService.getAllGenres().size();
 
         // When
@@ -152,8 +145,8 @@ public class GenreServiceTest {
     public void updateGenreTestSuite() {
         // Given
         List<String> movies = new ArrayList<>();
-        GenreDto genreDto1 = new GenreDto(1L, "Comedy", movies);
-        Genre genre1 = genreService.createGenre(genreDto1);
+        Genre genre1 = new Genre( "Comedy");
+        genre1 = genreService.saveGenre(genre1);
         Long genre1Id = genre1.getId();
         GenreDto genreDto2 = new GenreDto(genre1Id, "Sci-fi", movies);
 
@@ -166,6 +159,6 @@ public class GenreServiceTest {
 
         // CleanUp
         genreService.deleteGenre(genre1Id);
-
     }
+
 }

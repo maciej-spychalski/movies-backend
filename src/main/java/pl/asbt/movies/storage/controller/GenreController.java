@@ -15,7 +15,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/storage/genres")
 public class GenreController {
-
+/*
     @Autowired
     GenreService genreService;
 
@@ -24,7 +24,7 @@ public class GenreController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createGenre(@RequestBody GenreDto genreDto) {
-        genreService.createGenre(genreDto);
+        genreService.saveGenre(genreDto);
     }
 
     @GetMapping(value = "/{genreId}")
@@ -55,5 +55,5 @@ public class GenreController {
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public GenreDto updateGenre(@RequestBody GenreDto genreDto) {
         return genreMapper.mapToGenreDto(genreService.updateGenre(genreDto));
-    }
+    }*/
 }

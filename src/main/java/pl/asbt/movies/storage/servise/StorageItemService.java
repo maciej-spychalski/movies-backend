@@ -21,26 +21,14 @@ public class StorageItemService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StorageItemService.class);
     private StorageItemRepository storageItemRepository;
-    private StorageItemMapper storageItemMapper;
-    private MovieRepository movieRepository;
-    private MovieService movieService;
 
     @Autowired
-    public StorageItemService(StorageItemRepository storageItemRepository, StorageItemMapper storageItemMapper, MovieService movieService) {
+    public StorageItemService(StorageItemRepository storageItemRepository) {
         this.storageItemRepository = storageItemRepository;
-        this.storageItemMapper = storageItemMapper;
-        this.movieService = movieService;
     }
 
-    public StorageItem createStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
-        Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
-        StorageItem result = new StorageItem();
-        try {
-            return storageItemRepository.save(storageItemMapper.mapToStorageItem(storageItemDto, movie));
-        } catch (Exception e) {
-            LOGGER.error(CreatingException.ERR_STORAGE_ITEM_ALREADY_EXIST);
-        }
-        return result;
+    public StorageItem saveStorageItem(final StorageItem storageItem) {
+        return storageItemRepository.save(storageItem);
     }
 
     public Optional<StorageItem> getStorageItem(final Long id) {
@@ -64,14 +52,12 @@ public class StorageItemService {
     }
 
     public StorageItem updateStorageItem(final StorageItemDto storageItemDto) throws SearchingException {
-        Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElseThrow(SearchingException::new);
         StorageItem result = new StorageItem();
-        Long id = storageItemDto.getId();
+        Long storageId = storageItemDto.getId();
         try {
-            StorageItem storageItem = getStorageItem(id).orElseThrow(SearchingException::new);
-            storageItem.setMovie(movie);
+            StorageItem storageItem = getStorageItem(storageId).orElseThrow(SearchingException::new);
             storageItem.setQuantity(storageItemDto.getQuantity());
-            return storageItemRepository.save(storageItem);
+            return saveStorageItem(storageItem);
         } catch (Exception e) {
             LOGGER.error(SearchingException.ERR_NO_STORAGE_ITEM);
         }

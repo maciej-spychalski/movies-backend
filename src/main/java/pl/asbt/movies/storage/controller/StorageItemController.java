@@ -15,7 +15,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/storage/storageItems")
 public class StorageItemController {
-
+/*
     @Autowired
     StorageItemService storageItemService;
 
@@ -56,5 +56,5 @@ public class StorageItemController {
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public StorageItemDto updateStorageItem(@RequestBody StorageItemDto storageItemDto) throws SearchingException {
         return storageItemMapper.mapToStorageItemDto(storageItemService.updateStorageItem(storageItemDto));
-    }
+    }*/
 }

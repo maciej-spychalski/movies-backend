@@ -23,14 +23,13 @@ public class DirectorServiceTest {
     DirectorService directorService;
 
     @Test
-    public void createDirectorTestSuite() {
+    public void saveDirectorTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        DirectorDto directorDto = new DirectorDto(1L, "Name1", "Surname1", movies);
+        Director director1 = new Director("Name1", "Surname1");
         int directorQuantity = directorService.getAllDirectors().size();
 
         // When
-        Director director1 = directorService.createDirector(directorDto);
+        director1 = directorService.saveDirector(director1);
 
         // Then
         List<Director> directors = directorService.getAllDirectors();
@@ -44,9 +43,8 @@ public class DirectorServiceTest {
     @Test
     public void getDirectorTestSuit() {
         // Given
-        List<String> movies = new ArrayList<>();
-        DirectorDto directorDto1 = new DirectorDto(1L, "Name1", "Surname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
+        Director director1 = new Director("Name1", "Surname1");
+        director1 = directorService.saveDirector(director1);
         Long director1ID = director1.getId();
 
         // When
@@ -63,12 +61,11 @@ public class DirectorServiceTest {
     @Test
     public void getDirectorByNameAndSurnameTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        DirectorDto directorDto1 = new DirectorDto(1L, "Name1", "Surname1", movies);
-        DirectorDto directorDto2 = new DirectorDto(2L, "Name2", "Surname2", movies);
-        Director director1 = directorService.createDirector(directorDto1);
+        Director director1 = new Director("Name1", "Surname1");
+        Director director2 = new Director( "Name2", "Surname2");
+        director1 = directorService.saveDirector(director1);
         Long director1ID = director1.getId();
-        Director director2 = directorService.createDirector(directorDto2);
+        director2 = directorService.saveDirector(director2);
         Long director2ID = director2.getId();
 
         // When
@@ -87,12 +84,11 @@ public class DirectorServiceTest {
     @Test
     public void getAllDirectorsTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        DirectorDto directorDto1 = new DirectorDto(1L, "Name1", "Surname1", movies);
-        DirectorDto directorDto2 = new DirectorDto(2L, "Name2", "Surname2", movies);
-        Director director1 = directorService.createDirector(directorDto1);
+        Director director1 = new Director( "Name1", "Surname1");
+        Director director2 = new Director( "Name2", "Surname2");
+        director1 = directorService.saveDirector(director1);
         Long director1ID = director1.getId();
-        Director director2 = directorService.createDirector(directorDto2);
+        director2 = directorService.saveDirector(director2);
         Long director2ID = director2.getId();
 
         // When
@@ -110,12 +106,11 @@ public class DirectorServiceTest {
     @Test
     public void deleteDirectorTestSuit() {
         // Given
-        List<String> movies = new ArrayList<>();
-        DirectorDto directorDto1 = new DirectorDto(1L, "Name1", "Surname1", movies);
-        DirectorDto directorDto2 = new DirectorDto(2L, "Name2", "Surname2", movies);
-        Director director1 = directorService.createDirector(directorDto1);
+        Director director1 = new Director("Name1", "Surname1");
+        Director director2 = new Director("Name2", "Surname2");
+        director1 = directorService.saveDirector(director1);
         Long director1ID = director1.getId();
-        Director director2 = directorService.createDirector(directorDto2);
+        director2 = directorService.saveDirector(director2);
         Long director2ID = director2.getId();
         int directorsNumber = directorService.getAllDirectors().size();
 
@@ -132,12 +127,11 @@ public class DirectorServiceTest {
     @Test
     public void deleteDirectorsByNameAndSurnameTestSuite() {
         // Given
-        List<String> movies = new ArrayList<>();
-        DirectorDto directorDto1 = new DirectorDto(1L, "Name1", "Surname1", movies);
-        DirectorDto directorDto2 = new DirectorDto(2L, "Name2", "Surname2", movies);
-        Director director1 = directorService.createDirector(directorDto1);
+        Director director1 = new Director( "Name1", "Surname1");
+        Director director2 = new Director( "Name2", "Surname2");
+        director1 = directorService.saveDirector(director1);
         Long director1ID = director1.getId();
-        Director director2 = directorService.createDirector(directorDto2);
+        director2 = directorService.saveDirector(director2);
         Long director2ID = director2.getId();
         int directorsNumber = directorService.getAllDirectors().size();
 
@@ -155,8 +149,8 @@ public class DirectorServiceTest {
     public void updateDirectorTestSuite() {
         // Given
         List<String> movies = new ArrayList<>();
-        DirectorDto directorDto1 = new DirectorDto(1L, "Name1", "Surname1", movies);
-        Director director1 = directorService.createDirector(directorDto1);
+        Director director1 = new Director( "Name1", "Surname1");
+        director1 = directorService.saveDirector(director1);
         Long director1ID = director1.getId();
         DirectorDto directorDto2 = new DirectorDto(director1ID, "Name2", "Surname2", movies);
 

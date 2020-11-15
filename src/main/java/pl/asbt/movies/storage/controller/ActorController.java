@@ -2,7 +2,6 @@ package pl.asbt.movies.storage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.domain.ActorDto;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.ActorMapper;
@@ -17,6 +16,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 //@RequestMapping("/v1/storage/actor")
 @RequestMapping("/v1/storage/actors")
 public class ActorController {
+/*
 
     @Autowired
     ActorService actorService;
@@ -27,7 +27,7 @@ public class ActorController {
     //    @PostMapping(value = "createActor", consumes = APPLICATION_JSON_VALUE)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createActor(@RequestBody ActorDto actorDto) {
-        actorService.createActor(actorDto);
+        actorService.saveActor(actorDto);
     }
 
 //    @GetMapping(value = "getActor")
@@ -65,5 +65,6 @@ public class ActorController {
     public ActorDto updateActor(@RequestBody ActorDto actorDto) {
         return actorMapper.mapToActorDto(actorService.updateActor(actorDto));
     }
+*/
 
 }
