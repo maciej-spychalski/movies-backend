@@ -37,8 +37,12 @@ public class Genre {
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
+//    @ManyToMany(
+//            targetEntity = Movie.class,
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER)
     @JoinTable(
-            name = "JOIN_MOVIE_ACTOR",
+            name = "JOIN_MOVIE_GENRE",
             joinColumns = {@JoinColumn(name = "GENRE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")}
     )

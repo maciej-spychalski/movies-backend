@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity (name = "ACTORS")
-@Table (uniqueConstraints = {
+@Entity(name = "ACTORS")
+@Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"FIRSTNAME", "SURNAME"})
 })
 public class Actor {
@@ -46,7 +46,11 @@ public class Actor {
         return surname;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
+        @ManyToMany(cascade = CascadeType.ALL)
+//    @ManyToMany(
+//            targetEntity = Movie.class,
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER)
     @JoinTable(
             name = "JOIN_MOVIE_ACTOR",
             joinColumns = {@JoinColumn(name = "ACTOR_ID", referencedColumnName = "ID")},

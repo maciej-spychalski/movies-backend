@@ -47,6 +47,10 @@ public class Writer {
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
+//    @ManyToMany(
+//            targetEntity = Movie.class,
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER)
     @JoinTable(
             name = "JOIN_MOVIE_WRITER",
             joinColumns = {@JoinColumn(name = "WRITER_ID", referencedColumnName = "ID")},

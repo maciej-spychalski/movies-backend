@@ -52,17 +52,25 @@ public class Movie {
         return director;
     }
 
-    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
+//    @ManyToMany(cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.REFRESH,
+//            CascadeType.MERGE},
+//            mappedBy = "movies")
+//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies", fetch = FetchType.EAGER)
     public List<Writer> getWriters() {
         return writers;
     }
 
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
+//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies", fetch = FetchType.EAGER)
     public List<Actor> getActors() {
         return actors;
     }
 
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
+//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies", fetch = FetchType.EAGER)
     public List<Genre> getGenres() {
         return genres;
     }
