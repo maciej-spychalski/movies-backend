@@ -96,23 +96,23 @@ public class MovieServiceTest {
         genre2.getMovies().add(movie2);*/
     }
 
-    @After
-    public void removeDate() {
-        Long director1Id = director1.getId();
-        directorService.deleteDirector(director1Id);
-        Long writer1Id = writer1.getId();
-        writerService.deleteWriter(writer1Id);
-        Long writer2Id = writer2.getId();
-        writerService.deleteWriter(writer2Id);
-        Long actor1Id = actor1.getId();
-        actorService.deleteActor(actor1Id);
-        Long actor2Id = actor2.getId();
-        actorService.deleteActor(actor2Id);
-        Long genre1Id = genre1.getId();
-        genreService.deleteGenre(genre1Id);
-        Long genre2Id = genre2.getId();
-        genreService.deleteGenre(genre2Id);
-    }
+//    @After
+//    public void removeDate() {
+//        Long director1Id = director1.getId();
+//        directorService.deleteDirector(director1Id);
+//        Long writer1Id = writer1.getId();
+//        writerService.deleteWriter(writer1Id);
+//        Long writer2Id = writer2.getId();
+//        writerService.deleteWriter(writer2Id);
+//        Long actor1Id = actor1.getId();
+//        actorService.deleteActor(actor1Id);
+//        Long actor2Id = actor2.getId();
+//        actorService.deleteActor(actor2Id);
+//        Long genre1Id = genre1.getId();
+//        genreService.deleteGenre(genre1Id);
+//        Long genre2Id = genre2.getId();
+//        genreService.deleteGenre(genre2Id);
+//    }
 
 
     @Test
@@ -151,8 +151,8 @@ public class MovieServiceTest {
         assertEquals(90, (int) movieDB1.getDuration());
 
         //CleanUp
-        movieService.deleteMovie(movie1Id);
-        movieService.deleteMovie(movie2Id);
+//        movieService.deleteMovie(movie1Id);
+//        movieService.deleteMovie(movie2Id);
     }
 
     @Test
