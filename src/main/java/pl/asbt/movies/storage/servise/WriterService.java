@@ -4,11 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.domain.Writer;
 import pl.asbt.movies.storage.domain.WriterDto;
-import pl.asbt.movies.storage.mapper.WriterMapper;
 import pl.asbt.movies.storage.repository.WriterRepository;
 
 import java.util.List;

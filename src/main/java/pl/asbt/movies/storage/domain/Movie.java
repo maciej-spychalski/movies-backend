@@ -76,7 +76,18 @@ public class Movie {
         }
 
         public Movie build() {
-            return new Movie(title, director, writers, actors, genres, duration);
+            Movie movie = new  Movie(title, director, writers, actors, genres, duration);
+            movie.getDirector().getMovies().add(movie);
+            for(Writer theWriter : movie.getWriters()) {
+                theWriter.getMovies().add(movie);
+            }
+            for(Actor theActor : movie.getActors()) {
+                theActor.getMovies().add(movie);
+            }
+            for(Genre theGenre : movie.getGenres()) {
+                theGenre.getMovies().add(movie);
+            }
+            return movie;
         }
     }
 
@@ -99,19 +110,16 @@ public class Movie {
         return director;
     }
 
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Writer> getWriters() {
         return writers;
     }
 
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Actor> getActors() {
         return actors;
     }
 
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "movies")
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
     public List<Genre> getGenres() {
         return genres;

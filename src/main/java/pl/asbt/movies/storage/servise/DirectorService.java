@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.Director;
 import pl.asbt.movies.storage.domain.DirectorDto;
-import pl.asbt.movies.storage.exception.CreatingException;
 import pl.asbt.movies.storage.exception.SearchingException;
-import pl.asbt.movies.storage.mapper.DirectorMapper;
 import pl.asbt.movies.storage.repository.DirectorRepository;
 
 import java.util.List;

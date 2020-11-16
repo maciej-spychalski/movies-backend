@@ -1,253 +1,280 @@
 package pl.asbt.movies.storage.servise;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.*;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.repository.StorageItemRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-//@RunWith(MockitoJUnitRunner.class)
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StorageItemServiceTest {
-//
-////    @InjectMocks
-////    private StorageItemService storageItemService;
-////
-////    @Mock
-////    private MovieService movieService;
-//
-//    @Autowired
-//    StorageItemService storageItemService;
-//
-//    @Autowired
-//    StorageItemRepository storageItemRepository;
-//
-//    @Autowired
-//    DirectorService directorService;
-//
-//    @Autowired
-//    WriterService writerService;
-//
-//    @Autowired
-//    ActorService actorService;
-//
-//    @Autowired
-//    GenreService genreService;
-//
-//    @Autowired
-//    MovieService movieService;
-//
-//    private DirectorDto directorDto;
-//    private List<WriterDto> writersDto = new ArrayList<>();
-//    private List<ActorDto> actorsDto = new ArrayList<>();
-//    private List<GenreDto> genresDto = new ArrayList<>();
-//    private MovieDto movieDto1;
-//    private MovieDto movieDto2;
-//
-//
-//    @Before
-//    public void createData() {
-//        List<String> movies = new ArrayList<>();
-//
-//        directorDto = new DirectorDto(1L, "DirectorName1", "DirectorSurname1", movies);
-//        Director director = directorService.saveDirector(directorDto);
-//        Long director1ID = director.getId();
-//        directorDto = new DirectorDto(director1ID, "DirectorName1", "DirectorSurname1", movies);
-//
-//        WriterDto writerDto = new WriterDto(1L, "WriterName1", "WriterSurname1", movies);
-//        Writer writer = writerService.saveWriter(writerDto);
-//        Long writer1Id = writer.getId();
-//        writerDto = new WriterDto(writer1Id, "WriterName1", "WriterSurname1", movies);
-//        writersDto.add(writerDto);
-//
-//        ActorDto actorDto = new ActorDto(1L, "ActorName1", "ActorSurname1", movies);
-//        Actor actor = actorService.saveActor(actorDto);
-//        Long actor1ID = actor.getId();
-//        actorDto = new ActorDto(actor1ID, "ActorName1", "ActorSurname1", movies);
-//        actorsDto.add(actorDto);
-//
-//        GenreDto genreDto = new GenreDto(1L, "Comedy", movies);
-//        Genre genre = genreService.saveGenre(genreDto);
-//        Long genreID = genre.getId();
-//        genreDto = new GenreDto(genreID, "Comedy", movies);
-//        genresDto.add(genreDto);
-//
-//        movieDto1 = new MovieDto(1L, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
-//        Movie movie1 = movieService.saveMovie(movieDto1);
-//        Long movie1ID = movie1.getId();
-//        movieDto1 = new MovieDto(movie1ID, "Title1", directorDto, writersDto, actorsDto, genresDto, 90);
-//
-//        movieDto2 = new MovieDto(2L, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
-//        Movie movie2 = movieService.saveMovie(movieDto2);
-//        Long movie2ID = movie2.getId();
-//        movieDto2 = new MovieDto(movie2ID, "Title2", directorDto, writersDto, actorsDto, genresDto, 95);
-//    }
-//
-//    /*@After
-//    public void deleteData() {
-//        movieService.deleteMovie(movieDto1.getId());
-//        movieService.deleteMovie(movieDto2.getId());
-//        directorService.deleteDirector(directorDto.getId());
-//        writerService.deleteWriter(writersDto.get(0).getId());
-//        actorService.deleteActor(actorsDto.get(0).getId());
-//        genreService.deleteGenre(genresDto.get(0).getId());
-//    }*/
-//
-//    @Test
-//    public void createStorageItemTestSuite() throws SearchingException {
-//        // Given
-//        int storageItemQuantity = storageItemService.getAllStorageItems().size();
-//
-//        // When
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//
-//        // Then
-//        List<StorageItem> storageItems = storageItemService.getAllStorageItems();
-//        assertEquals(storageItemQuantity + 1, storageItems.size());
-//
-//        //CleanUp
-//        storageItemService.deleteStorageItem(storageItem1ID);
-//    }
-//
-//    @Test
-//    public void getStorageItemTestSuite() throws SearchingException {
-//        // Given
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//
-//        // When
-//        StorageItem storageItemDB1 = storageItemService.getStorageItem(storageItem1ID).orElse(new StorageItem());
-//
-//        // Then
-//        assertEquals(storageItemDto1.getQuantity(), storageItemDB1.getQuantity());
-//        assertEquals(movieDto1.getTitle(), storageItemDB1.getMovie().getTitle());
-//
-//        //CleanUp
-//        storageItemService.deleteStorageItem(storageItem1ID);
-//    }
-//
-//    @Test
-//    public void getStorageItemByMovieTitle() throws SearchingException {
-//        // Given
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//
-//        StorageItemDto storageItemDto2 = new StorageItemDto(2L, movieDto2.getTitle(), movieDto2.getId(),4);
-//        StorageItem storageItem2 = storageItemService.createStorageItem(storageItemDto2);
-//        Long storageItem2ID = storageItem2.getId();
-//
-//        // When
-//        List<StorageItem> storageItems = storageItemService.getStorageItemsByMovieTitle(movieDto2.getTitle());
-//
-//        // Then
-//        assertEquals(storageItemDto2.getQuantity(), storageItems.get(0).getQuantity());
-//        assertEquals(movieDto2.getTitle(), storageItems.get(0).getMovie().getTitle());
-//
-//        //CleanUp
-//        /*storageItemService.deleteStorageItem(storageItem1ID);
-//        storageItemService.deleteStorageItem(storageItem2ID)*/;
-//    }
-//
-//    @Test
-//    public void getAllStorageItemsTestSuite() throws SearchingException {
-//        // Given
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//
-//        StorageItemDto storageItemDto2 = new StorageItemDto(2L, movieDto2.getTitle(), movieDto2.getId(),4);
-//        StorageItem storageItem2 = storageItemService.createStorageItem(storageItemDto2);
-//        Long storageItem2ID = storageItem2.getId();
-//
-//        // When
-//        List<StorageItem> storageItems = storageItemService.getAllStorageItems();
-//
-//        // Then
-//        assertTrue(storageItems.size() > 1);
-//
-//        //CleanUp
-//        storageItemService.deleteStorageItem(storageItem1ID);
+
+    @Autowired
+    StorageItemService storageItemService;
+
+    @Autowired
+    StorageItemRepository storageItemRepository;
+
+    @Autowired
+    DirectorService directorService;
+
+    @Autowired
+    WriterService writerService;
+
+    @Autowired
+    ActorService actorService;
+
+    @Autowired
+    GenreService genreService;
+
+    @Autowired
+    MovieService movieService;
+
+    private Movie movie1;
+    private Movie movie2;
+    private Director director1;
+    private Writer writer1;
+    private Writer writer2;
+    private Actor actor1;
+    private Actor actor2;
+    private Genre genre1;
+    private Genre genre2;
+
+
+    @Before
+    public void createData() {
+        director1 = new Director("DirectorName1", "DirectorSurname1");
+        writer1 = new Writer("WriterName1", "WriterSurname1");
+        writer2 = new Writer("WriterName2", "WriterSurname3");
+        actor1 = new Actor("ActorName1", "ActorSurname1");
+        actor2 = new Actor("ActorName2", "ActorSurname2");
+        genre1 = new Genre("Comedy");
+        genre2 = new Genre("Sci-fi");
+
+        movie1 = new Movie.MovieBuilder()
+                .title("Title1")
+                .director(director1)
+                .writer(writer1)
+                .writer(writer2)
+                .actor(actor1)
+                .actor(actor2)
+                .genre(genre1)
+                .genre(genre2)
+                .duration(90)
+                .build();
+//        /movieService.saveMovie(movie1);
+
+        movie2 = new Movie.MovieBuilder()
+                .title("Title2")
+                .director(director1)
+                .writer(writer1)
+                .writer(writer2)
+                .actor(actor1)
+                .actor(actor2)
+                .genre(genre1)
+                .genre(genre2)
+                .duration(110)
+                .build();
+//        movieService.saveMovie(movie2);
+    }
+
+    @After
+    public void deleteData() {
+        Long movie1Id = movie1.getId();
+        movieService.deleteMovie(movie1Id);
+        Long movie2Id = movie2.getId();
+        movieService.deleteMovie(movie2Id);
+        Long director1Id = director1.getId();
+        directorService.deleteDirector(director1Id);
+        Long writer1Id = writer1.getId();
+        writerService.deleteWriter(writer1Id);
+        Long writer2Id = writer2.getId();
+        writerService.deleteWriter(writer2Id);
+        Long actor1Id = actor1.getId();
+        actorService.deleteActor(actor1Id);
+        Long actor2Id = actor2.getId();
+        actorService.deleteActor(actor2Id);
+        Long genre1Id = genre1.getId();
+        genreService.deleteGenre(genre1Id);
+        Long genre2Id = genre2.getId();
+        genreService.deleteGenre(genre2Id);
+    }
+
+    @Test
+    public void createStorageItemTestSuite() throws SearchingException {
+        // Given
+        int storageItemQuantity = storageItemService.getAllStorageItems().size();
+
+        // When
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        // Then
+        List<StorageItem> storageItems = storageItemService.getAllStorageItems();
+        assertEquals(storageItemQuantity + 1, storageItems.size());
+
+        //CleanUp
+        storageItemService.deleteStorageItem(storageItem1ID);
+    }
+
+    @Test
+    public void getStorageItemTestSuite() throws SearchingException {
+        // Given
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        // When
+        StorageItem storageItemDB1 = storageItemService.getStorageItem(storageItem1ID).orElse(new StorageItem());
+
+        // Then
+        assertEquals(2, (int) storageItemDB1.getQuantity());
+        assertEquals(movie1.getTitle(), storageItemDB1.getMovie().getTitle());
+
+        //CleanUp
+        storageItemService.deleteStorageItem(storageItem1ID);
+    }
+
+    @Test
+    public void getStorageItemByMovieTitle() throws SearchingException {
+        // Given
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        StorageItem storageItem2 = new StorageItem(4);
+        storageItem2.setMovie(movie2);
+        // ToDo: Zgłasza wyjątek bez adnotacji @Transactional ???
+        storageItem2 = storageItemService.saveStorageItem(storageItem2);
+        Long storageItem2ID = storageItem2.getId();
+
+        // When
+        List<StorageItem> storageItems = storageItemService.getStorageItemsByMovieTitle(movie2.getTitle());
+
+        // Then
+        assertEquals(4, (int) storageItems.get(0).getQuantity());
+        assertEquals(movie2.getTitle(), storageItems.get(0).getMovie().getTitle());
+
+        //CleanUp
+        storageItemService.deleteStorageItem(storageItem1ID);
+        storageItemService.deleteStorageItem(storageItem2ID);
+    }
+
+    @Test
+    public void getAllStorageItemsTestSuite() throws SearchingException {
+        // Given
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        StorageItem storageItem2 = new StorageItem(4);
+        storageItem2.setMovie(movie2);
+        storageItem2 = storageItemService.saveStorageItem(storageItem2);
+        Long storageItem2ID = storageItem2.getId();
+
+        // When
+        List<StorageItem> storageItems = storageItemService.getAllStorageItems();
+
+        // Then
+        assertTrue(storageItems.size() > 1);
+
+        //CleanUp
+        storageItemService.deleteStorageItem(storageItem1ID);
+        storageItemService.deleteStorageItem(storageItem2ID);
+    }
+
+    @Test
+    public void deleteStorageItem() throws SearchingException {
+        // Given
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        StorageItem storageItem2 = new StorageItem(4);
+        storageItem2.setMovie(movie2);
+        storageItem2 = storageItemService.saveStorageItem(storageItem2);
+        Long storageItem2ID = storageItem2.getId();
+
+        int storageItemsQuantity = storageItemService.getAllStorageItems().size();
+
+        // When
+        storageItemService.deleteStorageItem(storageItem1ID);
+        storageItemService.deleteStorageItem(storageItem2ID);
+
+        // Then
+        assertEquals(storageItemsQuantity - 2, storageItemService.getAllStorageItems().size());
+
+        //CleanUp
+        // todo: z jakiegoś powodu nie kasuje tego ???
+        // todo: po przerzuceniu wyrzej kasuje ale nie kasuje tego co jest zapisane w @After
 //        storageItemService.deleteStorageItem(storageItem2ID);
-//    }
-//
-//    @Test
-//    public void deleteStorageItem() throws SearchingException {
-//        // Given
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//
-//        StorageItemDto storageItemDto2 = new StorageItemDto(2L, movieDto2.getTitle(), movieDto2.getId(),4);
-//        StorageItem storageItem2 = storageItemService.createStorageItem(storageItemDto2);
-//        Long storageItem2ID = storageItem2.getId();
-//
-//        int storageItemsQuantity = storageItemService.getAllStorageItems().size();
-//
-//        // When
-//        storageItemService.deleteStorageItem(storageItem1ID);
-//
-//        // Then
-//        assertEquals(storageItemsQuantity - 1, storageItemService.getAllStorageItems().size());
-//
-//        //CleanUp
+    }
+
+    @Test
+    public void deleteStorageItemsByMovieTitle() throws SearchingException {
+        // Given
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        StorageItem storageItem2 = new StorageItem(4);
+        storageItem2.setMovie(movie2);
+        storageItem2 = storageItemService.saveStorageItem(storageItem2);
+        Long storageItem2ID = storageItem2.getId();
+
+        int storageItemsQuantity = storageItemService.getAllStorageItems().size();
+
+        // When
+        storageItemService.deleteStorageItemByMovieTitle(movie1.getTitle());
+        storageItemService.deleteStorageItem(storageItem2ID);
+
+        // Then
+        assertEquals(storageItemsQuantity - 2, storageItemService.getAllStorageItems().size());
+
+        //CleanUp
+        // todo: z jakiegoś powodu nie kasuje tego ???
+        // todo: po przerzuceniu wyrzej kasuje ale nie kasuje tego co jest zapisane w @After
 //        storageItemService.deleteStorageItem(storageItem2ID);
-//    }
-//
-//    @Test
-//    public void deleteStorageItemsByMovieTitle() throws SearchingException {
-//        // Given
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//
-//        StorageItemDto storageItemDto2 = new StorageItemDto(2L, movieDto2.getTitle(), movieDto2.getId(),4);
-//        StorageItem storageItem2 = storageItemService.createStorageItem(storageItemDto2);
-//        Long storageItem2ID = storageItem2.getId();
-//
-//        int storageItemsQuantity = storageItemService.getAllStorageItems().size();
-//
-//        // When
-//        storageItemService.deleteStorageItemByMovieTitle(movieDto1.getTitle());
-//
-//        // Then
-//        assertEquals(storageItemsQuantity - 1, storageItemService.getAllStorageItems().size());
-//
-//        //CleanUp
-//        storageItemService.deleteStorageItem(storageItem2ID);
-//    }
-//
-//    @Test
-//    public void updateStorageItem() throws SearchingException {
-//        // Given
-//        StorageItemDto storageItemDto1 = new StorageItemDto(1L, movieDto1.getTitle(), movieDto1.getId(),2);
-//        StorageItem storageItem1 = storageItemService.createStorageItem(storageItemDto1);
-//        Long storageItem1ID = storageItem1.getId();
-//        StorageItemDto storageItemDto2 = new StorageItemDto(storageItem1ID, movieDto2.getTitle(), movieDto2.getId(),4);
-//
-//        // When
-//        storageItemService.updateStorageItem(storageItemDto2);
-//
-//        // Then
-//        StorageItem theStorageItem = storageItemService.getStorageItem(storageItem1ID).orElse(new StorageItem());
-//        assertEquals(storageItemDto2.getQuantity(), theStorageItem.getQuantity());
-//        assertEquals(movieDto2.getTitle(), theStorageItem.getMovie().getTitle());
-//
-//        //CleanUp
-//        storageItemService.deleteStorageItem(storageItem1ID);
-//    }
+    }
+
+    @Test
+    public void updateStorageItem() throws SearchingException {
+        // Given
+        StorageItem storageItem1 = new StorageItem(2);
+        storageItem1.setMovie(movie1);
+        storageItem1 = storageItemService.saveStorageItem(storageItem1);
+        Long storageItem1ID = storageItem1.getId();
+
+        StorageItemDto storageItemDto2 = new StorageItemDto(1L, movie1.getTitle(), movie1.getId(),4);
+
+        // When
+        storageItemService.updateStorageItem(storageItemDto2);
+
+        // Then
+        StorageItem theStorageItem = storageItemService.getStorageItem(storageItem1ID).orElse(new StorageItem());
+        assertEquals(storageItemDto2.getQuantity(), theStorageItem.getQuantity());
+
+        //CleanUp
+        storageItemService.deleteStorageItem(storageItem1ID);
+    }
 }

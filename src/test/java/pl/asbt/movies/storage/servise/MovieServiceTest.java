@@ -7,9 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.*;
-import pl.asbt.movies.storage.repository.MovieRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-//@Transactional
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MovieServiceTest {
@@ -81,7 +79,7 @@ public class MovieServiceTest {
                 .duration(110)
                 .build();
 
-        director1.getMovies().add(movie1);
+        /*director1.getMovies().add(movie1);
         writer1.getMovies().add(movie1);
         writer2.getMovies().add(movie1);
         actor1.getMovies().add(movie1);
@@ -95,7 +93,7 @@ public class MovieServiceTest {
         actor1.getMovies().add(movie2);
         actor2.getMovies().add(movie2);
         genre1.getMovies().add(movie2);
-        genre2.getMovies().add(movie2);
+        genre2.getMovies().add(movie2);*/
     }
 
     @After
