@@ -15,7 +15,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/storage/writers")
 public class WriterController {
-/*
     @Autowired
     WriterService writerService;
 
@@ -24,7 +23,7 @@ public class WriterController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createWriter(@RequestBody WriterDto writerDto) {
-        writerService.saveWriter(writerDto);
+        writerService.saveWriter(writerMapper.mapToWriter(writerDto));
     }
 
     @GetMapping(value = "/{writerId}")
@@ -55,5 +54,5 @@ public class WriterController {
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public WriterDto updateWriter(@RequestBody WriterDto writerDto) {
         return writerMapper.mapToWriterDto(writerService.updateWriter(writerDto));
-    }*/
+    }
 }

@@ -15,16 +15,31 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/storage/movies")
 public class MovieController {
-/*
     @Autowired
     MovieService movieService;
 
     @Autowired
     MovieMapper movieMapper;
 
+    public void addDirector(@RequestParam Integer movieId, @RequestParam Integer directorId) {
+
+    }
+
+    public void addWriter() {
+
+    }
+
+    public void addActor() {
+
+    }
+    public void addGenre() {
+
+    }
+
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createMovie(@RequestBody MovieDto movieDto) {
-        movieService.saveMovie(movieDto);
+        movieService.saveMovie(movieMapper.mapToMovie(movieDto));
     }
 
     @GetMapping(value = "/{movieId}")
@@ -55,5 +70,5 @@ public class MovieController {
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public MovieDto updateMovie(@RequestBody MovieDto movieDto) {
         return movieMapper.mapToMovieDto(movieService.updateMovie(movieDto));
-    }*/
+    }
 }

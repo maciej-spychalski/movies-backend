@@ -11,10 +11,8 @@ import java.util.stream.Collectors;
 @Component
 public class StorageItemMapper {
 
-    public StorageItem mapToStorageItem(final StorageItemDto storageItemDto, Movie movie) {
+    public StorageItem mapToStorageItem(final StorageItemDto storageItemDto) {
         return new StorageItem(
-                storageItemDto.getId(),     //Todo: Dlaczego nie działa bez podania jakiegokolwiek ID ???
-                movie,
                 storageItemDto.getQuantity());
     }
 

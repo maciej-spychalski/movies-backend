@@ -15,7 +15,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/storage/genres")
 public class GenreController {
-/*
     @Autowired
     GenreService genreService;
 
@@ -24,7 +23,7 @@ public class GenreController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createGenre(@RequestBody GenreDto genreDto) {
-        genreService.saveGenre(genreDto);
+        genreService.saveGenre(genreMapper.mapToGenre(genreDto));
     }
 
     @GetMapping(value = "/{genreId}")
@@ -46,7 +45,6 @@ public class GenreController {
         genreService.deleteGenre(genreId);
     }
 
-//    @DeleteMapping(value = "/{type}")
     @DeleteMapping(value = "/type/{type}")
     public void deleteGenreByType(@PathVariable String type) {
         genreService.deleteGenreByType(type);
@@ -55,5 +53,5 @@ public class GenreController {
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
     public GenreDto updateGenre(@RequestBody GenreDto genreDto) {
         return genreMapper.mapToGenreDto(genreService.updateGenre(genreDto));
-    }*/
+    }
 }
