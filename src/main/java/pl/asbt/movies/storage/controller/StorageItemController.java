@@ -37,6 +37,20 @@ public class StorageItemController {
         storageItemService.saveStorageItem(storageItem);
     }
 
+    @PatchMapping(value = "/addQuantity/{id}/{quantity}")
+    public void addQuantity(@PathVariable Long id, @PathVariable int quantity) {
+        StorageItem storageItem = storageItemService.getStorageItem(id).orElse(new StorageItem());
+        storageItem.setQuantity(storageItem.getQuantity() + quantity);
+        storageItemService.saveStorageItem(storageItem);
+    }
+
+    @PatchMapping(value = "/removeQuantity/{movieId}/{quantity}")
+    public void subQuantity(@PathVariable Long id, @PathVariable int quantity) {
+        StorageItem storageItem = storageItemService.getStorageItem(id).orElse(new StorageItem());
+        storageItem.setQuantity(storageItem.getQuantity() + quantity);
+        storageItemService.saveStorageItem(storageItem);
+    }
+
     @GetMapping(value = "/{storageItemId}")
     public StorageItemDto getStorageItem(@PathVariable Long storageItemId) throws SearchingException {
         return storageItemMapper.mapToStorageItemDto(storageItemService.getStorageItem(storageItemId).
