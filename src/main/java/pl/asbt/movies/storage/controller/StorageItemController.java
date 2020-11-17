@@ -2,9 +2,12 @@ package pl.asbt.movies.storage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.asbt.movies.storage.domain.Movie;
+import pl.asbt.movies.storage.domain.StorageItem;
 import pl.asbt.movies.storage.domain.StorageItemDto;
 import pl.asbt.movies.storage.exception.SearchingException;
 import pl.asbt.movies.storage.mapper.StorageItemMapper;
+import pl.asbt.movies.storage.servise.MovieService;
 import pl.asbt.movies.storage.servise.StorageItemService;
 
 import java.util.List;
@@ -21,9 +24,17 @@ public class StorageItemController {
     @Autowired
     StorageItemMapper storageItemMapper;
 
+    @Autowired
+    MovieService movieService;
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createStorageItem(@RequestBody StorageItemDto storageItemDto) throws SearchingException {
-        storageItemService.saveStorageItem(storageItemMapper.mapToStorageItem(storageItemDto));
+        Movie movie = new Movie();
+        movie = movieService.getMovie(storageItemDto.getMovieId()).orElse(
+                movieService.getAllMoviesByTitle(storageItemDto.getMovieTitle()).get(0));
+        StorageItem storageItem = storageItemService.saveStorageItem(storageItemMapper.mapToStorageItem(storageItemDto));
+        storageItem.setMovie(movie);
+        storageItemService.saveStorageItem(storageItem);
     }
 
     @GetMapping(value = "/{storageItemId}")

@@ -21,7 +21,6 @@ public class MovieController {
     @Autowired
     MovieMapper movieMapper;
 
-
     @Autowired
     DirectorService directorService;
 
@@ -34,63 +33,112 @@ public class MovieController {
     @Autowired
     GenreService genreService;
 
-    private Movie.MovieBuilder movieBuilder = new Movie.MovieBuilder();
+//    private Movie.MovieBuilder movieBuilder = new Movie.MovieBuilder();
+//
+//     @PatchMapping(value = "/add_title/{movieTitle}")
+//    public void addTile(@PathVariable String movieTitle) {
+//        movieBuilder.title(movieTitle);
+//    }
+//
+//    @PatchMapping(value = "/add_duration/{movieDuration}")
+//    public void addDuration(@PathVariable Integer movieDuration) {
+//        movieBuilder.duration(movieDuration);
+//    }
+//
+//    @PatchMapping(value = "/add_director/{directorId}")
+//    public void addDirector(@PathVariable Long directorId) {
+//        movieBuilder.director(directorService.getDirector(directorId).orElse(new Director()));
+//    }
+//
+//    @PatchMapping(value = "/add_writer/{writerId}")
+//    public void addWriter(@PathVariable Long writerId) {
+//        movieBuilder.writer(writerService.getWriter(writerId).orElse(new Writer()));
+//    }
+//
+//    @PatchMapping(value = "/add_actor/{actorId}")
+//    public void addActor(@PathVariable Long actorId) {
+//        movieBuilder.actor(actorService.getActor(actorId).orElse(new Actor()));
+//    }
+//
+//    @PatchMapping(value = "/add_genre/{genreId}")
+//    public void addGenre(@PathVariable Long genreId) {
+//        movieBuilder.genre(genreService.getGenre(genreId).orElse(new Genre()));
+//    }
+//
+//    @PatchMapping(value = "/build/{movieTitle}")
+//    public void movieBuild(@PathVariable String movieTitle) {
+//        movieBuilder.title(movieTitle);
+//        Movie movie = movieBuilder.build();
+//        movieService.saveMovie(movie);
+//        movieBuilder = new Movie.MovieBuilder();
+//    }
 
-    /*@GetMapping(value = "/{name}/{surname}")
-    public List<DirectorDto> getDirectorByNameAndSurname(@PathVariable String name, @PathVariable String surname) {*/
-
-    //    @PostMapping(value = "/title", consumes = APPLICATION_JSON_VALUE)
-//    public void addTile(@RequestParam String movieTitle) {
-    @PatchMapping(value = "/add_title/{movieTitle}")
-    public void addTile(@PathVariable String movieTitle) {
-        movieBuilder.title(movieTitle);
-    }
-
-    //    @PostMapping(value = "/duration", consumes = APPLICATION_JSON_VALUE)
-//    public void addDuration(@RequestParam Integer movieDuration) {
-    @PatchMapping(value = "/add_duration/{movieDuration}")
-    public void addDuration(@PathVariable Integer movieDuration) {
-        movieBuilder.duration(movieDuration);
-    }
-
-    //    @PostMapping(value = "/director", consumes = APPLICATION_JSON_VALUE)
-//    public void addDirector(@RequestParam Long directorId) {
-    @PatchMapping(value = "/add_director/{directorId}")
-    public void addDirector(@PathVariable Long directorId) {
-        movieBuilder.director(directorService.getDirector(directorId).orElse(new Director()));
-    }
-
-//        @PostMapping(value = "/writer", consumes = APPLICATION_JSON_VALUE)
-//        public void addWriter(@RequestParam Long writerId) {
-    @PatchMapping(value = "/add_writer/{writerId}")
-    public void addWriter(@PathVariable Long writerId) {
-        movieBuilder.writer(writerService.getWriter(writerId).orElse(new Writer()));
-    }
-
-    //    @PostMapping(value = "/actor", consumes = APPLICATION_JSON_VALUE)
-//    public void addActor(@RequestParam Long actorId) {
-    @PatchMapping(value = "/add_actor/{actorId}")
-    public void addActor(@PathVariable Long actorId) {
-        movieBuilder.actor(actorService.getActor(actorId).orElse(new Actor()));
-    }
-
-    //    @PostMapping(value = "/genre", consumes = APPLICATION_JSON_VALUE)
-//    public void addGenre(@RequestParam Long genreId) {
-    @PatchMapping(value = "/add_genre/{genreId}")
-    public void addGenre(@PathVariable Long genreId) {
-        movieBuilder.genre(genreService.getGenre(genreId).orElse(new Genre()));
-    }
-
-    @PatchMapping(value = "/build/{movieTitle}")
-    public void movieBuild(@PathVariable String movieTitle) {
-        movieBuilder.title(movieTitle);
-        Movie movie = movieBuilder.build();
+    @PatchMapping(value = "/{movieId}/add_director/{directorId}")
+    public void addDirector(@PathVariable Long movieId, @PathVariable Long directorId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Director director = directorService.getDirector(directorId).orElse(new Director());
+        movie.setDirector(director);
+        director.getMovies().add(movie);
         movieService.saveMovie(movie);
-        movieBuilder = new Movie.MovieBuilder();
     }
-/*@PatchMapping(value = "/add_title/{movieTitle}")
-    public void addTile(@PathVariable String movieTitle) {
-        movieBuilder.title(movieTitle);*/
+
+    @PatchMapping(value = "/{movieId}/add_writer/{writerId}")
+    public void addWriter(@PathVariable Long movieId, @PathVariable Long writerId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Writer writer = writerService.getWriter(writerId).orElse(new Writer());
+        movie.getWriters().add(writer);
+        writer.getMovies().add(movie);
+        movieService.saveMovie(movie);
+    }
+
+    @PatchMapping(value = "/{movieId}/remove_writer/{writerId}")
+    public void removeWriter(@PathVariable Long movieId, @PathVariable Long writerId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Writer writer = writerService.getWriter(writerId).orElse(new Writer());
+        movie.getWriters().remove(writer);
+        writer.getMovies().remove(movie);
+        movieService.saveMovie(movie);
+    }
+
+    @PatchMapping(value = "/{movieId}/add_actor/{actorId}")
+    public void addActor(@PathVariable Long movieId, @PathVariable Long actorId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Actor actor = actorService.getActor(actorId).orElse(new Actor());
+        movie.getActors().add(actor);
+        actor.getMovies().add(movie);
+        movieService.saveMovie(movie);
+    }
+
+    @PatchMapping(value = "/{movieId}/remove_actor/{actorId}")
+    public void removeActor(@PathVariable Long movieId, @PathVariable Long actorId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Actor actor = actorService.getActor(actorId).orElse(new Actor());
+        movie.getActors().remove(actor);
+        actor.getMovies().remove(movie);
+        movieService.saveMovie(movie);
+    }
+
+    @PatchMapping(value = "/{movieId}/add_genre/{genreId}")
+    public void addGenre(@PathVariable Long movieId, @PathVariable Long genreId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Genre genre = genreService.getGenre(genreId).orElse(new Genre());
+        movie.getGenres().add(genre);
+        genre.getMovies().add(movie);
+        movieService.saveMovie(movie);
+    }
+
+    @PatchMapping(value = "/{movieId}/remove_genre/{genreId}")
+    public void removeGenre(@PathVariable Long movieId, @PathVariable Long genreId) {
+        Movie movie = movieService.getMovie(movieId).orElse(new Movie());
+        Genre genre = genreService.getGenre(genreId).orElse(new Genre());
+        movie.getGenres().remove(genre);
+        genre.getMovies().remove(movie);
+        movieService.saveMovie(movie);
+    }
+
+
+
+
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createMovie(@RequestBody MovieDto movieDto) {
