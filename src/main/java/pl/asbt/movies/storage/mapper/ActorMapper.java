@@ -3,7 +3,7 @@ package pl.asbt.movies.storage.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.Actor;
-import pl.asbt.movies.storage.domain.ActorDto;
+import pl.asbt.movies.storage.dto.ActorDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,80 +1,124 @@
 package pl.asbt.movies.storage.servise;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.*;
-import pl.asbt.movies.storage.exception.SearchingException;
-import pl.asbt.movies.storage.mapper.*;
+import pl.asbt.movies.storage.dto.*;
+import pl.asbt.movies.storage.exception.ErrorType;
+import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.MovieRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class MovieService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieService.class);
-    private MovieRepository movieRepository;
-    private MovieMapper movieMapper;
-    private ActorService actorService;
-    private DirectorService directorService;
-    private GenreService genreService;
-    private WriterService writerService;
-
-    @Autowired
-    public MovieService(MovieRepository movieRepository, MovieMapper movieMapper, ActorService actorService,
-                        DirectorService directorService, GenreService genreService, WriterService writerService) {
-        this.movieRepository = movieRepository;
-        this.movieMapper = movieMapper;
-        this.actorService = actorService;
-        this.directorService = directorService;
-        this.genreService = genreService;
-        this.writerService = writerService;
-    }
-
-    private List<Genre> getGenres(MovieDto movieDto) {
-        List<Genre> genres = new ArrayList<>();
-        for(GenreDto theGenre : movieDto.getGenresDto()) {
-            Genre genre = genreService.getGenre(theGenre.getId()).orElse(new Genre());
-            genre.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
-            genres.add(genre);
-        }
-        return genres;
-    }
-
-    private List<Actor> getActors(MovieDto movieDto) {
-        List<Actor> actors = new ArrayList<>();
-        for(ActorDto theActor : movieDto.getActorsDto()) {
-            Actor actor = actorService.getActor(theActor.getId()).orElse(new Actor());
-            actor.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
-            actors.add(actor);
-        }
-        return actors;
-    }
-
-    private List<Writer> getWriters(MovieDto movieDto) {
-        List<Writer> writers = new ArrayList<>();
-        for(WriterDto theWriter : movieDto.getWritersDto()) {
-            Writer writer = writerService.getWriter(theWriter.getId()).orElse(new Writer());
-            writer.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
-            writers.add(writer);
-        }
-        return writers;
-    }
-
-    private Director getDirector(MovieDto movieDto) {
-        DirectorDto directorDto = movieDto.getDirectorDto();
-        Director director = directorService.getDirector(directorDto.getId()).orElse(new Director());
-        director.getMovies().add(new Movie(movieDto.getTitle(), movieDto.getDuration()));
-        return director;
-    }
+    private final MovieRepository movieRepository;
+    private final ActorService actorService;
+    private final DirectorService directorService;
+    private final GenreService genreService;
+    private final WriterService writerService;
 
     public Movie saveMovie(final Movie movie) {
         return movieRepository.save(movie);
     }
+
+    public Movie addDirector(final Long movieId, final Long directorId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Director director = directorService.getDirector(directorId).orElse(new Director());
+        movie.setDirector(director);
+        director.getMovies().add(movie);
+        return saveMovie(movie);
+    }
+
+    public Movie addWriter(Long movieId, Long writerId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Writer writer = writerService.getWriter(writerId).orElse(new Writer());
+        movie.getWriters().add(writer);
+        writer.getMovies().add(movie);
+        return saveMovie(movie);
+    }
+
+    public Movie removeWriter(Long movieId, Long writerId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Writer writer = writerService.getWriter(writerId).orElse(new Writer());
+        movie.getWriters().remove(writer);
+        writer.getMovies().remove(movie);
+        return saveMovie(movie);
+    }
+
+    public Movie addActor(Long movieId, Long actorId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Actor actor = actorService.getActor(actorId).orElse(new Actor());
+        movie.getActors().add(actor);
+        actor.getMovies().add(movie);
+        return saveMovie(movie);
+    }
+
+    public Movie removeActor(Long movieId, Long actorId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Actor actor = actorService.getActor(actorId).orElse(new Actor());
+        movie.getActors().remove(actor);
+        actor.getMovies().remove(movie);
+        return saveMovie(movie);
+    }
+
+    public Movie addGenre(Long movieId, Long genreId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Genre genre = genreService.getGenre(genreId).orElse(new Genre());
+        movie.getGenres().add(genre);
+        genre.getMovies().add(movie);
+        return saveMovie(movie);
+    }
+
+    public Movie removeGenre(Long movieId, Long genreId) throws StorageException {
+        Movie movie = getMovie(movieId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no movie with given id.")
+                        .build()
+        );
+        Genre genre = genreService.getGenre(genreId).orElse(new Genre());
+        movie.getGenres().remove(genre);
+        genre.getMovies().remove(movie);
+        return saveMovie(movie);
+    }
+
 
     public Optional<Movie> getMovie(final Long id) {
         return movieRepository.findById(id);
@@ -100,12 +144,17 @@ public class MovieService {
         Movie result = new Movie();
         Long movieId = movieDto.getId();
         try {
-            Movie movie = getMovie(movieId).orElseThrow(SearchingException::new);
+            Movie movie = getMovie(movieId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no movie with given id.")
+                            .build()
+            );
             movie.setTitle(movieDto.getTitle());
             movie.setDuration(movieDto.getDuration());
             return saveMovie(movie);
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_NO_MOVIE);
+            LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
         }
         return result;
     }

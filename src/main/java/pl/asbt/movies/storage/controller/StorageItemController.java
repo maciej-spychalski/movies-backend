@@ -1,64 +1,57 @@
 package pl.asbt.movies.storage.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.asbt.movies.storage.domain.Movie;
-import pl.asbt.movies.storage.domain.StorageItem;
-import pl.asbt.movies.storage.domain.StorageItemDto;
-import pl.asbt.movies.storage.exception.SearchingException;
+import pl.asbt.movies.storage.dto.StorageItemDto;
+import pl.asbt.movies.storage.exception.ErrorType;
+import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.StorageItemMapper;
-import pl.asbt.movies.storage.servise.MovieService;
 import pl.asbt.movies.storage.servise.StorageItemService;
 
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/storage/storageItems")
 public class StorageItemController {
-    @Autowired
-    StorageItemService storageItemService;
 
-    @Autowired
-    StorageItemMapper storageItemMapper;
-
-    @Autowired
-    MovieService movieService;
+    private final StorageItemService storageItemService;
+    private final StorageItemMapper storageItemMapper;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public void createStorageItem(@RequestBody StorageItemDto storageItemDto) throws SearchingException {
-        Movie movie = new Movie();
-        movie = movieService.getMovie(storageItemDto.getMovieId()).orElse(
-                movieService.getAllMoviesByTitle(storageItemDto.getMovieTitle()).get(0));
-        StorageItem storageItem = storageItemService.saveStorageItem(storageItemMapper.mapToStorageItem(storageItemDto));
-        storageItem.setMovie(movie);
-        storageItemService.saveStorageItem(storageItem);
+    public void createStorageItem(@Validated @RequestBody StorageItemDto storageItemDto) {
+        storageItemService.saveStorageItem(storageItemDto);
     }
 
-    @PatchMapping(value = "/addQuantity/{id}/{quantity}")
-    public void addQuantity(@PathVariable Long id, @PathVariable int quantity) {
-        StorageItem storageItem = storageItemService.getStorageItem(id).orElse(new StorageItem());
-        storageItem.setQuantity(storageItem.getQuantity() + quantity);
-        storageItemService.saveStorageItem(storageItem);
+    @PatchMapping(value = "/add-Quantity/{id}/{quantity}")
+    public void addQuantity(@Validated @PathVariable Long id,
+                            @Validated @PathVariable int quantity) {
+        storageItemService.addQuantity(id, quantity);
     }
 
-    @PatchMapping(value = "/removeQuantity/{id}/{quantity}")
-    public void subQuantity(@PathVariable Long id, @PathVariable int quantity) {
-        StorageItem storageItem = storageItemService.getStorageItem(id).orElse(new StorageItem());
-        storageItem.setQuantity(storageItem.getQuantity() + quantity);
-        storageItemService.saveStorageItem(storageItem);
+    @PatchMapping(value = "/remove-Quantity/{id}/{quantity}")
+    public Boolean subQuantity(@Validated @PathVariable Long id,
+                               @Validated @PathVariable int quantity) {
+        return storageItemService.subQuantity(id, quantity);
     }
 
     @GetMapping(value = "/{storageItemId}")
-    public StorageItemDto getStorageItem(@PathVariable Long storageItemId) throws SearchingException {
-        return storageItemMapper.mapToStorageItemDto(storageItemService.getStorageItem(storageItemId).
-                orElseThrow(SearchingException::new));
+    public StorageItemDto getStorageItem(@Validated @PathVariable Long storageItemId) throws StorageException {
+        return storageItemMapper.mapToStorageItemDto(storageItemService.getStorageItem(storageItemId)
+                .orElseThrow(() ->
+                        StorageException.builder()
+                                .errorType(ErrorType.NOT_FOUND)
+                                .message("There are no storage item with given id.")
+                                .build()
+                ));
     }
 
     @GetMapping(value = "/title/{title}")
-    public List<StorageItemDto> getStorageItemByMovieTitle(@PathVariable String title) {
+    public List<StorageItemDto> getStorageItemByMovieTitle(@Validated @PathVariable String title) {
         return storageItemMapper.mapToStorageItemsDto(storageItemService.getStorageItemsByMovieTitle(title));
     }
 
@@ -68,17 +61,17 @@ public class StorageItemController {
     }
 
     @DeleteMapping(value = "/{storageItemId}")
-    public void deleteStorageItem(@PathVariable Long storageItemId) {
+    public void deleteStorageItem(@Validated @PathVariable Long storageItemId) {
         storageItemService.deleteStorageItem(storageItemId);
     }
 
     @DeleteMapping(value = "/title/{title}")
-    public void deleteStorageItemByMovieTitle(@PathVariable String title) {
+    public void deleteStorageItemByMovieTitle(@Validated @PathVariable String title) {
         storageItemService.deleteStorageItemByMovieTitle(title);
     }
 
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public StorageItemDto updateStorageItem(@RequestBody StorageItemDto storageItemDto) throws SearchingException {
+    public StorageItemDto updateStorageItem(@Validated @RequestBody StorageItemDto storageItemDto) {
         return storageItemMapper.mapToStorageItemDto(storageItemService.updateStorageItem(storageItemDto));
     }
 }

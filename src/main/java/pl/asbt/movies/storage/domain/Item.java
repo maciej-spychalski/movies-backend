@@ -3,26 +3,30 @@ package pl.asbt.movies.storage.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity(name = "STORAGE_ITEMS")
-public class StorageItem {
+@Entity(name = "ITEMS")
+public class Item {
     private Long id;
     private Movie movie;
     private Integer quantity;
+    private Cart cart;
+    private Order order;
 
-    public StorageItem(Integer quantity) {
+    public Item(Integer quantity) {
         this.quantity = quantity;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "STORAGE_ITEM_ID", unique = true)
+    @Column(name = "ITEM_ID", unique = true)
     public Long getId() {
         return id;
     }
@@ -38,6 +42,18 @@ public class StorageItem {
         return quantity;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "CART_ID")
+    public Cart getCart() {
+        return cart;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    public Order getOrder() {
+        return order;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -48,5 +64,13 @@ public class StorageItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

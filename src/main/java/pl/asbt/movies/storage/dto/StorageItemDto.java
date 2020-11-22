@@ -1,4 +1,4 @@
-package pl.asbt.movies.storage.domain;
+package pl.asbt.movies.storage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

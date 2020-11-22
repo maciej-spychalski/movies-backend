@@ -29,7 +29,7 @@ public class Actor {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "ACTOR_ID", unique = true)
     public Long getId() {

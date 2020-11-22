@@ -1,27 +1,24 @@
 package pl.asbt.movies.storage.servise;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.Genre;
-import pl.asbt.movies.storage.domain.GenreDto;
-import pl.asbt.movies.storage.exception.SearchingException;
+import pl.asbt.movies.storage.dto.GenreDto;
+import pl.asbt.movies.storage.exception.ErrorType;
+import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.GenreRepository;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class GenreService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreService.class);
-    private GenreRepository genreRepository;
-
-    @Autowired
-    public GenreService(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
-    }
+    private final GenreRepository genreRepository;
 
     public Genre saveGenre(final Genre genre) {
         return genreRepository.save(genre);
@@ -51,11 +48,16 @@ public class GenreService {
         Genre result = new Genre();
         Long genreId = genreDto.getId();
         try {
-            Genre genre = getGenre(genreId).orElseThrow(SearchingException::new);
+            Genre genre = getGenre(genreId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no genre with given id.")
+                            .build()
+            );
             genre.setType(genreDto.getType());
             return saveGenre(genre);
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_NO_GENRE);
+            LOGGER.error("Genre: " + ErrorType.NOT_FOUND.name());
         }
         return result;
     }

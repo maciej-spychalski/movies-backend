@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.asbt.movies.storage.domain.Genre;
-import pl.asbt.movies.storage.domain.GenreDto;
+import pl.asbt.movies.storage.dto.GenreDto;
 
 import java.util.ArrayList;
 import java.util.List;

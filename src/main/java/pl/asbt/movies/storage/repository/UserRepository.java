@@ -1,17 +1,18 @@
 package pl.asbt.movies.storage.repository;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.asbt.movies.storage.domain.StorageItem;
+import pl.asbt.movies.storage.domain.User;
 
 import java.util.List;
 
 @Transactional
 @Repository
-public interface StorageItemRepository extends JpaRepository<StorageItem, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<StorageItem> findByMovie_Title(String title);
+    List<User> findByFirstnameAndAndSurname(String firstname, String surname);
 
-    void deleteByMovie_Title(String title);
+    void deleteByFirstnameAndSurname(String firstname, String surname);
 }

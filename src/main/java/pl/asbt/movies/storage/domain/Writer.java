@@ -29,7 +29,7 @@ public class Writer {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "WRITER_ID", unique = true)
     public Long getId() {

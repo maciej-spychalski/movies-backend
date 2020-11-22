@@ -1,9 +1,8 @@
 package pl.asbt.movies.storage.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.StorageItem;
-import pl.asbt.movies.storage.domain.StorageItemDto;
+import pl.asbt.movies.storage.dto.StorageItemDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

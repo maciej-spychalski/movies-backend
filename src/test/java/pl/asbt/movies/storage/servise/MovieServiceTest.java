@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.asbt.movies.storage.domain.*;
+import pl.asbt.movies.storage.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MovieServiceTest {
     MovieService movieService;
 
     private Movie movie1;
-    private Movie movie2;
+    private Movie movie12;
     private Director director1;
     private Writer writer1;
     private Writer writer2;
@@ -67,7 +68,15 @@ public class MovieServiceTest {
                 .duration(90)
                 .build();
 
-        movie2 = new Movie.MovieBuilder()
+        director1.getMovies().add(movie1);
+        writer1.getMovies().add(movie1);
+        writer2.getMovies().add(movie1);
+        actor1.getMovies().add(movie1);
+        actor2.getMovies().add(movie1);
+        genre1.getMovies().add(movie1);
+        genre2.getMovies().add(movie1);
+
+        movie12 = new Movie.MovieBuilder()
                 .title("Title2")
                 .director(director1)
                 .writer(writer1)
@@ -79,40 +88,32 @@ public class MovieServiceTest {
                 .duration(110)
                 .build();
 
-        /*director1.getMovies().add(movie1);
-        writer1.getMovies().add(movie1);
-        writer2.getMovies().add(movie1);
-        actor1.getMovies().add(movie1);
-        actor2.getMovies().add(movie1);
-        genre1.getMovies().add(movie1);
-        genre2.getMovies().add(movie1);
-
-        director1.getMovies().add(movie2);
-        writer1.getMovies().add(movie2);
-        writer2.getMovies().add(movie2);
-        actor1.getMovies().add(movie2);
-        actor2.getMovies().add(movie2);
-        genre1.getMovies().add(movie2);
-        genre2.getMovies().add(movie2);*/
+        director1.getMovies().add(movie12);
+        writer1.getMovies().add(movie12);
+        writer2.getMovies().add(movie12);
+        actor1.getMovies().add(movie12);
+        actor2.getMovies().add(movie12);
+        genre1.getMovies().add(movie12);
+        genre2.getMovies().add(movie12);
     }
 
-//    @After
-//    public void removeDate() {
-//        Long director1Id = director1.getId();
-//        directorService.deleteDirector(director1Id);
-//        Long writer1Id = writer1.getId();
-//        writerService.deleteWriter(writer1Id);
-//        Long writer2Id = writer2.getId();
-//        writerService.deleteWriter(writer2Id);
-//        Long actor1Id = actor1.getId();
-//        actorService.deleteActor(actor1Id);
-//        Long actor2Id = actor2.getId();
-//        actorService.deleteActor(actor2Id);
-//        Long genre1Id = genre1.getId();
-//        genreService.deleteGenre(genre1Id);
-//        Long genre2Id = genre2.getId();
-//        genreService.deleteGenre(genre2Id);
-//    }
+    @After
+    public void removeDate() {
+        Long director1Id = director1.getId();
+        directorService.deleteDirector(director1Id);
+        Long writer1Id = writer1.getId();
+        writerService.deleteWriter(writer1Id);
+        Long writer2Id = writer2.getId();
+        writerService.deleteWriter(writer2Id);
+        Long actor1Id = actor1.getId();
+        actorService.deleteActor(actor1Id);
+        Long actor2Id = actor2.getId();
+        actorService.deleteActor(actor2Id);
+        Long genre1Id = genre1.getId();
+        genreService.deleteGenre(genre1Id);
+        Long genre2Id = genre2.getId();
+        genreService.deleteGenre(genre2Id);
+    }
 
 
     @Test
@@ -122,7 +123,7 @@ public class MovieServiceTest {
 
         // When
         movie1 = movieService.saveMovie(movie1);
-        movie2 = movieService.saveMovie(movie2);
+        movie12 = movieService.saveMovie(movie12);
 
         // Then
         List<Movie> movies1 = movieService.getAllMovies();
@@ -131,7 +132,7 @@ public class MovieServiceTest {
         //CleanUp
         Long movie1Id = movie1.getId();
         movieService.deleteMovie(movie1Id);
-        Long movie2Id = movie2.getId();
+        Long movie2Id = movie12.getId();
         movieService.deleteMovie(movie2Id);
     }
 
@@ -140,8 +141,8 @@ public class MovieServiceTest {
         // Given
         movie1 = movieService.saveMovie(movie1);
         Long movie1Id = movie1.getId();
-        movie2 = movieService.saveMovie(movie2);
-        Long movie2Id = movie2.getId();
+        movie12 = movieService.saveMovie(movie12);
+        Long movie2Id = movie12.getId();
 
         // When
         Movie movieDB1 = movieService.getMovie(movie1Id).orElse(new Movie());
@@ -151,15 +152,15 @@ public class MovieServiceTest {
         assertEquals(90, (int) movieDB1.getDuration());
 
         //CleanUp
-//        movieService.deleteMovie(movie1Id);
-//        movieService.deleteMovie(movie2Id);
+        movieService.deleteMovie(movie1Id);
+        movieService.deleteMovie(movie2Id);
     }
 
     @Test
     public void getMovieByTitleTestSuite() {
         // Given
         movie1 = movieService.saveMovie(movie1);
-        movie2 = movieService.saveMovie(movie2);
+        movie12 = movieService.saveMovie(movie12);
 
         // When
         List<Movie> movieList = new ArrayList<>();
@@ -172,7 +173,7 @@ public class MovieServiceTest {
         //CleanUp
         Long movie1Id = movie1.getId();
         movieService.deleteMovie(movie1Id);
-        Long movie2Id = movie2.getId();
+        Long movie2Id = movie12.getId();
         movieService.deleteMovie(movie2Id);
     }
 
@@ -180,7 +181,7 @@ public class MovieServiceTest {
     public void getAllMoviesTestSuite() {
         // Given
         movie1 = movieService.saveMovie(movie1);
-        movie2 = movieService.saveMovie(movie2);
+        movie12 = movieService.saveMovie(movie12);
 
         // When
         List<Movie> movieList = new ArrayList<>();
@@ -192,7 +193,7 @@ public class MovieServiceTest {
         //CleanUp
         Long movie1Id = movie1.getId();
         movieService.deleteMovie(movie1Id);
-        Long movie2Id = movie2.getId();
+        Long movie2Id = movie12.getId();
         movieService.deleteMovie(movie2Id);
     }
 
@@ -201,7 +202,7 @@ public class MovieServiceTest {
         // Given
         movie1 = movieService.saveMovie(movie1);
         Long movie1Id = movie1.getId();
-        movie2 = movieService.saveMovie(movie2);
+        movie12 = movieService.saveMovie(movie12);
 
         int moviesQuantity = movieService.getAllMovies().size();
 
@@ -212,7 +213,7 @@ public class MovieServiceTest {
         assertEquals(moviesQuantity -1, movieService.getAllMovies().size());
 
         //CleanUp
-        Long movie2Id = movie2.getId();
+        Long movie2Id = movie12.getId();
         movieService.deleteMovie(movie2Id);
     }
 
@@ -220,7 +221,7 @@ public class MovieServiceTest {
     public void deleteMovieByTitleTestSuite() {
         // Given
         movie1 = movieService.saveMovie(movie1);
-        movie2 = movieService.saveMovie(movie2);
+        movie12 = movieService.saveMovie(movie12);
 
         int moviesQuantity = movieService.getAllMovies().size();
 
@@ -231,7 +232,7 @@ public class MovieServiceTest {
         assertEquals(moviesQuantity -1, movieService.getAllMovies().size());
 
         //CleanUp
-        Long movie2Id = movie2.getId();
+        Long movie2Id = movie12.getId();
         movieService.deleteMovie(movie2Id);
     }
 
@@ -240,7 +241,7 @@ public class MovieServiceTest {
         // Given
         movie1 = movieService.saveMovie(movie1);
         Long movie1Id = movie1.getId();
-        movie2 = movieService.saveMovie(movie2);
+        movie12 = movieService.saveMovie(movie12);
 
         List<String> moviesTitle = new ArrayList<>();
         DirectorDto directorDto = new DirectorDto(1L, "Name3", "Surname3", moviesTitle);
@@ -259,67 +260,8 @@ public class MovieServiceTest {
 
         //CleanUp
         movieService.deleteMovie(movie1Id);
-        Long movie2Id = movie2.getId();
+        Long movie2Id = movie12.getId();
         movieService.deleteMovie(movie2Id);
     }
 
 }
-
-
-//        ////////////////////////////////////////////////////
-//        System.out.println();
-//        System.out.println();
-//        List<Movie> movies = movieService.getAllMovies();
-//        for(Movie theMovie : movies) {
-//            System.out.println("Movie Id: " + theMovie.getId());
-//            System.out.println("    Movie Title: " + theMovie.getTitle());
-//            System.out.println("    Director Id: " + theMovie.getDirector().getId());
-//            System.out.print("      Movie Director: " + theMovie.getDirector().getFirstname());
-//            System.out.println(" " + theMovie.getDirector().getSurname());
-//
-//            List<Writer> writers = theMovie.getWriters();
-//            System.out.println("    Writers:");
-//            for(Writer theWriter : writers) {
-//                System.out.println("        Writer Id: " + theWriter.getId());
-//                System.out.print("          Writer: " + theWriter.getFirstname());
-//                System.out.println(" " + theWriter.getSurname());
-//                List<Movie> writerMovies = theWriter.getMovies();
-//                System.out.print("              Movies: ");
-//                for(Movie movie : writerMovies) {
-//                    System.out.print(movie.getTitle() + ", ");
-//                }
-//                System.out.println();
-//            }
-//
-//            List<Actor> actors = theMovie.getActors();
-//            System.out.println("    Actors:");
-//            for(Actor theActor : actors) {
-//                System.out.println("        Actor Id: " + theActor.getId());
-//                System.out.print("          Actor: " + theActor.getFirstname());
-//                System.out.println(" " + theActor.getSurname());
-//                List<Movie> actorMovies = theActor.getMovies();
-//                System.out.print("              Movies: ");
-//                for(Movie movie : actorMovies) {
-//                    System.out.print(movie.getTitle() + ", ");
-//                }
-//                System.out.println();
-//            }
-//
-//            List<Genre> genres = theMovie.getGenres();
-//            System.out.println("    Genres:");
-//            for(Genre theGenre : genres) {
-//                System.out.println("        Genre Id: " + theGenre.getId());
-//                System.out.println("          Genre: " + theGenre.getType());
-//                List<Movie> genreMovies = theGenre.getMovies();
-//                System.out.print("              Movies: ");
-//                for(Movie movie : genreMovies) {
-//                    System.out.print(movie.getTitle() + ", ");
-//                }
-//                System.out.println();
-//            }
-//            System.out.println("    Duration: " + theMovie.getDuration());
-//            System.out.println();
-//        }
-//        System.out.println();
-//        System.out.println();
-//        ////////////////////////////////////////////////////

@@ -2,6 +2,7 @@ package pl.asbt.movies.storage.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.*;
+import pl.asbt.movies.storage.dto.DirectorDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

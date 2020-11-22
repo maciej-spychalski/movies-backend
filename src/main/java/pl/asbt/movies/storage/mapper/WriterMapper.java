@@ -2,7 +2,7 @@ package pl.asbt.movies.storage.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.Writer;
-import pl.asbt.movies.storage.domain.WriterDto;
+import pl.asbt.movies.storage.dto.WriterDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

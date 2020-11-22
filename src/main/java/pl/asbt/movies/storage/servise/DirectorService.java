@@ -1,27 +1,24 @@
 package pl.asbt.movies.storage.servise;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.Director;
-import pl.asbt.movies.storage.domain.DirectorDto;
-import pl.asbt.movies.storage.exception.SearchingException;
+import pl.asbt.movies.storage.dto.DirectorDto;
+import pl.asbt.movies.storage.exception.ErrorType;
+import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.DirectorRepository;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class DirectorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DirectorService.class);
-    private DirectorRepository directorRepository;
-
-    @Autowired
-    public DirectorService(DirectorRepository directorRepository) {
-        this.directorRepository = directorRepository;
-    }
+    private final DirectorRepository directorRepository;
 
     public Director saveDirector(final Director director) {
         return directorRepository.save(director);
@@ -51,12 +48,17 @@ public class DirectorService {
         Director result = new Director();
         Long directorId = directorDto.getId();
         try {
-            Director director = getDirector(directorId).orElseThrow(SearchingException::new);
+            Director director = getDirector(directorId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no director with given id.")
+                            .build()
+            );
             director.setFirstname(directorDto.getFirstname());
             director.setSurname(directorDto.getSurname());
             return saveDirector(director);
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_NO_DIRECTOR);
+            LOGGER.error("Director: " + ErrorType.NOT_FOUND.name());
         }
         return result;
     }

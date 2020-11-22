@@ -29,7 +29,7 @@ public class Director {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "DIRECTOR_ID", unique = true)
     public Long getId() {

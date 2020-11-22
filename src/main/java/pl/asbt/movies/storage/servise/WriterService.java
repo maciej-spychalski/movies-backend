@@ -1,27 +1,25 @@
 package pl.asbt.movies.storage.servise;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.asbt.movies.storage.exception.SearchingException;
+import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.domain.Writer;
-import pl.asbt.movies.storage.domain.WriterDto;
+import pl.asbt.movies.storage.dto.WriterDto;
+import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.WriterRepository;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class WriterService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WriterService.class);
-    private WriterRepository writerRepository;
+    private final WriterRepository writerRepository;
 
-    @Autowired
-    public WriterService(WriterRepository writerRepository) {
-        this.writerRepository = writerRepository;
-    }
 
     public Writer saveWriter(final Writer writer) {
         return writerRepository.save(writer);
@@ -51,12 +49,17 @@ public class WriterService {
         Writer result = new Writer();
         Long writerId = writerDto.getId();
         try {
-            Writer writer = getWriter(writerId).orElseThrow(SearchingException::new);
+            Writer writer = getWriter(writerId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no writer with given id.")
+                            .build()
+            );
             writer.setFirstname(writerDto.getFirstname());
             writer.setSurname(writerDto.getSurname());
             return saveWriter(writer);
         } catch (Exception e) {
-            LOGGER.error(SearchingException.ERR_NO_WRITER);
+            LOGGER.error("Writer: " + ErrorType.NOT_FOUND.name());
         }
         return result;
     }

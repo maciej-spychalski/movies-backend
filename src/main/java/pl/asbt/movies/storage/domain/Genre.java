@@ -24,7 +24,7 @@ public class Genre {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "GENRE_ID", unique = true)
     public Long getId() {

@@ -76,18 +76,7 @@ public class Movie {
         }
 
         public Movie build() {
-            Movie movie = new  Movie(title, director, writers, actors, genres, duration);
-            movie.getDirector().getMovies().add(movie);
-            for(Writer theWriter : movie.getWriters()) {
-                theWriter.getMovies().add(movie);
-            }
-            for(Actor theActor : movie.getActors()) {
-                theActor.getMovies().add(movie);
-            }
-            for(Genre theGenre : movie.getGenres()) {
-                theGenre.getMovies().add(movie);
-            }
-            return movie;
+            return new Movie(title, director, writers, actors, genres, duration);
         }
     }
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.asbt.movies.storage.domain.Director;
-import pl.asbt.movies.storage.domain.DirectorDto;
+import pl.asbt.movies.storage.dto.DirectorDto;
 
 import java.util.ArrayList;
 import java.util.List;
