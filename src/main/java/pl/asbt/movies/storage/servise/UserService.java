@@ -4,7 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.domain.Item;
 import pl.asbt.movies.storage.domain.User;
+import pl.asbt.movies.storage.dto.UserDto;
+import pl.asbt.movies.storage.exception.ErrorType;
+import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.UserRepository;
 
 import java.util.List;
@@ -29,9 +33,38 @@ public class UserService {
         return userRepository.findByFirstnameAndAndSurname(firstname, surname);
     }
 
-    /*
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
-    */
+
+    public void deleteUser(final Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public void deleteUserByFirstnameAndSurname(final String firstname, final String surname) {
+        userRepository.deleteByFirstnameAndSurname(firstname, surname);
+    }
+
+    public User updateUser(final UserDto userDto) {
+        User result = new User();
+        Long userId = userDto.getId();
+        try {
+            User user = getUser(userId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no user with given id.")
+                            .build()
+            );
+            user.setFirstname(userDto.getFirstname());
+            user.setSurname(userDto.getSurname());
+            user.setEmail(userDto.getEmail());
+//            user.setPassword(userDto.getPassword());
+//            user.setIsAdmin(userDto.getIsAdmin());
+//            user.setIsLogged(userDto.getIsLogged());
+        } catch (Exception e) {
+            LOGGER.error("Item: " + ErrorType.NOT_FOUND.name());
+        }
+        return result;
+    }
+
 }
