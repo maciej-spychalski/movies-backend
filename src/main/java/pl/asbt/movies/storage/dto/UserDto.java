@@ -24,7 +24,7 @@ public class UserDto {
     @NotBlank(message = "Please provide valid password")
     private String password;
     @NotNull
-    private Boolean userStatus;
+    private Boolean isAdmin;
     @NotNull
     private Boolean isLogged;
     private CartDto cartDto;

@@ -13,9 +13,8 @@ public class OrderDto {
 
     @NotNull
     private Long id;
-    private List<ItemDto> items = new ArrayList<>();
-    @NotNull
-    private UserDto userDto;
+    private List<ItemDto> itemsDto = new ArrayList<>();
+
 }
 
 

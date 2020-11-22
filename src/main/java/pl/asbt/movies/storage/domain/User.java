@@ -27,13 +27,13 @@ public class User {
     private Cart cart;
     private List<Order> orders = new ArrayList<>();
 
-    public User(String firstname, String surname, String email, String password, Boolean admin, Boolean logged) {
+    public User(String firstname, String surname, String email, String password, Boolean isAdmin, Boolean isLogged) {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.isAdmin = admin;
-        this.isLogged = logged;
+        this.isAdmin = isAdmin;
+        this.isLogged = isLogged;
     }
 
     @Id

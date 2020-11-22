@@ -17,9 +17,9 @@ public class ItemDto {
     @NotNull
     private Long id;
     @NotNull
-    private Movie movie;
+    private String movieTitle;
+    @NotNull
     private Integer quantity;
-    private List<Cart> carts = new ArrayList<>();
-    private List<Order> orders = new ArrayList<>();
+
 }
 
