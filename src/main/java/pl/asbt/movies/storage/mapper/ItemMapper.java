@@ -20,6 +20,7 @@ public class ItemMapper {
         return new ItemDto(
                 item.getId(),
                 item.getMovie().getTitle(),
+                item.getMovie().getId(),
                 item.getQuantity()
         );
     }

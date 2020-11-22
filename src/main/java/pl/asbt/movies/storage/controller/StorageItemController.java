@@ -27,13 +27,13 @@ public class StorageItemController {
         storageItemService.saveStorageItem(storageItemDto);
     }
 
-    @PatchMapping(value = "/add-Quantity/{id}/{quantity}")
+    @PatchMapping(value = "/add-quantity/{id}/{quantity}")
     public void addQuantity(@Validated @PathVariable Long id,
                             @Validated @PathVariable int quantity) {
         storageItemService.addQuantity(id, quantity);
     }
 
-    @PatchMapping(value = "/remove-Quantity/{id}/{quantity}")
+    @PatchMapping(value = "/sub-quantity/{id}/{quantity}")
     public Boolean subQuantity(@Validated @PathVariable Long id,
                                @Validated @PathVariable int quantity) {
         return storageItemService.subQuantity(id, quantity);

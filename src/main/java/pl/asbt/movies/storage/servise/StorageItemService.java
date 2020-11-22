@@ -23,9 +23,9 @@ public class StorageItemService {
     private final StorageItemMapper storageItemMapper;
     private final MovieService movieService;
 
-    public StorageItem saveStorageItem(final StorageItem storageItem) {
-        return storageItemRepository.save(storageItem);
-    }
+//    public StorageItem saveStorageItem(final StorageItem storageItem) {
+//        return storageItemRepository.save(storageItem);
+//    }
 
     public StorageItem saveStorageItem(final StorageItemDto storageItemDto) {
         Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElse(
@@ -84,7 +84,7 @@ public class StorageItemService {
                             .build()
             );
             storageItem.setQuantity(storageItemDto.getQuantity());
-            return saveStorageItem(storageItem);
+            return storageItemRepository.save(storageItem);
         } catch (Exception e) {
             LOGGER.error("Storage item: " + ErrorType.NOT_FOUND.name());
         }

@@ -19,6 +19,8 @@ public class ItemDto {
     @NotNull
     private String movieTitle;
     @NotNull
+    private Long movieId;
+    @NotNull
     private Integer quantity;
 
 }

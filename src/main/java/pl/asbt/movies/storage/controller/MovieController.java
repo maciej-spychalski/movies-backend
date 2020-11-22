@@ -80,7 +80,7 @@ public class MovieController {
     }
 
     @GetMapping(value = "/title/{title}")
-    public List<MovieDto> getMovieByTitle(@PathVariable String title) {
+    public List<MovieDto> getMovieByTitle(@Validated @PathVariable String title) {
         return movieMapper.mapToMoviesDto(movieService.getAllMoviesByTitle(title));
     }
 
@@ -90,17 +90,17 @@ public class MovieController {
     }
 
     @DeleteMapping(value = "/{titleId}")
-    public void deleteMovie(@PathVariable Long titleId) {
+    public void deleteMovie(@Validated @PathVariable Long titleId) {
         movieService.deleteMovie(titleId);
     }
 
     @DeleteMapping(value = "/title/{title}")
-    public void deleteMovieByTitle(@PathVariable String title) {
+    public void deleteMovieByTitle(@Validated @PathVariable String title) {
         movieService.deleteMovieByTitle(title);
     }
 
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public MovieDto updateMovie(@RequestBody MovieDto movieDto) {
+    public MovieDto updateMovie(@Validated @RequestBody MovieDto movieDto) {
         return movieMapper.mapToMovieDto(movieService.updateMovie(movieDto));
     }
 }
