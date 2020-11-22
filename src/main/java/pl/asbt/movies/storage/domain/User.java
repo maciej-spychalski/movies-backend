@@ -23,17 +23,17 @@ public class User {
     private String email;
     private String password;
     private Boolean isAdmin;
-    private Boolean isLoggedIn;
+    private Boolean isLogged;
     private Cart cart;
     private List<Order> orders = new ArrayList<>();
 
-    public User(String firstname, String surname, String email, String password, Boolean isAdmin, Boolean isLoggedIn) {
+    public User(String firstname, String surname, String email, String password, Boolean admin, Boolean logged) {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
-        this.isLoggedIn = isLoggedIn;
+        this.isAdmin = admin;
+        this.isLogged = logged;
     }
 
     @Id
@@ -64,14 +64,14 @@ public class User {
         return password;
     }
 
-    @Column(name = "ISADMIN")
-    public Boolean getAdmin() {
+    @Column(name = "IS_ADMIN")
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    @Column(name = "IS_LOGGED_IN")
-    public Boolean getLoggedIn() {
-        return isLoggedIn;
+    @Column(name = "IS_LOGGED")
+    public Boolean getIsLogged() {
+        return isLogged;
     }
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -110,12 +110,12 @@ public class User {
         this.password = password;
     }
 
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(Boolean admin) {
+        admin = admin;
     }
 
-    public void setLoggedIn(Boolean loggedIn) {
-        isLoggedIn = loggedIn;
+    public void setIsLogged(Boolean loggedIn) {
+        isLogged = isLogged;
     }
 
     public void setCart(Cart cart) {

@@ -106,6 +106,7 @@ public class StorageItemServiceTest {
         movieService.saveMovie(movie2);
     }
 
+
     @After
     public void deleteData() {
         Long movie1Id = movie1.getId();
