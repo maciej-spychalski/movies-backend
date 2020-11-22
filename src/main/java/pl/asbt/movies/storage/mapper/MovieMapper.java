@@ -1,5 +1,6 @@
 package pl.asbt.movies.storage.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.*;
@@ -8,25 +9,15 @@ import pl.asbt.movies.storage.dto.MovieDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Component
 public class MovieMapper {
 
-    private ActorMapper actorMapper;
-    private DirectorMapper directorMapper;
-    private GenreMapper genreMapper;
-    private WriterMapper writerMapper;
-    private StorageItemMapper storageItemMapper;
-
-    @Autowired
-    public MovieMapper(ActorMapper actorMapper, DirectorMapper directorMapper,
-                       GenreMapper genreMapper, WriterMapper writerMapper,
-                       StorageItemMapper storageItemMapper) {
-        this.actorMapper = actorMapper;
-        this.directorMapper = directorMapper;
-        this.genreMapper = genreMapper;
-        this.writerMapper = writerMapper;
-        this.storageItemMapper = storageItemMapper;
-    }
+    private final ActorMapper actorMapper;
+    private final DirectorMapper directorMapper;
+    private final GenreMapper genreMapper;
+    private final WriterMapper writerMapper;
+    private final StorageItemMapper storageItemMapper;
 
     public Movie mapToMovie(final MovieDto movieDto) {
         return new Movie(movieDto.getTitle(), movieDto.getDuration());

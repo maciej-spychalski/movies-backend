@@ -40,7 +40,7 @@ public class ActorController {
     @GetMapping(value = "/{name}/{surname}")
     public List<ActorDto> getActorByNameAndSurname(@Validated@PathVariable String name,
                                                    @Validated @PathVariable String surname) {
-        return actorMapper.mapToActorsDto(actorService.getActorsByNameAndSurname(name, surname));
+        return actorMapper.mapToActorsDto(actorService.getActorsByFirstnameAndSurname(name, surname));
     }
 
 

@@ -1,6 +1,5 @@
 package pl.asbt.movies.storage.mapper;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.Item;
 import pl.asbt.movies.storage.dto.ItemDto;

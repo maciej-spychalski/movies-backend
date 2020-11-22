@@ -69,7 +69,7 @@ public class ActorServiceTest {
 
         // When
         List<Actor> actors;
-        actors = actorService.getActorsByNameAndSurname(actor2.getFirstname(), actor2.getSurname());
+        actors = actorService.getActorsByFirstnameAndSurname(actor2.getFirstname(), actor2.getSurname());
 
         // Then
         assertEquals("Name2", actors.get(0).getFirstname());
