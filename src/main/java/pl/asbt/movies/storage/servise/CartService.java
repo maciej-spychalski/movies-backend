@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.Cart;
 import pl.asbt.movies.storage.domain.Order;
 import pl.asbt.movies.storage.domain.User;
-import pl.asbt.movies.storage.dto.OrderDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.CartRepository;

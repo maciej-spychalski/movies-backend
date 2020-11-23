@@ -3,7 +3,12 @@ package pl.asbt.movies.storage.mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.User;
+import pl.asbt.movies.storage.dto.CartDto;
+import pl.asbt.movies.storage.dto.DirectorDto;
 import pl.asbt.movies.storage.dto.UserDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -24,6 +29,10 @@ public class UserMapper {
     }
 
     public UserDto mapToUserDto(final User user) {
+        CartDto cartDto = null;
+        if (user.getCart() != null) {
+            cartDto = cartMapper.mapToCartDto(user.getCart());
+        }
         return new UserDto(
                 user.getId(),
                 user.getFirstname(),
@@ -32,8 +41,15 @@ public class UserMapper {
                 user.getPassword(),
                 user.getIsAdmin(),
                 user.getIsLogged(),
-                cartMapper.mapToCartDto(user.getCart()),
+                cartDto,
+//                cartMapper.mapToCartDto(user.getCart()),
                 orderMapper.mapToOrdersDto(user.getOrders())
         );
+    }
+
+    public List<UserDto> mapToUsersDto(final List<User> users) {
+        return users.stream()
+                .map(u -> mapToUserDto(u))
+                .collect(Collectors.toList());
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import pl.asbt.movies.storage.domain.Cart;
 import pl.asbt.movies.storage.domain.Item;
 import pl.asbt.movies.storage.domain.User;
 import pl.asbt.movies.storage.dto.UserDto;
@@ -22,6 +23,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User saveUser(final User user) {
+        Cart cart = new Cart();
+        user.setCart(cart);
         return userRepository.save(user);
     }
 

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.*;
+import pl.asbt.movies.storage.dto.DirectorDto;
 import pl.asbt.movies.storage.dto.MovieDto;
 
 import java.util.List;
@@ -24,10 +25,15 @@ public class MovieMapper {
     }
 
     public MovieDto mapToMovieDto(final Movie movie) {
+        DirectorDto directorDto = null;
+        if (movie.getDirector() != null) {
+            directorDto = directorMapper.mapToDirectorDto(movie.getDirector());
+        }
         return new MovieDto(
                 movie.getId(),
                 movie.getTitle(),
-                directorMapper.mapToDirectorDto(movie.getDirector()),
+                directorDto,
+//                directorMapper.mapToDirectorDto(movie.getDirector()),
                 writerMapper.mapToWritersDto(movie.getWriters()),
                 actorMapper.mapToActorsDto(movie.getActors()),
                 genreMapper.mapToGenresDto(movie.getGenres()),
