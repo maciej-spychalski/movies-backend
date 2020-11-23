@@ -56,7 +56,7 @@ public class DirectorService {
             );
             director.setFirstname(directorDto.getFirstname());
             director.setSurname(directorDto.getSurname());
-            return saveDirector(director);
+            return directorRepository.save(director);
         } catch (Exception e) {
             LOGGER.error("Director: " + ErrorType.NOT_FOUND.name());
         }

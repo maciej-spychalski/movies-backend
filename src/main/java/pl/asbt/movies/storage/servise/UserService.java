@@ -63,7 +63,7 @@ public class UserService {
             user.setPassword(userDto.getPassword());
             user.setIsAdmin(userDto.getIsAdmin());
             user.setIsLogged(userDto.getIsLogged());
-            return saveUser(user);
+            return userRepository.save(user);
         } catch (Exception e) {
             LOGGER.error("User: " + ErrorType.NOT_FOUND.name());
         }

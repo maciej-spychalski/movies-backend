@@ -55,7 +55,7 @@ public class GenreService {
                             .build()
             );
             genre.setType(genreDto.getType());
-            return saveGenre(genre);
+            return genreRepository.save(genre);
         } catch (Exception e) {
             LOGGER.error("Genre: " + ErrorType.NOT_FOUND.name());
         }

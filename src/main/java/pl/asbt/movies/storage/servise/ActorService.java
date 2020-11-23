@@ -56,7 +56,7 @@ public class ActorService {
             );
             actor.setFirstname(actorDto.getFirstname());
             actor.setSurname(actorDto.getSurname());
-            return saveActor(actor);
+            return actorRepository.save(actor);
         } catch (Exception e) {
             LOGGER.error("Actor: " + ErrorType.NOT_FOUND.name());
         }

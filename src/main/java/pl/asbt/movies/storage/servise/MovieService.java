@@ -103,7 +103,7 @@ public class MovieService {
         Genre genre = genreService.getGenre(genreId).orElse(new Genre());
         movie.getGenres().add(genre);
         genre.getMovies().add(movie);
-        return saveMovie(movie);
+        return movieRepository.save(movie);
     }
 
     public Movie removeGenre(Long movieId, Long genreId) throws StorageException {

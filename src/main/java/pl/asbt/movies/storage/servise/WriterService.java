@@ -57,7 +57,7 @@ public class WriterService {
             );
             writer.setFirstname(writerDto.getFirstname());
             writer.setSurname(writerDto.getSurname());
-            return saveWriter(writer);
+            return writerRepository.save(writer);
         } catch (Exception e) {
             LOGGER.error("Writer: " + ErrorType.NOT_FOUND.name());
         }
