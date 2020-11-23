@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.Cart;
-import pl.asbt.movies.storage.domain.Item;
 import pl.asbt.movies.storage.domain.User;
 import pl.asbt.movies.storage.dto.UserDto;
 import pl.asbt.movies.storage.exception.ErrorType;
@@ -61,11 +60,12 @@ public class UserService {
             user.setFirstname(userDto.getFirstname());
             user.setSurname(userDto.getSurname());
             user.setEmail(userDto.getEmail());
-//            user.setPassword(userDto.getPassword());
-//            user.setIsAdmin(userDto.getIsAdmin());
-//            user.setIsLogged(userDto.getIsLogged());
+            user.setPassword(userDto.getPassword());
+            user.setIsAdmin(userDto.getIsAdmin());
+            user.setIsLogged(userDto.getIsLogged());
+            return saveUser(user);
         } catch (Exception e) {
-            LOGGER.error("Item: " + ErrorType.NOT_FOUND.name());
+            LOGGER.error("User: " + ErrorType.NOT_FOUND.name());
         }
         return result;
     }

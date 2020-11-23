@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.User;
 import pl.asbt.movies.storage.dto.CartDto;
-import pl.asbt.movies.storage.dto.DirectorDto;
 import pl.asbt.movies.storage.dto.UserDto;
 
 import java.util.List;
@@ -42,7 +41,6 @@ public class UserMapper {
                 user.getIsAdmin(),
                 user.getIsLogged(),
                 cartDto,
-//                cartMapper.mapToCartDto(user.getCart()),
                 orderMapper.mapToOrdersDto(user.getOrders())
         );
     }

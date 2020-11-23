@@ -3,6 +3,7 @@ package pl.asbt.movies.storage.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.asbt.movies.storage.domain.User;
 import pl.asbt.movies.storage.dto.UserDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
@@ -45,5 +46,12 @@ public class UserController {
     @DeleteMapping(value = "/{userId}")
     public void deleteUser(@Validated @PathVariable Long userId) {
         userService.deleteUser(userId);
+    }
+
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        User user = userService.updateUser(userDto);
+        return userMapper.mapToUserDto(user);
+//        return userMapper.mapToUserDto(userService.updateUser(userDto));
     }
 }

@@ -111,11 +111,10 @@ public class User {
     }
 
     public void setIsAdmin(Boolean admin) {
-        admin = admin;
+        this.isAdmin = admin;
     }
-
-    public void setIsLogged(Boolean loggedIn) {
-        isLogged = isLogged;
+    public void setIsLogged(Boolean logged) {
+        this.isLogged = logged;
     }
 
     public void setCart(Cart cart) {
