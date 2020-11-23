@@ -31,32 +31,38 @@ public class ItemService {
                 movieService.getAllMoviesByTitle(itemDto.getMovieTitle()).get(0));
         Item item = itemRepository.save(itemMapper.mapToItem(itemDto));
         item.setMovie(movie);
+
+        StorageItem storageItem = storageItemService.getStorageItemsByMovieTitle(item.getMovie().getTitle()).get(0);
+        if (storageItem.getQuantity() < item.getQuantity()) {
+            item.setQuantity(storageItem.getQuantity());
+            LOGGER.error("Too few movies: " + item.getMovie().getTitle());
+        }
+
         return itemRepository.save(item);
     }
 
-    public Boolean addQuantity(Long id, int quantity) {
+    public Item addQuantity(Long id, int quantity) {
         Item item = getItem(id).orElse(new Item());
         StorageItem storageItem = storageItemService.getStorageItemsByMovieTitle(item.getMovie().getTitle()).get(0);
         if (storageItem.getQuantity() >= item.getQuantity() + quantity) {
             item.setQuantity(item.getQuantity() + quantity);
-            itemRepository.save(item);
-            return true;
         } else {
+            item.setQuantity(storageItem.getQuantity());
+
             LOGGER.error("Too few movies: " + item.getMovie().getTitle());
         }
-        return false;
+        return itemRepository.save(item);
     }
 
-    public Boolean subQuantity(Long id, int quantity) {
-        Boolean succeed = false;
-        Item Item = getItem(id).orElse(new Item());
-        int currentQuantity = Item.getQuantity();
+    public Item subQuantity(Long id, int quantity) {
+        Item item = getItem(id).orElse(new Item());
+        int currentQuantity = item.getQuantity();
         if (currentQuantity - quantity > 0) {
-            Item.setQuantity(currentQuantity - quantity);
-            succeed = true;
-            itemRepository.save(Item);
+            item.setQuantity(currentQuantity - quantity);
+        } else {
+            item.setQuantity(0);
         }
-        return succeed;
+        return itemRepository.save(item);
     }
 
     public Optional<Item> getItem(final Long id) {
@@ -81,7 +87,14 @@ public class ItemService {
                             .message("There are no item with given id.")
                             .build()
             );
-            item.setQuantity(itemDto.getQuantity());
+
+            StorageItem storageItem = storageItemService.getStorageItemsByMovieTitle(item.getMovie().getTitle()).get(0);
+            if (storageItem.getQuantity() < itemDto.getQuantity()) {
+                item.setQuantity(storageItem.getQuantity());
+                LOGGER.error("Too few movies: " + item.getMovie().getTitle());
+            } else {
+                item.setQuantity(itemDto.getQuantity());
+            }
             return itemRepository.save(item);
         } catch (Exception e) {
             LOGGER.error("Item: " + ErrorType.NOT_FOUND.name());

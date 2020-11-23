@@ -38,15 +38,15 @@ public class ItemController {
     }
 
     @PatchMapping(value = "/add-quantity/{id}/{quantity}")
-    public void addQuantity(@Validated @PathVariable Long id,
+    public ItemDto addQuantity(@Validated @PathVariable Long id,
                             @Validated @PathVariable int quantity) {
-        itemService.addQuantity(id, quantity);
+        return itemMapper.mapToItemDto(itemService.addQuantity(id, quantity));
     }
 
     @PatchMapping(value = "/sub-quantity/{id}/{quantity}")
-    public Boolean subQuantity(@Validated @PathVariable Long id,
+    public ItemDto subQuantity(@Validated @PathVariable Long id,
                                @Validated @PathVariable int quantity) {
-        return itemService.subQuantity(id, quantity);
+        return itemMapper.mapToItemDto(itemService.subQuantity(id, quantity));
     }
 
     @GetMapping
