@@ -43,7 +43,7 @@ public class OrderController {
     }
 
     @DeleteMapping(value = "/{orderId}")
-    public void deleteCard(@Validated @PathVariable Long orderId) {
+    public void deleteOrder(@Validated @PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
     }
 }
