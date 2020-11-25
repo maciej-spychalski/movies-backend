@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Order {
     private Boolean isFinalized = false;
     private List<Item> items = new ArrayList<>();
     private User user;
+    private BigDecimal price = new BigDecimal(BigInteger.ZERO);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,6 +52,11 @@ public class Order {
         return isFinalized;
     }
 
+    @Column(name = "PRICE")
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -64,5 +72,10 @@ public class Order {
     public void setIsFinalized(Boolean isFinalized) {
         this.isFinalized = isFinalized;
     }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
 }
 

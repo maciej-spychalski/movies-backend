@@ -22,7 +22,8 @@ public class OrderMapper {
         return new OrderDto(
                 order.getId(),
                 order.getIsFinalized(),
-                itemMapper.mapToItemsDto(order.getItems())
+                itemMapper.mapToItemsDto(order.getItems()),
+                order.getPrice()
         );
     }
 

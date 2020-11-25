@@ -16,6 +16,8 @@ import pl.asbt.movies.storage.repository.ItemRepository;
 import pl.asbt.movies.storage.repository.OrderRepository;
 import pl.asbt.movies.storage.repository.UserRepository;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +68,11 @@ public class CartService {
 
         cart.getItems().add(item);
         item.setCart(cart);
+
+        ///
+        cart.setPrice(cart.getPrice().add(item.getPrice()));
+        ///
+
         return cartRepository.save(cart);
     }
 
@@ -84,13 +91,17 @@ public class CartService {
                         .build()
         );
 
+        ///
+        cart.setPrice(cart.getPrice().subtract(item.getPrice()));
+        ///
+
         cart.getItems().remove(item);
         itemService.deleteItem(itemId);
         return cartRepository.save(cart);
     }
 
     public Order createOrder(final Long cartId, final Long userId) throws StorageException {
-
+        // todo: chyba wystarczy przekazać cart
         Cart cart = cartRepository.findById(cartId).orElseThrow(() ->
                 StorageException.builder()
                         .errorType(ErrorType.NOT_FOUND)
@@ -104,8 +115,10 @@ public class CartService {
                         .build()
         );
 
+        BigDecimal price = cart.getPrice();
         List<Item> itemsCart = cart.getItems();
         List<Item> itemsOrder = new ArrayList<>();
+        cart.setPrice(new BigDecimal(BigInteger.ZERO));
 
         while (itemsCart.size() > 0) {
             Item theItem = itemsCart.get(0);
@@ -121,8 +134,9 @@ public class CartService {
         Order order = new Order();
         order = orderRepository.save(order);
         order.setUser(user);
+        order.setPrice(price);
 
-        for(Item theItem :itemsOrder) {
+        for (Item theItem : itemsOrder) {
             order.getItems().add(theItem);
             theItem.setOrder(order);
             orderRepository.save(order);

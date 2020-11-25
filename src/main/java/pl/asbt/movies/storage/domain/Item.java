@@ -62,10 +62,6 @@ public class Item {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -85,4 +81,9 @@ public class Item {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
 }

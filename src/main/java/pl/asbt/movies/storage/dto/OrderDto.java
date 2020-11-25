@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class OrderDto {
     private Long id;
     private Boolean isFinalized;
     private List<ItemDto> itemsDto = new ArrayList<>();
+    private BigDecimal price;
 
 }
 

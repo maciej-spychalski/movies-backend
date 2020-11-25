@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,6 +17,7 @@ import java.util.List;
 public class Cart {
     private Long id;
     private List<Item> items;
+    private BigDecimal price = new BigDecimal(BigInteger.ZERO);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +37,11 @@ public class Cart {
         return items;
     }
 
+    @Column(name = "PRICE")
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -41,5 +49,10 @@ public class Cart {
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
 }
 
