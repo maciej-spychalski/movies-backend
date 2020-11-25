@@ -18,7 +18,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/v1/storage/cards")
+@RequestMapping("/v1/storage/carts")
 public class CartController {
 
     private final CartService cartService;
@@ -28,6 +28,7 @@ public class CartController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createCart(@Validated @RequestBody CartDto cartDto) {
         cartService.saveCart(cartMapper.matToCart(cartDto));
+        // todo: To chyba można skasować bo koszyk tworzony jest wraz z użytkownikiem
     }
 
     @GetMapping(value = "/{cardId}")
@@ -55,7 +56,16 @@ public class CartController {
         return orderMapper.mapToOrderDto(cartService.createOrder(cartId, userId));
     }
 
-    // To:Do Add-Item
-    // To:DO sub-Item
+    @PatchMapping(value = "/add-item/{cartId}/{itemId}")
+    public CartDto addItem(@Validated @PathVariable Long cartId,
+                           @Validated @PathVariable Long itemId) throws StorageException {
+        return cartMapper.mapToCartDto(cartService.addItem(cartId, itemId));
+    }
+
+    @PatchMapping(value = "/delete-item/{cartId}/{itemId}")
+    public CartDto deleteItem(@Validated @PathVariable Long cartId,
+                              @Validated @PathVariable Long itemId) throws StorageException {
+        return cartMapper.mapToCartDto(cartService.deleteItem(cartId, itemId));
+    }
 
 }
