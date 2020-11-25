@@ -13,7 +13,10 @@ import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.repository.CartRepository;
 import pl.asbt.movies.storage.repository.ItemRepository;
+import pl.asbt.movies.storage.repository.OrderRepository;
+import pl.asbt.movies.storage.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +27,11 @@ public class CartService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CartService.class);
     private final CartRepository cartRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
     private final ItemService itemService;
     private final ItemRepository itemRepository;
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
     public Cart saveCart(final Cart cart) {
         return cartRepository.save(cart);
@@ -61,7 +66,6 @@ public class CartService {
 
         cart.getItems().add(item);
         item.setCart(cart);
-//        item = itemRepository.save(item);
         return cartRepository.save(cart);
     }
 
@@ -100,12 +104,31 @@ public class CartService {
                         .build()
         );
 
+        List<Item> itemsCart = cart.getItems();
+        List<Item> itemsOrder = new ArrayList<>();
+
+        while (itemsCart.size() > 0) {
+            Item theItem = itemsCart.get(0);
+            Item item = new Item();
+            item.setMovie(theItem.getMovie());
+            item.setQuantity(theItem.getQuantity());
+            itemsOrder.add(item);
+            cart.getItems().remove(theItem);
+            itemService.deleteItem(theItem.getId());
+            cartRepository.save(cart);
+        }
+
         Order order = new Order();
+        order = orderRepository.save(order);
         order.setUser(user);
-        order.setItems(cart.getItems());
-        cart.getItems().clear();
-        user.getOrders().add(order);
-        return orderService.saveOrder(order);
+
+        for(Item theItem :itemsOrder) {
+            order.getItems().add(theItem);
+            theItem.setOrder(order);
+            orderRepository.save(order);
+        }
+
+        return order;
     }
 
 //    public Cart updateCart(final CartDto cartDto) {

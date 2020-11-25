@@ -51,8 +51,9 @@ public class CartController {
         cartService.deleteCart(cardId);
     }
 
-    @PatchMapping(value = "/{cartId}/{userId}")
-    public OrderDto createOrder(@Validated Long cartId, @Validated Long userId) throws StorageException {
+    @PatchMapping(value = "/create-order/{cartId}/{userId}")
+    public OrderDto createOrder(@Validated @PathVariable Long cartId,
+                                @Validated @PathVariable Long userId) throws StorageException {
         return orderMapper.mapToOrderDto(cartService.createOrder(cartId, userId));
     }
 

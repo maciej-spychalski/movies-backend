@@ -42,8 +42,8 @@ public class OrderController {
         return orderMapper.mapToOrdersDto(orderService.getAllOrders());
     }
 
-    @DeleteMapping(value = "/{cardId}")
-    public void deleteCard(@Validated @PathVariable Long orederId) {
-        orderService.deleteOrder(orederId);
+    @DeleteMapping(value = "/{orderId}")
+    public void deleteCard(@Validated @PathVariable Long orderId) {
+        orderService.deleteOrder(orderId);
     }
 }
