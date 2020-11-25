@@ -21,7 +21,8 @@ public class ItemMapper {
                 item.getId(),
                 item.getMovie().getTitle(),
                 item.getMovie().getId(),
-                item.getQuantity()
+                item.getQuantity(),
+                item.getPrice()
         );
     }
 

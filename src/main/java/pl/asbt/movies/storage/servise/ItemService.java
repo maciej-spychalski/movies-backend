@@ -13,6 +13,7 @@ import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.ItemMapper;
 import pl.asbt.movies.storage.repository.ItemRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,10 @@ public class ItemService {
             LOGGER.error("Too few movies: " + item.getMovie().getTitle());
         }
 
+        ///
+        item.setPrice(movie.getPrice().multiply(new BigDecimal(item.getQuantity())));
+        ///
+
         return itemRepository.save(item);
     }
 
@@ -51,6 +56,21 @@ public class ItemService {
 
             LOGGER.error("Too few movies: " + item.getMovie().getTitle());
         }
+
+        ///
+        try {
+            Movie movie = movieService.getMovie(item.getMovie().getId()).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no movie with given id.")
+                            .build()
+            );
+            item.setPrice(movie.getPrice().multiply(new BigDecimal(item.getQuantity())));
+        } catch (Exception e) {
+            LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
+        }
+        ///
+
         return itemRepository.save(item);
     }
 
@@ -62,6 +82,21 @@ public class ItemService {
         } else {
             item.setQuantity(0);
         }
+
+        ///
+        try {
+            Movie movie = movieService.getMovie(item.getMovie().getId()).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no movie with given id.")
+                            .build()
+            );
+            item.setPrice(movie.getPrice().multiply(new BigDecimal(item.getQuantity())));
+        } catch (Exception e) {
+            LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
+        }
+        ///
+
         return itemRepository.save(item);
     }
 
@@ -95,6 +130,21 @@ public class ItemService {
             } else {
                 item.setQuantity(itemDto.getQuantity());
             }
+
+            ///
+            try {
+                Movie movie = movieService.getMovie(item.getMovie().getId()).orElseThrow(() ->
+                        StorageException.builder()
+                                .errorType(ErrorType.NOT_FOUND)
+                                .message("There are no movie with given id.")
+                                .build()
+                );
+                item.setPrice(movie.getPrice().multiply(new BigDecimal(item.getQuantity())));
+            } catch (Exception e) {
+                LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
+            }
+            ///
+
             return itemRepository.save(item);
         } catch (Exception e) {
             LOGGER.error("Item: " + ErrorType.NOT_FOUND.name());

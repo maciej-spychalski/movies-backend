@@ -21,6 +21,7 @@ public class OrderMapper {
     public OrderDto mapToOrderDto(final Order order) {
         return new OrderDto(
                 order.getId(),
+                order.getIsFinalized(),
                 itemMapper.mapToItemsDto(order.getItems())
         );
     }

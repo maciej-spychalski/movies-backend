@@ -15,6 +15,7 @@ import java.util.List;
 @Entity(name = "ORDERS")
 public class Order {
     private Long id;
+    private Boolean isFinalized = false;
     private List<Item> items = new ArrayList<>();
     private User user;
 
@@ -42,6 +43,12 @@ public class Order {
         return user;
     }
 
+    @NotNull
+    @Column(name = "IS_FINALIZED", unique = true)
+    public Boolean getIsFinalized() {
+        return isFinalized;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -52,6 +59,10 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setIsFinalized(Boolean isFinalized) {
+        this.isFinalized = isFinalized;
     }
 }
 

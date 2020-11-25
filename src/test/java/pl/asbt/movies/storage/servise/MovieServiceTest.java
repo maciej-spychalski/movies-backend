@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.asbt.movies.storage.domain.*;
 import pl.asbt.movies.storage.dto.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class MovieServiceTest {
                 .genre(genre1)
                 .genre(genre2)
                 .duration(90)
+                .price(new BigDecimal(10.00))
                 .build();
 
         director1.getMovies().add(movie1);
@@ -86,6 +88,7 @@ public class MovieServiceTest {
                 .genre(genre1)
                 .genre(genre2)
                 .duration(110)
+                .price(new BigDecimal(20.00))
                 .build();
 
         director1.getMovies().add(movie12);
@@ -248,7 +251,7 @@ public class MovieServiceTest {
         List<WriterDto> writersDto = new ArrayList<>();
         List<ActorDto> actorsDto = new ArrayList<>();
         List<GenreDto> genresDto = new ArrayList<>();
-        MovieDto movieDto2 = new MovieDto(movie1Id, "Title3", directorDto, writersDto, actorsDto,  genresDto, 95);
+        MovieDto movieDto2 = new MovieDto(movie1Id, "Title3", directorDto, writersDto, actorsDto,  genresDto, 95, new BigDecimal(15.00));
 
         // When
         movieService.updateMovie(movieDto2);
@@ -257,6 +260,7 @@ public class MovieServiceTest {
         Movie theMovie = movieService.getMovie(movie1Id).orElse(new Movie());
         assertEquals("Title3", theMovie.getTitle());
         assertEquals(95, (int) theMovie.getDuration());
+        assertEquals(15.00, theMovie.getPrice().doubleValue(), 0.01);
 
         //CleanUp
         movieService.deleteMovie(movie1Id);

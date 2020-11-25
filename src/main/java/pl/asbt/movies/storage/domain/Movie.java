@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +23,23 @@ public class Movie {
     private List<Actor> actors = new ArrayList<>();
     private List<Genre> genres = new ArrayList<>();
     private Integer duration;
+    private BigDecimal price;
 
-    public Movie(String title, Integer duration) {
+    public Movie(String title, Integer duration, BigDecimal price) {
         this.title = title;
         this.duration = duration;
+        this.price = price;
     }
 
-    public Movie(String title, Director director, List<Writer> writers, List<Actor> actors, List<Genre> genres, Integer duration) {
+    public Movie(String title, Director director, List<Writer> writers, List<Actor> actors, List<Genre> genres,
+                 Integer duration, BigDecimal price) {
         this.title = title;
         this.director = director;
         this.writers = writers;
         this.actors = actors;
         this.genres = genres;
         this.duration = duration;
+        this.price = price;
     }
 
     public static class MovieBuilder {
@@ -44,6 +49,7 @@ public class Movie {
         private List<Actor> actors = new ArrayList<>();
         private List<Genre> genres = new ArrayList<>();
         private Integer duration;
+        private BigDecimal price;
 
         public MovieBuilder title(String title) {
             this.title = title;
@@ -75,8 +81,13 @@ public class Movie {
             return this;
         }
 
+        public MovieBuilder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
         public Movie build() {
-            return new Movie(title, director, writers, actors, genres, duration);
+            return new Movie(title, director, writers, actors, genres, duration, price);
         }
     }
 
@@ -119,6 +130,11 @@ public class Movie {
         return duration;
     }
 
+    @Column(name = "PRICE")
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -147,4 +163,7 @@ public class Movie {
         this.duration = duration;
     }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 }

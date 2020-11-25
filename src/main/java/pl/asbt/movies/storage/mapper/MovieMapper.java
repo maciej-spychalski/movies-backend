@@ -7,6 +7,7 @@ import pl.asbt.movies.storage.domain.*;
 import pl.asbt.movies.storage.dto.DirectorDto;
 import pl.asbt.movies.storage.dto.MovieDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class MovieMapper {
     private final StorageItemMapper storageItemMapper;
 
     public Movie mapToMovie(final MovieDto movieDto) {
-        return new Movie(movieDto.getTitle(), movieDto.getDuration());
+        return new Movie(movieDto.getTitle(), movieDto.getDuration(), movieDto.getPrice());
     }
 
     public MovieDto mapToMovieDto(final Movie movie) {
@@ -33,11 +34,12 @@ public class MovieMapper {
                 movie.getId(),
                 movie.getTitle(),
                 directorDto,
-//                directorMapper.mapToDirectorDto(movie.getDirector()),
                 writerMapper.mapToWritersDto(movie.getWriters()),
                 actorMapper.mapToActorsDto(movie.getActors()),
                 genreMapper.mapToGenresDto(movie.getGenres()),
-                movie.getDuration());
+                movie.getDuration(),
+                movie.getPrice());
+//                movie.getPrice().doubleValue());
     }
 
     public List<MovieDto> mapToMoviesDto(final List<Movie> movies) {

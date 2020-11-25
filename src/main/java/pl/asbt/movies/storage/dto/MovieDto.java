@@ -2,9 +2,11 @@ package pl.asbt.movies.storage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +14,17 @@ import java.util.List;
 @Getter
 public class MovieDto {
 
-    @NotNull(message = "Please provide valid movie Id" )
+    @NotNull(message = "Please provide valid movie Id")
     private Long id;
-    @NotBlank(message = "Please provide valid movie title" )
+    @NotBlank(message = "Please provide valid movie title")
     private String title;
     private DirectorDto directorDto;
     private List<WriterDto> writersDto = new ArrayList<>();
     private List<ActorDto> actorsDto = new ArrayList<>();
     private List<GenreDto> genresDto = new ArrayList<>();
+    @NotNull(message = "Please provide valid movie duration")
+//    @Range(min = 30, max = 240)
     private Integer duration;
+    @NotNull(message = "Please provide valid price in format #.##")
+    private BigDecimal price;
 }

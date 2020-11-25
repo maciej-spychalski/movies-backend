@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,6 +20,7 @@ public class Item {
     private Integer quantity;
     private Cart cart;
     private Order order;
+    private BigDecimal price = new BigDecimal(BigInteger.ZERO);
 
     public Item(Integer quantity) {
         this.quantity = quantity;
@@ -52,6 +55,15 @@ public class Item {
     @JoinColumn(name = "ORDER_ID")
     public Order getOrder() {
         return order;
+    }
+
+    @Column(name = "PRICE")
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public void setId(Long id) {

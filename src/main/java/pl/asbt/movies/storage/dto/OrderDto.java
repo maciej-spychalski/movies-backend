@@ -13,6 +13,7 @@ public class OrderDto {
 
     @NotNull(message = "Please provide valid order Id" )
     private Long id;
+    private Boolean isFinalized;
     private List<ItemDto> itemsDto = new ArrayList<>();
 
 }

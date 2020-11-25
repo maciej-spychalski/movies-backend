@@ -8,6 +8,7 @@ import pl.asbt.movies.storage.domain.Order;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ItemDto {
     private Long movieId;
     @NotNull(message = "Please provide valid quantity" )
     private Integer quantity;
+    private BigDecimal price;
 
 }
 

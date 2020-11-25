@@ -152,6 +152,7 @@ public class MovieService {
             );
             movie.setTitle(movieDto.getTitle());
             movie.setDuration(movieDto.getDuration());
+            movie.setPrice(movieDto.getPrice());
             return saveMovie(movie);
         } catch (Exception e) {
             LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
