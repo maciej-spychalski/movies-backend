@@ -39,7 +39,7 @@ public class WriterController {
 
     @GetMapping(value = "/{name}/{surname}")
     public List<WriterDto> getWriterByNameAndSurname(@Validated @PathVariable String name,
-                                                     @PathVariable String surname) {
+                                                     @Validated @PathVariable String surname) {
         return writerMapper.mapToWritersDto(writerService.getAllWritersByNameAndSurname(name, surname));
     }
 

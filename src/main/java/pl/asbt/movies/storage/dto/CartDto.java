@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class CartDto {
 
-    @NotNull
+    @NotNull(message = "Please provide valid cart Id" )
     private Long id;
     private List<ItemDto> itemsDto;
 }

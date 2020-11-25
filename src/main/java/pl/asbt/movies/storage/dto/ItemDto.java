@@ -6,6 +6,7 @@ import pl.asbt.movies.storage.domain.Cart;
 import pl.asbt.movies.storage.domain.Movie;
 import pl.asbt.movies.storage.domain.Order;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,13 @@ import java.util.List;
 @Getter
 public class ItemDto {
 
-    @NotNull
+    @NotNull(message = "Please provide valid item Id" )
     private Long id;
-    @NotNull
+    @NotBlank(message = "Please provide valid movie title" )
     private String movieTitle;
-    @NotNull
+    @NotNull(message = "Please provide valid movie id" )
     private Long movieId;
-    @NotNull
+    @NotNull(message = "Please provide valid quantity" )
     private Integer quantity;
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class OrderDto {
 
-    @NotNull
+    @NotNull(message = "Please provide valid order Id" )
     private Long id;
     private List<ItemDto> itemsDto = new ArrayList<>();
 

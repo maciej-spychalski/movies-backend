@@ -23,7 +23,9 @@ public class UserDto {
     private String email;
     @NotBlank(message = "Please provide valid password")
     private String password;
+    @NotNull(message = "Please provide true or false")
     private Boolean isAdmin;
+    @NotNull(message = "Please provide true or false")
     private Boolean isLogged;
     private CartDto cartDto;
     private List<OrderDto> ordersDto = new ArrayList<>();;

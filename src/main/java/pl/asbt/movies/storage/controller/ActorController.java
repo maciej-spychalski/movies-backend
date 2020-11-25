@@ -50,7 +50,7 @@ public class ActorController {
     }
 
     @DeleteMapping(value = "/{actorId}")
-    public void deleteActor(@PathVariable Long actorId) {
+    public void deleteActor(@Validated @PathVariable Long actorId) {
         actorService.deleteActor(actorId);
     }
 

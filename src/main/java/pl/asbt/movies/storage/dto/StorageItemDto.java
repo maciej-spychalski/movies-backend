@@ -9,12 +9,13 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 public class StorageItemDto {
-    @NotNull
+
+    @NotNull(message = "Please provide valid storage item Id" )
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Please provide valid movie title" )
     private String movieTitle;
-    @NotNull
+    @NotNull(message = "Please provide valid movie id" )
     private Long movieId;
-    @NotNull
+    @NotNull(message = "Please provide valid quantity" )
     private Integer quantity;
 }

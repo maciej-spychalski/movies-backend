@@ -49,10 +49,7 @@ public class UserController {
     }
 
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public UserDto updateUser(@RequestBody UserDto userDto) {
-        User user = userService.updateUser(userDto);
-        UserDto userDto1 = userMapper.mapToUserDto(user);
-        return userDto1;
-//        return userMapper.mapToUserDto(userService.updateUser(userDto));
+    public UserDto updateUser(@Validated @RequestBody UserDto userDto) {
+        return userMapper.mapToUserDto(userService.updateUser(userDto));
     }
 }
