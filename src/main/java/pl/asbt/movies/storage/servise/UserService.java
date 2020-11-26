@@ -70,4 +70,41 @@ public class UserService {
         return result;
     }
 
+    public User loginUser(final Long userId, final String email, final String password) {
+        User result = new User();
+        try {
+            User user = getUser(userId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no user with given id.")
+                            .build()
+            );
+            if (user.getEmail().equals(email) &&
+                    user.getPassword().equals(password)) {
+                user.setIsLogged(true);
+            }
+            ;
+            return userRepository.save(user);
+        } catch (Exception e) {
+            LOGGER.error("User: " + ErrorType.NOT_FOUND.name());
+        }
+        return result;
+    }
+
+    public User logoutUser(final Long userId) {
+        User result = new User();
+        try {
+            User user = getUser(userId).orElseThrow(() ->
+                    StorageException.builder()
+                            .errorType(ErrorType.NOT_FOUND)
+                            .message("There are no user with given id.")
+                            .build()
+            );
+            user.setIsLogged(false);
+            return userRepository.save(user);
+        } catch (Exception e) {
+            LOGGER.error("User: " + ErrorType.NOT_FOUND.name());
+        }
+        return result;
+    }
 }

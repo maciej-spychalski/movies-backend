@@ -46,4 +46,9 @@ public class OrderController {
     public void deleteOrder(@Validated @PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
     }
+
+    @PatchMapping(value = "/finalize/{orderId}")
+    public OrderDto finalizeOrder(@Validated @PathVariable Long orderId) {
+        return orderMapper.mapToOrderDto(orderService.finalizeOrder(orderId));
+    }
 }

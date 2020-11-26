@@ -47,7 +47,7 @@ public class Order {
     }
 
     @NotNull
-    @Column(name = "IS_FINALIZED", unique = true)
+    @Column(name = "IS_FINALIZED")
     public Boolean getIsFinalized() {
         return isFinalized;
     }

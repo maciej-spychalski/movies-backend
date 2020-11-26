@@ -125,6 +125,7 @@ public class CartService {
             Item item = new Item();
             item.setMovie(theItem.getMovie());
             item.setQuantity(theItem.getQuantity());
+            item.setPrice(theItem.getPrice());
             itemsOrder.add(item);
             cart.getItems().remove(theItem);
             itemService.deleteItem(theItem.getId());

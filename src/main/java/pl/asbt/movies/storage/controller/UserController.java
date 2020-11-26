@@ -52,4 +52,17 @@ public class UserController {
     public UserDto updateUser(@Validated @RequestBody UserDto userDto) {
         return userMapper.mapToUserDto(userService.updateUser(userDto));
     }
+
+    @PatchMapping(value = "/login/{userId}/{email}/{password}")
+    public UserDto loginUser(@Validated @PathVariable Long userId,
+                             @Validated @PathVariable String email,
+                             @Validated @PathVariable String password) {
+        return userMapper.mapToUserDto(userService.loginUser(userId, email, password));
+    }
+
+    @PatchMapping(value = "/logout/{userId}")
+    public UserDto logoutUser(@Validated @PathVariable Long userId) {
+        return userMapper.mapToUserDto(userService.logoutUser(userId));
+    }
+
 }
