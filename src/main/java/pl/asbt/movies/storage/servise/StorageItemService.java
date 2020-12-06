@@ -3,6 +3,8 @@ package pl.asbt.movies.storage.servise;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.*;
 import pl.asbt.movies.storage.dto.*;
@@ -11,21 +13,20 @@ import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.StorageItemMapper;
 import pl.asbt.movies.storage.repository.StorageItemRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@EnableScheduling
 @RequiredArgsConstructor
 @Service
 public class StorageItemService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StorageItemService.class);
+    private static final int MINIMUM_STORAGE_ITEM_QUANTITY = 200;
     private final StorageItemRepository storageItemRepository;
     private final StorageItemMapper storageItemMapper;
     private final MovieService movieService;
-
-//    public StorageItem saveStorageItem(final StorageItem storageItem) {
-//        return storageItemRepository.save(storageItem);
-//    }
 
     public StorageItem saveStorageItem(final StorageItemDto storageItemDto) {
         Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElse(
@@ -101,6 +102,18 @@ public class StorageItemService {
             LOGGER.error("Storage item: " + ErrorType.NOT_FOUND.name());
         }
         return result;
+    }
+
+    @Scheduled(cron = "0 0 10 * * *") // once a day
+    public void stockUpStorageItem() {
+        List<StorageItem> storageItems = new ArrayList<>();
+        storageItems = getAllStorageItems();
+        for (StorageItem theStorageItem : storageItems) {
+            if (theStorageItem.getQuantity() < MINIMUM_STORAGE_ITEM_QUANTITY) {
+                theStorageItem.setQuantity(MINIMUM_STORAGE_ITEM_QUANTITY);
+                storageItemRepository.save(theStorageItem);
+            }
+        }
     }
 
 }
