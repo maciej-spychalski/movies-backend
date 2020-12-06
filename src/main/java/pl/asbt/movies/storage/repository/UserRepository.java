@@ -6,12 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.asbt.movies.storage.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByFirstnameAndAndSurname(String firstname, String surname);
+
+    Optional<User> findByEmail(String  email);
 
     void deleteByFirstnameAndSurname(String firstname, String surname);
 }

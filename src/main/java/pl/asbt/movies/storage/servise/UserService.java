@@ -31,6 +31,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<User> getUser(final String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public List<User> getUserByNameAndSurname(final String firstname, final String surname) {
         return userRepository.findByFirstnameAndAndSurname(firstname, surname);
     }
@@ -70,13 +74,13 @@ public class UserService {
         return result;
     }
 
-    public User loginUser(final Long userId, final String email, final String password) {
+    public User loginUser(final String email, final String password) {
         User result = new User();
         try {
-            User user = getUser(userId).orElseThrow(() ->
+            User user = getUser(email).orElseThrow(() ->
                     StorageException.builder()
                             .errorType(ErrorType.NOT_FOUND)
-                            .message("There are no user with given id.")
+                            .message("There are no user with given email.")
                             .build()
             );
             if (user.getEmail().equals(email) &&

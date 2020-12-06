@@ -30,15 +30,27 @@ public class StorageItemService {
     public StorageItem saveStorageItem(final StorageItemDto storageItemDto) {
         Movie movie = movieService.getMovie(storageItemDto.getMovieId()).orElse(
                 movieService.getAllMoviesByTitle(storageItemDto.getMovieTitle()).get(0));
+
+        int quantity = 0;
+        Long id = 0L;
+        List<StorageItem> storagesItem = getAllStorageItems();
+        for (StorageItem theStorageItem : storagesItem) {
+            if (theStorageItem.getMovie().getTitle().equals(storageItemDto.getMovieTitle())) {
+                quantity = storageItemDto.getQuantity();
+                id = theStorageItem.getId();
+                return addQuantity(id, quantity);
+            }
+        }
+
         StorageItem storageItem = storageItemRepository.save(storageItemMapper.mapToStorageItem(storageItemDto));
         storageItem.setMovie(movie);
         return storageItemRepository.save(storageItem);
     }
 
-    public void addQuantity(Long id, int quantity) {
+    public StorageItem addQuantity(Long id, int quantity) {
         StorageItem storageItem = getStorageItem(id).orElse(new StorageItem());
         storageItem.setQuantity(storageItem.getQuantity() + quantity);
-        storageItemRepository.save(storageItem);
+        return storageItemRepository.save(storageItem);
     }
 
     public Boolean subQuantity(Long id, int quantity) {

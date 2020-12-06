@@ -9,8 +9,10 @@ import pl.asbt.movies.storage.domain.Cart;
 import pl.asbt.movies.storage.domain.Item;
 import pl.asbt.movies.storage.domain.Order;
 import pl.asbt.movies.storage.domain.User;
+import pl.asbt.movies.storage.dto.ItemDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
+import pl.asbt.movies.storage.mapper.ItemMapper;
 import pl.asbt.movies.storage.repository.CartRepository;
 import pl.asbt.movies.storage.repository.ItemRepository;
 import pl.asbt.movies.storage.repository.OrderRepository;
@@ -31,6 +33,7 @@ public class CartService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final ItemService itemService;
+    private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
     private final OrderService orderService;
     private final OrderRepository orderRepository;
@@ -66,13 +69,23 @@ public class CartService {
                         .build()
         );
 
-        cart.getItems().add(item);
-        item.setCart(cart);
 
-        ///
-        cart.setPrice(cart.getPrice().add(item.getPrice()));
-        ///
-
+        List<Item> items = cart.getItems();
+        Boolean isItemExist = false;
+        for (Item theItem : items) {
+            if (theItem.getMovie().getTitle().equals(item.getMovie().getTitle())) {
+                theItem.setQuantity(theItem.getQuantity() + item.getQuantity());
+                cart.setPrice(cart.getPrice().add(item.getPrice()));
+                ItemDto itemDto = itemMapper.mapToItemDto(theItem);
+                item = itemService.updateItem(itemDto);
+                isItemExist = true;
+            }
+        }
+        if (!isItemExist) {
+            cart.getItems().add(item);
+            item.setCart(cart);
+            cart.setPrice(cart.getPrice().add(item.getPrice()));
+        }
         return cartRepository.save(cart);
     }
 
@@ -118,7 +131,7 @@ public class CartService {
         BigDecimal price = cart.getPrice();
         List<Item> itemsCart = cart.getItems();
         List<Item> itemsOrder = new ArrayList<>();
-        cart.setPrice(new BigDecimal(BigInteger.ZERO));
+        cart.setPrice(new BigDecimal(0));
 
         while (itemsCart.size() > 0) {
             Item theItem = itemsCart.get(0);
@@ -146,22 +159,22 @@ public class CartService {
         return order;
     }
 
-//    public Cart updateCart(final CartDto cartDto) {
-//        Cart result = new Cart();
-//        Long cartId = cartDto.getId();
-//        try {
-//            Cart cart = getCart(cartId).orElseThrow(() ->
-//                    StorageException.builder()
-//                            .errorType(ErrorType.NOT_FOUND)
-//                            .message("There are no cart with given id.")
-//                            .build()
-//            );
-//         } catch (Exception e) {
-//            LOGGER.error("Cart " + ErrorType.NOT_FOUND.name());
-//        }
-//
-//        return result;
-//    }
+    public Cart updateCartPrice(final Long cartId) throws StorageException {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() ->
+                StorageException.builder()
+                        .errorType(ErrorType.NOT_FOUND)
+                        .message("There are no cart with given id.")
+                        .build()
+        );
+
+        BigDecimal price = new BigDecimal(0);
+        List<Item> items = cart.getItems();
+        for (Item theItem : items) {
+            price = price.add(theItem.getPrice());
+        }
+        cart.setPrice(price);
+        return cartRepository.save(cart);
+    }
 
 }
 

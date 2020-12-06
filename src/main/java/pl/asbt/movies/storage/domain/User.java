@@ -54,7 +54,7 @@ public class User {
         return surname;
     }
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL"/*, unique = true*/)
     public String getEmail() {
         return email;
     }

@@ -28,5 +28,5 @@ public class UserDto {
     @NotNull(message = "Please provide true or false")
     private Boolean isLogged;
     private CartDto cartDto;
-    private List<OrderDto> ordersDto = new ArrayList<>();;
+    private List<OrderDto> ordersDto = new ArrayList<>();
 }
