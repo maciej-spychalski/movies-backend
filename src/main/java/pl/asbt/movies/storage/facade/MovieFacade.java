@@ -44,8 +44,8 @@ public class MovieFacade {
         movieService.removeGenre(movieId, genreId);
     }
 
-    public void createMovie(MovieDto movieDto) {
-        movieService.saveMovie(movieMapper.mapToMovie(movieDto));
+    public MovieDto createMovie(MovieDto movieDto) {
+        return movieMapper.mapToMovieDto(movieService.saveMovie(movieMapper.mapToMovie(movieDto)));
     }
 
     public MovieDto fetchMovie(Long movieId) throws StorageException {

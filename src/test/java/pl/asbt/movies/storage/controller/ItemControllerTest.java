@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.asbt.movies.storage.dto.ItemDto;
-import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.facade.ItemFacade;
 
 import java.math.BigDecimal;

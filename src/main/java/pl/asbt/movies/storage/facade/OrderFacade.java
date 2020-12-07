@@ -16,8 +16,8 @@ public class OrderFacade {
     private final OrderService orderService;
     private final OrderMapper orderMapper;
 
-    public void createOrder(OrderDto orderDto) {
-        orderService.saveOrder(orderMapper.mapToOrder(orderDto));
+    public OrderDto createOrder(OrderDto orderDto) {
+        return orderMapper.mapToOrderDto(orderService.saveOrder(orderMapper.mapToOrder(orderDto)));
     }
 
     public OrderDto fetchOrder(Long orderId) throws StorageException {
