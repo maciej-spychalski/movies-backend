@@ -16,8 +16,8 @@ public class DirectorFacade {
     private final DirectorService directorService;
     private final DirectorMapper directorMapper;
 
-    public void createDirector(DirectorDto directorDto) {
-        directorService.saveDirector(directorMapper.mapToDirector(directorDto));
+    public DirectorDto createDirector(DirectorDto directorDto) {
+        return directorMapper.mapToDirectorDto(directorService.saveDirector(directorMapper.mapToDirector(directorDto)));
     }
 
     public DirectorDto fetchDirector(Long directorId) throws StorageException {

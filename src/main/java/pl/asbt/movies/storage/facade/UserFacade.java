@@ -16,8 +16,8 @@ public class UserFacade {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public void createUser(UserDto userDto) {
-        userService.saveUser(userMapper.mapToUser(userDto));
+    public UserDto createUser(UserDto userDto) {
+        return userMapper.mapToUserDto(userService.saveUser(userMapper.mapToUser(userDto)));
     }
 
     public UserDto fetchUser(Long userId) throws StorageException {

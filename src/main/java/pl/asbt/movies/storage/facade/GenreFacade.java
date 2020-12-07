@@ -16,8 +16,8 @@ public class GenreFacade {
     private final GenreService genreService;
     private final GenreMapper genreMapper;
 
-    public void createGenre(GenreDto genreDto) {
-        genreService.saveGenre(genreMapper.mapToGenre(genreDto));
+    public GenreDto createGenre(GenreDto genreDto) {
+        return genreMapper.mapToGenreDto(genreService.saveGenre(genreMapper.mapToGenre(genreDto)));
     }
 
     public GenreDto fetchGenre(Long genreId) throws StorageException {

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class ActorServiceTest {
 
     @Autowired
-    ActorService actorService;
+    private ActorService actorService;
 
     @Test
     public void saveActorTestSuite() {

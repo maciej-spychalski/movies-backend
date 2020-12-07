@@ -2,6 +2,7 @@ package pl.asbt.movies.storage.facade;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.dto.ActorDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
@@ -17,8 +18,8 @@ public class ActorFacade {
     private final ActorService actorService;
     private final ActorMapper actorMapper;
 
-    public void createActor(ActorDto actorDto) {
-        actorService.saveActor(actorMapper.mapToActor(actorDto));
+    public ActorDto createActor(ActorDto actorDto) {
+        return actorMapper.mapToActorDto(actorService.saveActor(actorMapper.mapToActor(actorDto)));
     }
 
     public ActorDto fetchActor(Long actorId) throws StorageException {

@@ -54,7 +54,7 @@ public class DirectorServiceTest {
         assertEquals("Name1", directorDB1.getFirstname());
         assertEquals("Surname1", directorDB1.getSurname());
 
-        //CleanUp
+        // CleanUp
         directorService.deleteDirector(director1ID);
     }
 

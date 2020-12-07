@@ -17,8 +17,8 @@ public class CartFacade {
     private final CartService cartService;
     private final CartMapper cartMapper;
 
-    public void createCart(CartDto cartDto) {
-        cartService.saveCart(cartMapper.matToCart(cartDto));
+    public CartDto createCart(CartDto cartDto) {
+        return cartMapper.mapToCartDto(cartService.saveCart(cartMapper.matToCart(cartDto)));
         // todo: To chyba można skasować bo koszyk tworzony jest wraz z użytkownikiem
     }
 
@@ -31,11 +31,11 @@ public class CartFacade {
         ));
     }
 
-    public List<CartDto> fetchCards() {
+    public List<CartDto> fetchCarts() {
         return cartMapper.mapToCartsDto(cartService.getAllCarts());
     }
 
-    public void deleteCard(Long cardId) {
+    public void deleteCart(Long cardId) {
         cartService.deleteCart(cardId);
     }
 

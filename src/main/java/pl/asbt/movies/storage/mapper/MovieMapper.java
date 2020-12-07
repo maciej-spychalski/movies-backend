@@ -39,7 +39,6 @@ public class MovieMapper {
                 genreMapper.mapToGenresDto(movie.getGenres()),
                 movie.getDuration(),
                 movie.getPrice());
-//                movie.getPrice().doubleValue());
     }
 
     public List<MovieDto> mapToMoviesDto(final List<Movie> movies) {

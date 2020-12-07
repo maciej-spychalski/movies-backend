@@ -25,19 +25,19 @@ public class CartController {
         // todo: To chyba można skasować bo koszyk tworzony jest wraz z użytkownikiem
     }
 
-    @GetMapping(value = "/{cardId}")
-    public CartDto getCard(@Validated @PathVariable Long cardId) throws StorageException {
-        return cartFacade.fetchCard(cardId);
+    @GetMapping(value = "/{cartId}")
+    public CartDto getCart(@Validated @PathVariable Long cartId) throws StorageException {
+        return cartFacade.fetchCard(cartId);
     }
 
     @GetMapping
-    public List<CartDto> getCards() {
-        return cartFacade.fetchCards();
+    public List<CartDto> getCarts() {
+        return cartFacade.fetchCarts();
     }
 
-    @DeleteMapping(value = "/{cardId}")
-    public void deleteCard(@Validated @PathVariable Long cardId) {
-        cartFacade.deleteCard(cardId);
+    @DeleteMapping(value = "/{cartId}")
+    public void deleteCart(@Validated @PathVariable Long cartId) {
+        cartFacade.deleteCart(cartId);
     }
 
     //    @PatchMapping(value = "/create-order/{cartId}/{userId}")

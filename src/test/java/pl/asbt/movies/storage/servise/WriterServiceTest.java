@@ -53,7 +53,7 @@ public class WriterServiceTest {
         assertEquals("Name1", writerDB1.getFirstname());
         assertEquals("Surname1", writerDB1.getSurname());
 
-        //CleanUp
+        // CleanUp
         writerService.deleteWriter(writer1ID);
     }
 

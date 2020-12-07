@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    // todo: chyba do usunięcia
     List<User> findByFirstnameAndAndSurname(String firstname, String surname);
 
     Optional<User> findByEmail(String  email);

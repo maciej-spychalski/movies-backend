@@ -16,8 +16,8 @@ public class WriterFacade {
     private final WriterService writerService;
     private final WriterMapper writerMapper;
 
-    public void createWriter(WriterDto writerDto) {
-        writerService.saveWriter(writerMapper.mapToWriter(writerDto));
+    public WriterDto createWriter(WriterDto writerDto) {
+        return writerMapper.mapToWriterDto(writerService.saveWriter(writerMapper.mapToWriter(writerDto)));
     }
 
     public WriterDto fetchWriter(Long writerId) throws StorageException {
