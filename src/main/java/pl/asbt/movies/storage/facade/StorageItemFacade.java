@@ -16,8 +16,8 @@ public class StorageItemFacade {
     private final StorageItemService storageItemService;
     private final StorageItemMapper storageItemMapper;
 
-    public void createStorageItem(StorageItemDto storageItemDto) {
-        storageItemService.saveStorageItem(storageItemDto);
+    public StorageItemDto createStorageItem(StorageItemDto storageItemDto) {
+        return storageItemMapper.mapToStorageItemDto(storageItemService.saveStorageItem(storageItemDto));
     }
 
     public void addQuantity(Long id, int quantity) {
