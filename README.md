@@ -1,4 +1,5 @@
-# maciej-spychalski-kodilla-final-project-backend
+# Maciej Spychalski - Kodilla - final project - backend
+
 Backend of final project for Kodilla course
 
 Last backend commit:
