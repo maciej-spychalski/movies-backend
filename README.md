@@ -3,10 +3,16 @@
 Backend of final project for Kodilla course
 
 Last backend commit:
-https://github.com/trevize77/movies-backend/commits/673f37f8fb3706c854220babe9893bba3f08276c
+https://github.com/trevize77/movies-backend/commit/d9feb2a6a6cbfd5d4b130215dd07e097b21e10e6
 
 Last frontend commit:
-https://github.com/trevize77/movies-frontend/commit/8b4275fe9a759d517d2a190d435d1eb78a8a3360
+https://github.com/trevize77/movies-frontend/commit/4223429261cd7097ecb8293adb05e7f0dc3c1d3f
+
+Backend project
+https://github.com/trevize77/movies-backend
+
+Frontend project
+https://github.com/trevize77/movies-frontend
 
 Project configuration
 1. Create mysql database - movies
