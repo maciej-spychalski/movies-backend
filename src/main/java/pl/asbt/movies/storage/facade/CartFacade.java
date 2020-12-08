@@ -19,7 +19,6 @@ public class CartFacade {
 
     public CartDto createCart(CartDto cartDto) {
         return cartMapper.mapToCartDto(cartService.saveCart(cartMapper.matToCart(cartDto)));
-        // todo: To chyba można skasować bo koszyk tworzony jest wraz z użytkownikiem
     }
 
     public CartDto fetchCard(Long cardId) throws StorageException {

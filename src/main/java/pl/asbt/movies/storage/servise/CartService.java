@@ -27,14 +27,10 @@ import java.util.Optional;
 @Service
 public class CartService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CartService.class);
     private final CartRepository cartRepository;
     private final UserService userService;
-    private final UserRepository userRepository;
     private final ItemService itemService;
     private final ItemMapper itemMapper;
-    private final ItemRepository itemRepository;
-    private final OrderService orderService;
     private final OrderRepository orderRepository;
 
     public Cart saveCart(final Cart cart) {
@@ -103,9 +99,7 @@ public class CartService {
                         .build()
         );
 
-        ///
         cart.setPrice(cart.getPrice().subtract(item.getPrice()));
-        ///
 
         cart.getItems().remove(item);
         itemService.deleteItem(itemId);

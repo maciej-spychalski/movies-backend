@@ -35,7 +35,6 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    // todo: chyba do usunięcia
     public List<User> getUserByNameAndSurname(final String firstname, final String surname) {
         return userRepository.findByFirstnameAndAndSurname(firstname, surname);
     }
@@ -48,7 +47,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // todo: chyba do usunięcia
     public void deleteUserByFirstnameAndSurname(final String firstname, final String surname) {
         userRepository.deleteByFirstnameAndSurname(firstname, surname);
     }

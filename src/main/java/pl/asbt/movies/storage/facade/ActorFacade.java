@@ -2,7 +2,6 @@ package pl.asbt.movies.storage.facade;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.asbt.movies.storage.domain.Actor;
 import pl.asbt.movies.storage.dto.ActorDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;

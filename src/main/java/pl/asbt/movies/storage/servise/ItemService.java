@@ -39,9 +39,7 @@ public class ItemService {
             LOGGER.error("Too few movies: " + item.getMovie().getTitle());
         }
 
-        ///
         item.setPrice(movie.getPrice().multiply(new BigDecimal(item.getQuantity())));
-        ///
 
         return itemRepository.save(item);
     }
@@ -57,7 +55,6 @@ public class ItemService {
             LOGGER.error("Too few movies: " + item.getMovie().getTitle());
         }
 
-        ///
         try {
             Movie movie = movieService.getMovie(item.getMovie().getId()).orElseThrow(() ->
                     StorageException.builder()
@@ -69,7 +66,6 @@ public class ItemService {
         } catch (Exception e) {
             LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
         }
-        ///
 
         return itemRepository.save(item);
     }
@@ -83,7 +79,6 @@ public class ItemService {
             item.setQuantity(0);
         }
 
-        ///
         try {
             Movie movie = movieService.getMovie(item.getMovie().getId()).orElseThrow(() ->
                     StorageException.builder()
@@ -95,7 +90,6 @@ public class ItemService {
         } catch (Exception e) {
             LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
         }
-        ///
 
         return itemRepository.save(item);
     }
@@ -131,7 +125,6 @@ public class ItemService {
                 item.setQuantity(itemDto.getQuantity());
             }
 
-            ///
             try {
                 Movie movie = movieService.getMovie(item.getMovie().getId()).orElseThrow(() ->
                         StorageException.builder()
@@ -143,7 +136,6 @@ public class ItemService {
             } catch (Exception e) {
                 LOGGER.error("Movie: " + ErrorType.NOT_FOUND.name());
             }
-            ///
 
             return itemRepository.save(item);
         } catch (Exception e) {
@@ -151,5 +143,4 @@ public class ItemService {
         }
         return result;
     }
-
 }

@@ -2,7 +2,6 @@ package pl.asbt.movies.storage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,7 +22,6 @@ public class MovieDto {
     private List<ActorDto> actorsDto = new ArrayList<>();
     private List<GenreDto> genresDto = new ArrayList<>();
     @NotNull(message = "Please provide valid movie duration")
-//    @Range(min = 30, max = 240)
     private Integer duration;
     @NotNull(message = "Please provide valid price in format #.##")
     private BigDecimal price;

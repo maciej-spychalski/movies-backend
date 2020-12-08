@@ -29,4 +29,5 @@ public class UserDto {
     private Boolean isLogged;
     private CartDto cartDto;
     private List<OrderDto> ordersDto = new ArrayList<>();
+
 }

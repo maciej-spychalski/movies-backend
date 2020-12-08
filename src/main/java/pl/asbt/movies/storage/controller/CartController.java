@@ -40,32 +40,24 @@ public class CartController {
         cartFacade.deleteCart(cartId);
     }
 
-    //    @PatchMapping(value = "/create-order/{cartId}/{userId}")
-    //    @PutMapping(value = "/create-order/{cartId}/{userId}")
     @PostMapping(value = "/create-order/{cartId}/{userId}")
     public void createOrder(@Validated @PathVariable Long cartId,
                             @Validated @PathVariable Long userId) throws StorageException {
         cartFacade.createOrder(cartId, userId);
     }
 
-    //        @PatchMapping(value = "/add-item/{cartId}/{itemId}")
-    //    @PutMapping(value = "/add-item/{cartId}/{itemId}")
     @PostMapping(value = "/add-item/{cartId}/{itemId}")
     public CartDto addItem(@Validated @PathVariable Long cartId,
                            @Validated @PathVariable Long itemId) throws StorageException {
         return cartFacade.addItem(cartId, itemId);
     }
 
-    //    @PatchMapping(value = "/delete-item/{cartId}/{itemId}")9
-    //    @PutMapping(value = "/add-item/{cartId}/{itemId}")
     @PostMapping(value = "/delete-item/{cartId}/{itemId}")
     public CartDto deleteItem(@Validated @PathVariable Long cartId,
                               @Validated @PathVariable Long itemId) throws StorageException {
         return cartFacade.deleteItem(cartId, itemId);
     }
 
-    //    @PatchMapping(value = "/update-price/{cartId}")
-    //    @PutMapping(value = "/update-price/{cartId}")9
     @PostMapping(value = "/update-price/{cartId}")
     public CartDto updateCartPrice(@Validated @PathVariable Long cartId) throws StorageException {
         return cartFacade.updateCartPrice(cartId);

@@ -19,56 +19,42 @@ public class MovieController {
 
     private final MovieFacade movieFacade;
 
-//    @PatchMapping(value = "/{movieId}/add-director/{directorId}")
-//    @PutMapping(value = "/{movieId}/add-director/{directorId}")
     @PostMapping(value = "/{movieId}/add-director/{directorId}")
     public void addDirector(@Validated @PathVariable Long movieId,
                             @Validated @PathVariable Long directorId) throws StorageException {
         movieFacade.addDirector(movieId, directorId);
     }
 
-//    @PatchMapping(value = "/{movieId}/add-writer/{writerId}")
-//    @PutMapping(value = "/{movieId}/add-writer/{writerId}")
     @PostMapping(value = "/{movieId}/add-writer/{writerId}")
     public void addWriter(@Validated @PathVariable Long movieId,
                           @Validated @PathVariable Long writerId) throws StorageException {
         movieFacade.addWriter(movieId, writerId);
     }
 
-//    @PatchMapping(value = "/{movieId}/remove-writer/{writerId}")
-//    @PutMapping(value = "/{movieId}/remove-writer/{writerId}")
     @PostMapping(value = "/{movieId}/remove-writer/{writerId}")
     public void removeWriter(@Validated @PathVariable Long movieId,
                              @Validated @PathVariable Long writerId) throws StorageException {
         movieFacade.removeWriter(movieId, writerId);
     }
 
-//    @PatchMapping(value = "/{movieId}/add-actor/{actorId}")
-//    @PutMapping(value = "/{movieId}/add-actor/{actorId}")
     @PostMapping(value = "/{movieId}/add-actor/{actorId}")
     public void addActor(@Validated @PathVariable Long movieId,
                          @Validated @PathVariable Long actorId) throws StorageException {
         movieFacade.addActor(movieId, actorId);
     }
 
-//    @PatchMapping(value = "/{movieId}/remove-actor/{actorId}")
-//    @PutMapping(value = "/{movieId}/remove-actor/{actorId}")
     @PostMapping(value = "/{movieId}/remove-actor/{actorId}")
     public void removeActor(@Validated @PathVariable Long movieId,
                             @Validated @PathVariable Long actorId) throws StorageException {
         movieFacade.removeActor(movieId, actorId);
     }
 
-//    @PatchMapping(value = "/{movieId}/add-genre/{genreId}")
-//    @PutMapping(value = "/{movieId}/add-genre/{genreId}")
     @PostMapping(value = "/{movieId}/add-genre/{genreId}")
     public void addGenre(@Validated @PathVariable Long movieId,
                          @Validated @PathVariable Long genreId) throws StorageException {
         movieFacade.addGenre(movieId, genreId);
     }
 
-//    @PatchMapping(value = "/{movieId}/remove-genre/{genreId}")
-//    @PutMapping(value = "/{movieId}/remove-genre/{genreId}")
     @PostMapping(value = "/{movieId}/remove-genre/{genreId}")
     public void removeGenre(@Validated @PathVariable Long movieId,
                             @Validated @PathVariable Long genreId) throws StorageException {

@@ -1,13 +1,11 @@
 package pl.asbt.movies.storage.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.asbt.movies.storage.domain.*;
 import pl.asbt.movies.storage.dto.DirectorDto;
 import pl.asbt.movies.storage.dto.MovieDto;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +17,6 @@ public class MovieMapper {
     private final DirectorMapper directorMapper;
     private final GenreMapper genreMapper;
     private final WriterMapper writerMapper;
-    private final StorageItemMapper storageItemMapper;
 
     public Movie mapToMovie(final MovieDto movieDto) {
         return new Movie(movieDto.getTitle(), movieDto.getDuration(), movieDto.getPrice());

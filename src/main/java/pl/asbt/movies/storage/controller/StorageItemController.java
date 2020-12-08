@@ -23,16 +23,12 @@ public class StorageItemController {
         saveStorageItem.createStorageItem(storageItemDto);
     }
 
-//    @PatchMapping(value = "/add-quantity/{id}/{quantity}")
-//    @PutMapping(value = "/add-quantity/{id}/{quantity}")
     @PostMapping(value = "/add-quantity/{id}/{quantity}")
     public void addQuantity(@Validated @PathVariable Long id,
                             @Validated @PathVariable int quantity) {
         saveStorageItem.addQuantity(id, quantity);
     }
 
-//    @PatchMapping(value = "/sub-quantity/{id}/{quantity}")
-//    @PutMapping(value = "/sub-quantity/{id}/{quantity}")
     @PostMapping(value = "/sub-quantity/{id}/{quantity}")
     public Boolean subQuantity(@Validated @PathVariable Long id,
                                @Validated @PathVariable int quantity) {

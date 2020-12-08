@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.asbt.movies.description.config.DescriptionConfig;
 import pl.asbt.movies.description.dto.DescriptionDto;
-import pl.asbt.movies.passwordgenerator.dto.GeneratedPasswordDto;
 
 import java.net.URI;
 

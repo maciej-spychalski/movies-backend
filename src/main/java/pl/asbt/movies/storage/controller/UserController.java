@@ -43,16 +43,12 @@ public class UserController {
         return userFacade.updateUser(userDto);
     }
 
-//    @PatchMapping(value = "/login/{email}/{password}")
-//    @PutMapping(value = "/login/{email}/{password}")
     @PostMapping(value = "/login/{email}/{password}")
     public UserDto loginUser(@Validated @PathVariable String email,
                              @Validated @PathVariable String password) {
         return userFacade.loginUser(email, password);
     }
 
-//    @PatchMapping(value = "/logout/{userId}")
-//    @PutMapping(value = "/logout/{userId}")
     @PostMapping(value = "/logout/{userId}")
     public UserDto logoutUser(@Validated @PathVariable Long userId) {
         return userFacade.logoutUser(userId);

@@ -29,16 +29,12 @@ public class ItemController {
         return itemFacade.fetchItem(itemId);
     }
 
-//    @PatchMapping(value = "/add-quantity/{id}/{quantity}")
-//    @PutMapping(value = "/add-quantity/{id}/{quantity}")
     @PostMapping(value = "/add-quantity/{id}/{quantity}")
     public ItemDto addQuantity(@Validated @PathVariable Long id,
                             @Validated @PathVariable int quantity) {
         return itemFacade.addQuantity(id, quantity);
     }
 
-//    @PatchMapping(value = "/sub-quantity/{id}/{quantity}")
-//    @PutMapping(value = "/sub-quantity/{id}/{quantity}")
     @PostMapping(value = "/sub-quantity/{id}/{quantity}")
     public ItemDto subQuantity(@Validated @PathVariable Long id,
                                @Validated @PathVariable int quantity) {

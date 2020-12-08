@@ -18,4 +18,5 @@ public class StorageItemDto {
     private Long movieId;
     @NotNull(message = "Please provide valid quantity" )
     private Integer quantity;
+
 }

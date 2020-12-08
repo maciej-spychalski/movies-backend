@@ -39,8 +39,6 @@ public class OrderController {
         orderFacade.deleteOrder(orderId);
     }
 
-//    @PatchMapping(value = "/finalize/{orderId}")
-//    @PutMapping(value = "/finalize/{orderId}")
     @PostMapping(value = "/finalize/{orderId}")
     public OrderDto finalizeOrder(@Validated @PathVariable Long orderId) {
         return orderFacade.finalizeOrder(orderId);

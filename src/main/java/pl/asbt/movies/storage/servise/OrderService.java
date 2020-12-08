@@ -64,22 +64,4 @@ public class OrderService {
         }
         return result;
     }
-
-//    public Order updateItem(final OrderDto orderDto) {
-//        Order result = new Order();
-//        Long orderId = orderDto.getId();
-//        try {
-//            Order order = getOrder(orderId).orElseThrow(() ->
-//                    StorageException.builder()
-//                            .errorType(ErrorType.NOT_FOUND)
-//                            .message("There are no order with given id.")
-//                            .build()
-//            );
-//            return saveOrder(order);
-//        } catch (Exception e) {
-//            LOGGER.error("Order: " + ErrorType.NOT_FOUND.name());
-//        }
-//        return result;
-//    }
-
 }
