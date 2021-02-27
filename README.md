@@ -3,7 +3,7 @@
 Backend of final project for Kodilla course
 
 Last backend commit:
-https://github.com/trevize77/movies-backend/commit/d9feb2a6a6cbfd5d4b130215dd07e097b21e10e6
+https://github.com/trevize77/movies-backend/commit/382f24885e376d5cd8aa1e5c281ff1da656d067b
 
 Last frontend commit:
 https://github.com/trevize77/movies-frontend/commit/4223429261cd7097ecb8293adb05e7f0dc3c1d3f

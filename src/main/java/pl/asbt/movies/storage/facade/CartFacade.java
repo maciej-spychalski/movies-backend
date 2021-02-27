@@ -6,7 +6,7 @@ import pl.asbt.movies.storage.dto.CartDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.CartMapper;
-import pl.asbt.movies.storage.servise.CartService;
+import pl.asbt.movies.storage.service.CartService;
 
 import java.util.List;
 

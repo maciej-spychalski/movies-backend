@@ -6,7 +6,7 @@ import pl.asbt.movies.storage.dto.StorageItemDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.StorageItemMapper;
-import pl.asbt.movies.storage.servise.StorageItemService;
+import pl.asbt.movies.storage.service.StorageItemService;
 
 import java.util.List;
 

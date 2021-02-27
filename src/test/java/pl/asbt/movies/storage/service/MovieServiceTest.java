@@ -1,4 +1,4 @@
-package pl.asbt.movies.storage.servise;
+package pl.asbt.movies.storage.service;
 
 import org.junit.After;
 import org.junit.Before;

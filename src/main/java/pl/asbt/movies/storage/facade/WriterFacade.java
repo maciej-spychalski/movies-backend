@@ -6,7 +6,7 @@ import pl.asbt.movies.storage.dto.WriterDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.WriterMapper;
-import pl.asbt.movies.storage.servise.WriterService;
+import pl.asbt.movies.storage.service.WriterService;
 
 import java.util.List;
 

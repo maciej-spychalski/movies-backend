@@ -1,9 +1,6 @@
-package pl.asbt.movies.storage.servise;
+package pl.asbt.movies.storage.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.OS;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.asbt.movies.storage.domain.Cart;
 import pl.asbt.movies.storage.domain.Item;
@@ -14,9 +11,7 @@ import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.ItemMapper;
 import pl.asbt.movies.storage.repository.CartRepository;
-import pl.asbt.movies.storage.repository.ItemRepository;
 import pl.asbt.movies.storage.repository.OrderRepository;
-import pl.asbt.movies.storage.repository.UserRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

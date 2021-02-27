@@ -1,4 +1,4 @@
-package pl.asbt.movies.storage.servise;
+package pl.asbt.movies.storage.service;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

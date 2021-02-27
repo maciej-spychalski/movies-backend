@@ -6,7 +6,7 @@ import pl.asbt.movies.storage.dto.DirectorDto;
 import pl.asbt.movies.storage.exception.ErrorType;
 import pl.asbt.movies.storage.exception.StorageException;
 import pl.asbt.movies.storage.mapper.DirectorMapper;
-import pl.asbt.movies.storage.servise.DirectorService;
+import pl.asbt.movies.storage.service.DirectorService;
 
 import java.util.List;
 
